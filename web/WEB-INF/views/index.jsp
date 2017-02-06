@@ -4,6 +4,7 @@
     <title></title>
 </head>
 <body>
-<p>text</p>
+<h1>I'm so happy!</h1>
+<p>${hello}</p>
 </body>
 </html>
