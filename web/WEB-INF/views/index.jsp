@@ -4,8 +4,7 @@
     <title></title>
 </head>
 <body>
-<h1>I'm so happy!</h1>
-<p>${hello}</p>
-<p>AppContext: ${acName}</p>
+<h1>hello</h1>
+<p>text</p>
 </body>
 </html>
