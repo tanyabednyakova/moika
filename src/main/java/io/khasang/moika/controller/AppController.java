@@ -14,7 +14,7 @@ public class AppController {
     @RequestMapping("/")
     public String hello(Model model) {
         model.addAttribute("hello", "Hello spring!!!");
-        model.addAttribute("acName",someTest.getStr());
+        model.addAttribute("someStr",someTest.getStr());
 
         return "index";
     }
