@@ -9,6 +9,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import java.util.Date;
+
 @Configuration
 @PropertySource(value = {"classpath:util.properties"})
 public class AppConfig {
@@ -33,7 +35,12 @@ public class AppConfig {
     }
 
     @Bean
-    public CreateTable createTable(){
-        return new CreateTable(jdbcTemplate());
+    public CreateTable createTable() {
+        return new CreateTable(jdbcTemplate()
+        );
+    }
+    @Bean
+    public Date testDate() {
+        return new Date();
     }
 }
