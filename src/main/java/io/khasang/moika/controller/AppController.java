@@ -24,6 +24,6 @@ public class AppController {
     @RequestMapping("/test")
     public String test(Model model) {
         model.addAttribute("test", createTable.create());
-        return "testout";
+        return "Test";
     }
 }
