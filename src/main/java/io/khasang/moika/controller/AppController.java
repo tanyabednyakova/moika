@@ -16,8 +16,8 @@ public class AppController {
         return "index";
     }
 
-    @RequestMapping("/create")
-    public String create(Model model){
+    @RequestMapping("/db/create")
+    public String create(Model model) {
         model.addAttribute("create", createTable.createTableStatus());
         return "create";
     }
