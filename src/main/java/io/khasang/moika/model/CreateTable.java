@@ -10,7 +10,6 @@ public class CreateTable {
     }
 
     public CreateTable() {
-
     }
 
     public JdbcTemplate getJdbcTemplate() {

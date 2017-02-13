@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
+@ComponentScan({"io.khasang.moika.controller", "io.khasang.moika.config", "io.khasang.moika.*"})
 @ComponentScan(
         basePackages = {"io.khasang.moika"/*.controller", "io.khasang.moika.config"*//*DRS, "io.khasang.moika.model",  */},
         excludeFilters = @ComponentScan.Filter(type= FilterType.REGEX, pattern = {"io.khasang.moika.model.*"})
