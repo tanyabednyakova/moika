@@ -9,15 +9,20 @@ import java.io.Serializable;
 /**
  * Created by blajimir on 14.02.2017.
  */
-@Entity(name = "sometable")
-public class SomeTable implements Serializable{
+@Entity(name = "some_rows")
+public class SomeRow implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private String name;
     private String description;
 
-    public SomeTable() {
+    public SomeRow(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public SomeRow() {
     }
 
     public long getId() {
