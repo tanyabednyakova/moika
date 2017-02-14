@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"io.khasang.moika.controller","io.khasang.moika.config"})
+@ComponentScan({"io.khasang.moika.controller","io.khasang.moika.config","io.khasang.moika.dao"})
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private ApplicationContext appContext;
