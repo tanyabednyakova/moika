@@ -3,3 +3,10 @@
 *.iml
 /target/
 /rr/
+<<<<<<< HEAD
+/lib/
+/classes/
+=======
+/classes/
+/lib/
+>>>>>>> development
