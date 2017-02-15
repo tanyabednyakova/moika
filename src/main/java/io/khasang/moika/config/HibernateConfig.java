@@ -17,7 +17,6 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource(value = {"classpath:hibernate.properties"})
-@PropertySource(value = {"classpath:util.properties"})
 public class HibernateConfig {
 
     @Autowired
@@ -30,8 +29,6 @@ public class HibernateConfig {
         sessionFactoryBean.setDataSource(dataSource);
         sessionFactoryBean.setPackagesToScan("io.khasang.moika.entity");
         sessionFactoryBean.setHibernateProperties(properties());
-
-
         return sessionFactoryBean;
     }
 

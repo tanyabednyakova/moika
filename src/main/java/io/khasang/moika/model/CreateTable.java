@@ -12,9 +12,6 @@ public class CreateTable {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public CreateTable() {
-    }
-
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
