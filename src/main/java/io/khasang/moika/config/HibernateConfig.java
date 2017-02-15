@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
@@ -29,10 +30,16 @@ public class HibernateConfig {
         sessionFactoryBean.setDataSource(dataSource);
         sessionFactoryBean.setPackagesToScan("io.khasang.moika.entity");
         sessionFactoryBean.setHibernateProperties(properties());
+        Properties p = sessionFactoryBean.getHibernateProperties();
+        p.forEach((k,v)-> System.out.printf("prop: %s  value: %s%n",k,v));
         return sessionFactoryBean;
     }
 
     private Properties properties(){
+        System.out.println("Info: " +  environment.getRequiredProperty("hibernate.dialect"));
+        System.out.println("Info: " +  environment.getRequiredProperty("hibernate.show_sql"));
+        System.out.println("Info: " +  environment.getRequiredProperty("hibernate.format_sql"));
+        System.out.println("Info: " +  environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));

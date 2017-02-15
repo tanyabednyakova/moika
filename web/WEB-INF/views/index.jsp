@@ -6,6 +6,5 @@
 </head>
 <body>
 <h1>hello</h1>
-<p>${someStr}</p>
 </body>
 </html>
