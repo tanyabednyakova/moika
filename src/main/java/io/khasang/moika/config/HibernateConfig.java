@@ -26,11 +26,11 @@ public class HibernateConfig {
     @Bean
     @Autowired
     public LocalSessionFactoryBean sessionFactory(DriverManagerDataSource dataSource){
-        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
-        sessionFactoryBean.setDataSource(dataSource);
-        sessionFactoryBean.setPackagesToScan("io.khasang.moika.entity");
-        sessionFactoryBean.setHibernateProperties(properties());
-        return sessionFactoryBean;
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
+        sessionFactory.setPackagesToScan("io.khasang.moika.entity");
+        sessionFactory.setHibernateProperties(properties());
+        return sessionFactory;
     }
 
     private Properties properties(){
