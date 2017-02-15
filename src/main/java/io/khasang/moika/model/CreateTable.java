@@ -2,9 +2,6 @@ package io.khasang.moika.model;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-/**
- * Created by blajimir on 09.02.2017.
- */
 public class CreateTable {
     private JdbcTemplate jdbcTemplate;
 
@@ -15,6 +12,9 @@ public class CreateTable {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public CreateTable() {
+    }
+
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
@@ -23,7 +23,7 @@ public class CreateTable {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public String create() {
+    private String create() {
         try {
             jdbcTemplate.execute("DROP TABLE IF EXISTS films");
             jdbcTemplate.execute("CREATE TABLE films (\n" +
@@ -36,7 +36,11 @@ public class CreateTable {
                     ");");
             return "Table created";
         } catch (Exception e) {
-            return "Table not crated " + e;
+            return "Table creation failed: " + e;
         }
+    }
+
+    public String createTableStatus() {
+        return create();
     }
 }

@@ -24,10 +24,7 @@ public class AppController {
     @Autowired
     private CreateTable createTable;
     @RequestMapping("/")
-    public String hello(Model model) {
-        model.addAttribute("hello", "Hello spring!!!");
-        model.addAttribute("someStr",someTest.getStr());
-        model.addAttribute("beansList",appContext.getBeanDefinitionNames());
+    public String hello() {
         return "index";
     }
 

@@ -46,11 +46,11 @@ public class AppConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
-        JdbcDaoImpl jdbcDao = new JdbcDaoImpl();
-        jdbcDao.setDataSource(dataSource());
-        jdbcDao.setUsersByUsernameQuery(environment.getProperty("usersByQuery"));
-        jdbcDao.setAuthoritiesByUsernameQuery(environment.getProperty("rolesByQuery"));
-        return jdbcDao;
+    public UserDetailsService userDetailsService() {
+        JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
+        jdbcImpl.setDataSource(dataSource());
+        jdbcImpl.setUsersByUsernameQuery(environment.getRequiredProperty("usersByQuery"));
+        jdbcImpl.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("rolesByQuery"));
+        return jdbcImpl;
     }
 }
