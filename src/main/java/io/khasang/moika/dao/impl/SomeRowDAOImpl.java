@@ -29,13 +29,14 @@ public class SomeRowDAOImpl implements SomeRowDAO {
 
     @Override
     public SomeRow get(long id) {
-        Session session = sessionFactory.getCurrentSession();
-        CriteriaQuery<SomeRow> criteria = session.getCriteriaBuilder()
-                .createQuery(SomeRow.class);
-        criteria.select(criteria.from(SomeRow.class))
-                .where(session.getCriteriaBuilder()
-                        .equal(criteria.from(SomeRow.class).get("id"),Long.toString(id)));
-        return session.createQuery(criteria).getSingleResult();
+        return sessionFactory.getCurrentSession().get(SomeRow.class,id);
+        /*Session session = sessionFactory.getCurrentSession();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<SomeRow> criteria = cb.createQuery(SomeRow.class);
+        Root<SomeRow> root= criteria.from(SomeRow.class);
+        criteria.select(root)
+                .where(cb.equal(root.get("id"),Long.toString(id)));
+        return session.createQuery(criteria).getSingleResult();*/
     }
 
     @Override
