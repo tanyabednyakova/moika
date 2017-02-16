@@ -5,7 +5,6 @@ import io.khasang.moika.entity.SomeRow;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.sometest.SomeTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,7 @@ import java.util.List;
 @Controller
 public class AppController {
     @Autowired
-    private ApplicationContext appContext;
+    private SomeRowDAO someRowDAO;
     @Autowired
     private SomeTest someTest;
     @Autowired
@@ -42,7 +41,6 @@ public class AppController {
     }
     @RequestMapping("/test/entity")
     public ModelAndView testEntity(){
-        SomeRowDAO someRowDAO = appContext.getBean(SomeRowDAO.class);
         long rows = someRowDAO.countRow();
         System.out.println("rows: "+rows);
         SomeRow someRow;
