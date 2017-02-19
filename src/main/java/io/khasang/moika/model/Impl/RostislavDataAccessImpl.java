@@ -53,6 +53,7 @@ public class RostislavDataAccessImpl implements RostislavDataAccess {
 
     @Override
     public List<Map<String, Object>> getSelectedDataFromJoinedDbEntities(String leftTableName, String rightTableName, Map<String, Pair<String, String>> joinType, Map<String, Pair<String, String>> filters) {
-        return null;
+        //TODO: реализовать метод
+        throw new RuntimeException("Mетод ещё не реализован!");
     }
 }
