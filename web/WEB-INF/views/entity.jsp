@@ -1,10 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Encode your login</title>
+    <title>Entity test</title>
 </head>
 <body>
-<h3>Your password</h3>
-<p>${encode}</p>
+<h3>SomeRow:</h3>
+Name: ${someRow.name}<br>
+Descr: ${someRow.description}
 </body>
 </html>

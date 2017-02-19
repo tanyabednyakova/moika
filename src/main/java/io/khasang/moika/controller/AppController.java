@@ -1,5 +1,7 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.dao.SomeRowDAO;
+import io.khasang.moika.entity.SomeRow;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.PskvorDataAccessService;
 import io.khasang.moika.service.RostislavDataAccessService;
