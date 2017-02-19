@@ -1,6 +1,8 @@
 package io.khasang.moika.config;
 
 import io.khasang.moika.model.CreateTable;
+import io.khasang.moika.model.MadvDataAcces;
+import io.khasang.moika.model.impl.MadvDataAccesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +41,10 @@ public class AppConfig {
     public CreateTable createTable(){
         return new CreateTable(jdbcTemplate());
     }
-
+    @Bean
+    public MadvDataAcces madvDataAcces(){
+        return new MadvDataAccesImpl(jdbcTemplate());
+    }
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
