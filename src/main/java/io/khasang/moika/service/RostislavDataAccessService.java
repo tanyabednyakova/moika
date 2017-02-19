@@ -5,9 +5,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Rostislav Dublin on 19.02.2017.
- */
 public interface RostislavDataAccessService {
 
     /**
