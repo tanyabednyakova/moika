@@ -1,6 +1,5 @@
 package io.khasang.moika.model.impl;
 
-import io.khasang.moika.entity.Car;
 import io.khasang.moika.model.MadvDataAcces;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,20 +26,15 @@ public class MadvDataAccesImpl implements MadvDataAcces {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     @Override
-    public String insert(Car car) {
-        String sql = "INSERT INTO cars " +
-                "(id, carmodel, carnumber, cartype, description) VALUES (?, ?, ?, ?, ?)";
-
+    public String truncate(String table) {
         try {
-            jdbcTemplate.update(sql, new Object[]{
-                    car.getId(), car.getCarModel(), car.getCarNumber(), car.getCarType(), car.getDescription()
-            });
-            return "Строка успешно вставлена";
+            jdbcTemplate.execute("TRUNCATE "+table);
+            return "Таблица " + table+ " успешно очищена";
         } catch (DataAccessException e) {
-            return "Ошибка при вставке строки: "+e;
+           return "Ошибка при очистке теблицы"+ table+ ": "+e;
         }
-
-
     }
 }
+

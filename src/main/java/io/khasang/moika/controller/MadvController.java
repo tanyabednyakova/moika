@@ -1,6 +1,5 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.entity.Car;
 import io.khasang.moika.model.MadvDataAcces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,15 +17,9 @@ public class MadvController {
         return "index1";
     }
 
-    @RequestMapping("/madv/insert")
+    @RequestMapping("/madv/truncate")
     public String create(Model model) {
-        Car car = new Car();
-        car.setId(3l);
-        car.setCarModel("Седан");
-        car.setCarNumber("");
-        car.setCarType("");
-        car.setDescription("");
-        model.addAttribute("insert", madvDataAcces.insert(car));
-        return "insert";
+        model.addAttribute("truncate", madvDataAcces.truncate("cars"));
+        return "truncate";
     }
 }

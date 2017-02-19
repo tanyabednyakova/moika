@@ -5,6 +5,7 @@ import io.khasang.moika.model.MadvDataAcces;
 import io.khasang.moika.model.impl.MadvDataAccesImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -16,6 +17,7 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 @Configuration
 @PropertySource(value = {"classpath:util.properties"})
 @PropertySource(value = {"classpath:auth.properties"})
+@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service"})
 public class AppConfig {
     @Autowired
     Environment environment;
