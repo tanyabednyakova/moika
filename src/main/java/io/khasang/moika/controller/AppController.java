@@ -1,6 +1,7 @@
 package io.khasang.moika.controller;
 
 import io.khasang.moika.model.CreateTable;
+import io.khasang.moika.service.PskvorDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,29 +23,10 @@ public class AppController {
     @Autowired
     CreateTable createTable;
     @Autowired
-    Date testDate;
+    PskvorDataAccessService pskvorDataAccessService;
 
-    /**
-     * DRS The @RequestMapping annotation ensures that HTTP requests to / are mapped to the hello() method.
-     *
-     * @param name
-     * @param model
-     * @return
-     */
     @RequestMapping("/")
-
-    public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
-
-        /* DRS
-        @RequestParam binds the value of the query String parameter name into the name parameter of the hello() method.
-        This query String parameter is not required; if it is absent in the request, the defaultValue of "World" is used.
-        The value of the name parameter is added to a Model object, ultimately making it accessible to the view template.
-        */
-
-        model.addAttribute("name", name);
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        model.addAttribute("startTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(testDate));
-
+    public String hello() {
         return "index";
     }
 
@@ -60,6 +42,64 @@ public class AppController {
         modelAndView.setViewName("encode");
         modelAndView.addObject("crypt", new BCryptPasswordEncoder().encode(name));
         return modelAndView;
+    }
 
+    @RequestMapping(value = "/queries", method = RequestMethod.GET)
+    public String SelectAll( Model model) {
+        String res = pskvorDataAccessService.select("public.box_status");
+        model.addAttribute("selecttable", res);
+        return "ps-queries"; //имя jsp
+    }
+
+    @RequestMapping(value = "/queries2", method = RequestMethod.GET)
+    public String SelectWhere( Model model) {
+        String res = pskvorDataAccessService.select("public.box_status", " id_status = ?", new Object[] {2});
+        model.addAttribute("selecttable", res);
+        return "ps-queries"; //имя jsp
+    }
+
+    @RequestMapping(value = "/create2", method = RequestMethod.GET)
+    public String createTable( Model model) {
+        String res = pskvorDataAccessService.createData("public.test", new String[] {"id", "Name1", "Name2"},
+                   new String[] {"serial", "varchar (20)", "varchar(255)"}, " id_pkey PRIMARY KEY (id)");
+        model.addAttribute("selecttable", res);
+        return "ps-queries"; //имя jsp
+    }
+
+
+    @RequestMapping(value = "/change", method = RequestMethod.GET)
+    public String updateTable( Model model) {
+        String res = pskvorDataAccessService.changeData("public.test", new String[] { "Name1"}," id = ?" , new Object[] { "DDDDD", 1});
+        model.addAttribute("selecttable", res);
+        return "ps-queries"; //имя jsp
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.GET)
+    public String insertIntoTable( Model model) {
+        String res = pskvorDataAccessService.addData("public.test", new String[] { "AAAAAA", "BBBBB"});
+        model.addAttribute("selecttable", res);
+        return "ps-queries"; //имя jsp
+    }
+
+    @RequestMapping(value = "/selectjoin", method = RequestMethod.GET)
+    public String selectJoin( Model model) {
+        String res = pskvorDataAccessService.joinSelect("public.cars", "public.car_types", "id_type", "carnum = ?", new Object[] { "DDDDD"}); // поменять на № машины
+        model.addAttribute("selecttable", res);
+        return "ps-queries"; //имя jsp
+    }
+
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public String deleteData( Model model) {
+        String res = pskvorDataAccessService.deleteData("public.test", " id = ?", new Object[]{1});
+        model.addAttribute("selecttable", res);
+        return "ps-queries"; //имя jsp
+    }
+
+    @RequestMapping(value = "/backup", method = RequestMethod.GET)
+    public String backupData( Model model) {
+        String res = pskvorDataAccessService.backupData("c:\\backup\\carwash.sql");
+        model.addAttribute("selecttable", res);
+        return "ps-queries"; //имя jsp
     }
 }
