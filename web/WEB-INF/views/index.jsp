@@ -3,10 +3,7 @@
 <head>
     <title>CarWash</title>
 </head>
-fffff
 <body>
-dddd
-xxx
 <h1>Здравствуй, ${name}!</h1>
 <p>Текущее время ${currentTime}</p>
 <br/>
@@ -14,4 +11,3 @@ xxx
 <p>${information}</p>
 </body>
 </html>
->>>>>>> development
