@@ -1,5 +1,7 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.dao.SomeRowDAO;
+import io.khasang.moika.entity.SomeRow;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.PskvorDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 public class AppController {
