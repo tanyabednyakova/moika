@@ -11,10 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created by Rostislav Dublin on 19.02.2017.
- */
-
 @Service
 public class RostislavDataAccessImpl implements RostislavDataAccess {
     @Autowired
