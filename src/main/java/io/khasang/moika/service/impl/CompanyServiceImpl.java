@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Component("CompanyServiceImpl")
 @Transactional
-public class CompanyServiceImpl {
+public class CompanyServiceImpl implements CompanyService {
     @Autowired
     CompanyDao companyDao;
 
@@ -24,5 +26,9 @@ public class CompanyServiceImpl {
 
     public Company getCompanyById(int id) {
         return companyDao.getCompanyById(id);
+    }
+
+    public List<Company> getCompanyGazpromList(){
+        return companyDao.getCompanyList();
     }
 }

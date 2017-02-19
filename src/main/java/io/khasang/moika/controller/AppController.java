@@ -1,20 +1,22 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.entity.Company;
 import io.khasang.moika.model.CreateTable;
+import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.PskvorDataAccessService;
 import io.khasang.moika.service.RostislavDataAccessService;
+import io.khasang.moika.service.impl.CompanyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @Controller
 public class AppController {
@@ -24,6 +26,8 @@ public class AppController {
     PskvorDataAccessService pskvorDataAccessService;
     @Autowired
     RostislavDataAccessService rostislavDataAccessService;
+    @Autowired
+    CompanyService companyService;
 
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
@@ -121,5 +125,30 @@ public class AppController {
         return "index";
     }
 
+    @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object addCompany(@RequestBody Company company){
+        companyService.addCompany(company);
+        return company;
+    }
 
+    @RequestMapping(value = "/company", method = RequestMethod.GET)
+    public String getCompanyList(Model model){
+        model.addAttribute("companies", companyService.getCompanyGazpromList());
+        return "companies";
+    }
+
+    @RequestMapping(value = "company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object updateCompany(@RequestBody Company company){
+//        companyService.updateCompany(company);
+        return company;
+    }
+
+    @RequestMapping(value = "/deleteMessage/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+//        companyService.deleteCompany(company);
+        return "redirect:ya.ru";
+    }
 }
