@@ -75,7 +75,7 @@ public class CompanyDaoImpl implements CompanyDao {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public List getCompanyList() {
+    public List<Company> getCompanyList() {
         Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from Company;");
         query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();

@@ -3,6 +3,11 @@ package io.khasang.moika.config;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.model.MadvDataAcces;
 import io.khasang.moika.model.impl.MadvDataAccesImpl;
+import io.khasang.moika.model.Impl.PskvorDataAccessJdbcImpl;
+import io.khasang.moika.model.PskvorDataAccess;
+import io.khasang.moika.service.CompanyService;
+import io.khasang.moika.service.PskvorDataAccessService;
+import io.khasang.moika.service.impl.CompanyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,6 +18,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+
+import java.util.Date;
 
 @Configuration
 @PropertySource(value = {"classpath:util.properties"})
@@ -40,8 +47,13 @@ public class AppConfig {
     }
 
     @Bean
-    public CreateTable createTable(){
-        return new CreateTable(jdbcTemplate());
+    public CreateTable createTable() {
+        return new CreateTable(jdbcTemplate()
+        );
+    }
+    @Bean
+    public Date testDate() {
+        return new Date();
     }
     @Bean
     public MadvDataAcces madvDataAcces(){
@@ -55,4 +67,13 @@ public class AppConfig {
         jdbcImpl.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("rolesByQuery"));
         return jdbcImpl;
     }
+
+    @Bean
+    public PskvorDataAccess pskvorDataAccess(){
+         return (new PskvorDataAccessJdbcImpl(jdbcTemplate()));
+    }
+
+    @Bean
+    public PskvorDataAccessService pskvorDataAccessService() { return ( new PskvorDataAccessService(pskvorDataAccess()));}
+
 }
