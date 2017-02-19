@@ -9,10 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.*;
@@ -168,22 +165,21 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
 
     @Override
     public void doBackup(String path) {
-       /*try {
+        try {
             //Process process = Runtime.getRuntime().exec(path+ File.separator+"pg_dump.exe -U root -t cars carwash > db.sql");
-            Process process = Runtime.getRuntime().exec(path+
-                    File.separator+"pg_dump.exe -U root -W -t cars carwash > db.sql");
-            process.waitFor();
-            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(),"Cp1251"));
-            String line = null;
+           ProcessBuilder pb = new ProcessBuilder(path+File.separator+"pg_dump.exe",
+                   "-U","root","-t","cars","carwash > db.sql");
+           pb.environment().put("PGPASSWORD","root");
+           pb.redirectErrorStream(true);
+           pb.start();
+           /* String line = null;
             while((line = br.readLine())!=null){
                 System.out.println(line);
-            }
+            }*/
             //System.out.println(process.getInputStream());
             //process.getOutputStream().write(Byte.valueOf("root"));
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+        }
     }
 }
