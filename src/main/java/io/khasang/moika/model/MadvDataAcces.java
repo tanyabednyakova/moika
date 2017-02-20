@@ -1,9 +1,21 @@
 package io.khasang.moika.model;
 
-/**
- * Created by madv on 19.02.2017.
- */
+import java.util.List;
+// TODO: 20.02.2017 просмотреть скопированное
+// TODO: 20.02.2017 подключить логирование
+// TODO: 20.02.2017 сделать побольше join
+// TODO: 20.02.2017 удаление по id
 public interface MadvDataAcces {
+    List<String> select(String tableName);
+    List<String> select(String tableName, String condition, Object[] args);
+    String insert(String tableName, Object[] args );
+    String update(String tableName, String[] fileds, String cond, Object[] args);
+    String create(String tableName, String[] fields, String[] fieldsTypes, String constraint);
+    List<String> join(String tableName1, String tableName2, String joinfield, String condition, Object[] args);
+    List<String> internalRequest(String tableName1, String tableName2, String inField, String wherefield, String condition, Object[] args);
+    List<String> caseSelect(String tableName, String field, String caseWhen, String caseThen, String caseElse, String condition, Object[] args);
     String truncate(String table);
+    String backupDB(String fileName);
+
 
 }

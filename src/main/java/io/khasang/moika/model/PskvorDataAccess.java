@@ -2,9 +2,6 @@ package io.khasang.moika.model;
 
 import java.util.List;
 
-/**
- * Created by Pauls on 17.02.2017.
- */
 public interface PskvorDataAccess {
     List<String> readData(String tableName);
     List<String> readData(String tableName, String cond, Object[] args);

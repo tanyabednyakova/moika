@@ -2,12 +2,12 @@ package io.khasang.moika.config;
 
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.model.MadvDataAcces;
-import io.khasang.moika.model.impl.MadvDataAccesImpl;
-import io.khasang.moika.model.Impl.PskvorDataAccessJdbcImpl;
 import io.khasang.moika.model.PskvorDataAccess;
-import io.khasang.moika.service.CompanyService;
+import io.khasang.moika.model.impl.MadvDataAccesImpl;
+import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
+import io.khasang.moika.service.MadvDataAccesService;
 import io.khasang.moika.service.PskvorDataAccessService;
-import io.khasang.moika.service.impl.CompanyServiceImpl;
+import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -56,9 +56,9 @@ public class AppConfig {
         return new Date();
     }
     @Bean
-    public MadvDataAcces madvDataAcces(){
-        return new MadvDataAccesImpl(jdbcTemplate());
-    }
+    public MadvDataAcces madvDataAcces(){return new MadvDataAccesImpl(jdbcTemplate());}
+    @Bean
+    public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
@@ -74,6 +74,8 @@ public class AppConfig {
     }
 
     @Bean
-    public PskvorDataAccessService pskvorDataAccessService() { return ( new PskvorDataAccessService(pskvorDataAccess()));}
+    public PskvorDataAccessService pskvorDataAccessService() {return ( new PskvorDataAccessService(pskvorDataAccess()));}
+
+
 
 }
