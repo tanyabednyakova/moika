@@ -1,27 +1,30 @@
-package io.khasang.moika.model.Impl;
+package io.khasang.moika.model.impl;
 
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.entity.Client;
 import io.khasang.moika.model.AKovalevDataAccess;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
-import java.io.*;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Arrays;
 
-/**
- * Created by Благомир on 18.02.2017..
- *
- */
-@Service
+@Component
 public class AKovalevDataAccessImpl implements AKovalevDataAccess {
     private JdbcTemplate jdbcTemplate;
-    private static long currId;
+    private static long currentCarId;
     private RowMapper<Car> rowMapperCar = (ResultSet rs, int rowNum) -> {
         Car car = new Car();
         car.setId(rs.getLong("id"));
@@ -39,11 +42,11 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
     public AKovalevDataAccessImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         Long maxId = this.jdbcTemplate.queryForObject("SELECT MAX(id) FROM cars", Long.class);
-        currId = maxId == null ? 1 : ++maxId;
+        currentCarId = maxId == null ? 1 : ++maxId;
     }
 
-    public static long getCurrId() {
-        return currId;
+    public static long getCurrentCarId() {
+        return currentCarId;
     }
 
     @Override
@@ -77,10 +80,14 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
                 (ResultSet rs, int rowNum) -> new Pair<>(rs.getString("carnumber"),
                         rs.getInt("discount")));
     }
-
+    @Override
+    public Car selectQuery(long id) {
+        String sql = "SELECT * FROM cars WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, rowMapperCar);
+    }
     @Override
     public List<Car> selectQuery(String type) {
-        String sql = "SELECT * FROM cars WHERE type = ?";
+        String sql = "SELECT * FROM cars WHERE cartype = ?";
         return jdbcTemplate.query(sql, new Object[]{type}, rowMapperCar);
     }
 
@@ -105,43 +112,42 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
             StringBuilder sql = new StringBuilder("INSERT INTO cars " +
                     "(id,carmodel,carnumber,cartype,description) " +
                     "VALUES");
-            List args = new ArrayList();
+            List<Object> args = new ArrayList<>();
             for (Car car : cars) {
-                car.setId(currId++);
+                car.setId(currentCarId++);
                 args.addAll(Arrays.asList(car.getId(), car.getCarModel(), car.getCarNumber(),
                         car.getCarType(), car.getDescription()));
                 sql.append(" (?,?,?,?,?),");
             }
             sql.replace(sql.length() - 1, sql.length(), ";");
-            System.out.println(sql.toString());
             jdbcTemplate.update(sql.toString(), args.toArray());
         }
     }
 
-    //
     @Override
     public List<Car> withinSelectQuery() {
         String sql = "SELECT * FROM cars " +
                 "WHERE cartype = 'hatchback' " +
                 "AND id IN (SELECT id FROM cars WHERE carnumber LIKE '%777')";
-        List<Car> cars = jdbcTemplate.query(sql, rowMapperCar);
-        return cars;
+        return jdbcTemplate.query(sql, rowMapperCar);
     }
+
     //Выбрать машины у которых клиентов номера начинаются на 555
     @Override
     public List<Pair<Car, Client>> joinQuery() {
-        String sql = "SELECT * FROM cars " +
+        String sql = "SELECT cars.*,clients.id AS client_id, clients.car_id,clients.name,clients.lastname," +
+                "clients.phone FROM cars " +
                 "INNER JOIN clients ON cars.id = clients.car_id AND clients.phone LIKE '555%'";
         return jdbcTemplate.query(sql, (ResultSet rs, int rowNum) -> {
             Client client = new Client();
-            client.setId(rs.getLong("clients.id"));
+
+            client.setId(rs.getLong("client_id"));
             client.setCarId(rs.getLong("car_id"));
             client.setLastname(rs.getString("lastname"));
             client.setName(rs.getString("name"));
             client.setPhone(rs.getString("phone"));
             Car car = rowMapperCar.mapRow(rs, rowNum);
-            car.setId(rs.getLong("cars.id"));
-            return new Pair<Car, Client>(car, client);
+            return new Pair<>(car, client);
         });
     }
 
@@ -164,21 +170,22 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
     }
 
     @Override
-    public void doBackup(String path) {
+    @Autowired
+    @Async
+    public void doBackup(Environment environment) {
+        ProcessBuilder pb = new ProcessBuilder(
+                environment.getProperty("jdbc.postgresql.pgDump.path") + "pg_dump.exe",
+                "-d", environment.getProperty("jdbc.postgresql.pgDump.url"),
+                "-U", environment.getProperty("jdbc.postgresql.username"),
+                "-t", "cars",
+                "-f", environment.getProperty("jdbc.postgresql.pgDump.backupFolder") +
+                environment.getProperty("jdbc.postgresql.pgDump.backupName"));
+
         try {
-            //Process process = Runtime.getRuntime().exec(path+ File.separator+"pg_dump.exe -U root -t cars carwash > db.sql");
-           ProcessBuilder pb = new ProcessBuilder(path+File.separator+"pg_dump.exe",
-                   "-U","root","-t","cars","carwash > db.sql");
-           pb.environment().put("PGPASSWORD","root");
-           pb.redirectErrorStream(true);
-           pb.start();
-           /* String line = null;
-            while((line = br.readLine())!=null){
-                System.out.println(line);
-            }*/
-            //System.out.println(process.getInputStream());
-            //process.getOutputStream().write(Byte.valueOf("root"));
-        } catch (IOException e) {
+            Process process = pb.start();
+            process.waitFor();
+            System.out.println(process.exitValue());//Переделать! Эта строка должа писаться в лог!!!
+        } catch (IOException|InterruptedException e) {
             e.printStackTrace();
         }
     }
