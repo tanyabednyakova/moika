@@ -5,9 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Created by Pauls on 17.02.2017.
- */
 @Service
 public class PskvorDataAccessService {
     PskvorDataAccess pskvorDataAccess;
@@ -33,8 +30,8 @@ public class PskvorDataAccessService {
         return pskvorDataAccess;
     }
 
-    public void setPskvorDataAccess(PskvorDataAccess pdasi) {
-        this.pskvorDataAccess = pdasi;
+    public void setPskvorDataAccess(PskvorDataAccess pskvorDataAccess) {
+        this.pskvorDataAccess = pskvorDataAccess;
     }
 
     public String select(String tableName) {
@@ -62,8 +59,8 @@ public class PskvorDataAccessService {
         return res;
     }
 
-    public String joinSelect(String tableName1, String tableName2, String joinfield, String condition, Object[] args){
-        List<String> strings = pskvorDataAccess.joinData(tableName1,tableName2, joinfield, condition, args);
+    public String joinSelect(List<String> tableNames, List<String[]> joinFields, String condition, Object[] args){
+        List<String> strings = pskvorDataAccess.joinData(tableNames, joinFields, condition, args);
         return getRowsAsString(strings);
     }
 
@@ -72,8 +69,8 @@ public class PskvorDataAccessService {
         return res;
     }
 
-    public String backupData(String fileName) {
-        String res = pskvorDataAccess.backupData(fileName);
+    public String backupData(String pgDumpPath, String fileName, boolean isExecute) {
+        String res = pskvorDataAccess.backupData(pgDumpPath, fileName, false);
         return res;
     }
 }
