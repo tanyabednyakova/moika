@@ -33,6 +33,21 @@ public interface AKovalevDataAccess {
     List<Pair<String, Integer>> withCaseQuery(Map<String, Integer> params);
 
     /**
+     * <p>Метод проверяет на существование записи о Car-объекте в БД по указанному в параметрах id</p>
+     *
+     * @param id- целочисленное значение, соответсвующее полю id в таблице cars в БД
+     * @return boolean - Возвращает true, если объект найден и false, ексли отсутствует
+     */
+    boolean containsCarQuery(long id);
+
+    /**
+     * <p>Метод возвращает список всех Car-объектов существующих в БД</p>
+     *
+     * @return List<Car> - список объектов найденных в БД
+     */
+    List<Car> selectAllCarsQuery();
+
+    /**
      * <p>Метод выводит Car-объект соответсвующие указанному в параметрах id</p>
      *
      * @param id- целочисленное значение, соответсвующее полю id в таблице cars в БД

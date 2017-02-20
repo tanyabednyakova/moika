@@ -74,6 +74,8 @@ public class TestJdbcDAO {
         /*JdbcTemplate jdbcTemplate = jdbcTemplate();
         AKovalevDataAccess dataAccess = new AKovalevDataAccessImpl(jdbcTemplate);
         initTable(dataAccess, jdbcTemplate);
+        System.out.println(dataAccess.containsCarQuery(5L));
+        System.out.println(dataAccess.containsCarQuery(15L));
         dataAccess.truncateQuery();
         dataAccess.deleteQuery("A512BB97");
         Car car = dataAccess.selectQuery(2);

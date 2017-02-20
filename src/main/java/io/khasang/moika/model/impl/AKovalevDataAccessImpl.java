@@ -80,6 +80,24 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
                 (ResultSet rs, int rowNum) -> new Pair<>(rs.getString("carnumber"),
                         rs.getInt("discount")));
     }
+
+    @Override
+    public boolean containsCarQuery(long id) {
+        String sql = "SELECT COUNT(id) FROM cars WHERE id=?";
+        Long countCars = this.jdbcTemplate.queryForObject(sql, new Object[]{id}, Long.class);
+        if (countCars == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public List<Car> selectAllCarsQuery() {
+        String sql = "SELECT * FROM cars";
+        return jdbcTemplate.query(sql, rowMapperCar);
+    }
+
     @Override
     public Car selectQuery(long id) {
         String sql = "SELECT * FROM cars WHERE id = ?";
@@ -140,7 +158,6 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
                 "INNER JOIN clients ON cars.id = clients.car_id AND clients.phone LIKE '555%'";
         return jdbcTemplate.query(sql, (ResultSet rs, int rowNum) -> {
             Client client = new Client();
-
             client.setId(rs.getLong("client_id"));
             client.setCarId(rs.getLong("car_id"));
             client.setLastname(rs.getString("lastname"));
@@ -170,10 +187,9 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
     }
 
     @Override
-    @Autowired
     @Async
     public void doBackup(Environment environment) {
-        ProcessBuilder pb = new ProcessBuilder(
+        ProcessBuilder processBuilder = new ProcessBuilder(
                 environment.getProperty("jdbc.postgresql.pgDump.path") + "pg_dump.exe",
                 "-d", environment.getProperty("jdbc.postgresql.pgDump.url"),
                 "-U", environment.getProperty("jdbc.postgresql.username"),
@@ -182,9 +198,9 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
                 environment.getProperty("jdbc.postgresql.pgDump.backupName"));
 
         try {
-            Process process = pb.start();
+            Process process = processBuilder.start();
             process.waitFor();
-            System.out.println(process.exitValue());//Переделать! Эта строка должа писаться в лог!!!
+            System.out.println(process.exitValue());//Переделать! Эта строка должна быть отправлена в лог с пояснениями!
         } catch (IOException|InterruptedException e) {
             e.printStackTrace();
         }
