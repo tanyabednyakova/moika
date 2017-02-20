@@ -1,10 +1,7 @@
 package io.khasang.moika.model;
 
 import java.util.List;
-// TODO: 20.02.2017 просмотреть скопированное
-// TODO: 20.02.2017 подключить логирование
-// TODO: 20.02.2017 сделать побольше join
-// TODO: 20.02.2017 удаление по id
+
 public interface MadvDataAcces {
     List<String> select(String tableName);
     List<String> select(String tableName, String condition, Object[] args);

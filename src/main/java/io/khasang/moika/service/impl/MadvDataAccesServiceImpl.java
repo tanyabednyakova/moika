@@ -38,8 +38,9 @@ public class MadvDataAccesServiceImpl implements MadvDataAccesService {
         madvDataAcces.create("dogs", fields, typeFilds, " id_pkey PRIMARY KEY (id)");
         return "Создана таблица Dogs";
     }
+
     @Override
-    public List<String> selectAllDogs(){
-         return madvDataAcces.select("dogs");
+    public List<String> selectAllDogs() {
+        return madvDataAcces.select("dogs");
     }
 }
