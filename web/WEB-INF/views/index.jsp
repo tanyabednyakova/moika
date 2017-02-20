@@ -4,7 +4,10 @@
     <title>CarWash</title>
 </head>
 <body>
-<h1>hello</h1>
-<p>world</p>
+<h1>Здравствуй, ${name}!</h1>
+<p>Текущее время ${currentTime}</p>
+<br/>
+<%--<p>Сервер запущен ${startTime}</p>--%>
+<p>${information}</p>
 </body>
 </html>
