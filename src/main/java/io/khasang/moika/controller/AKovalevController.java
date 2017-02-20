@@ -18,26 +18,26 @@ public class AKovalevController {
     AKovalevDataAccessService akovalevDataAccessService;
 
     @RequestMapping("/")
-    public String getListCar(Model model){
-        model.addAttribute("listCars",akovalevDataAccessService.getAllCars());
+    public String getListCar(Model model) {
+        model.addAttribute("listCars", akovalevDataAccessService.getAllCars());
         return "listcars";
     }
 
     @RequestMapping("/editcar")
-    public String editCar(Model model, @RequestParam long id){
-        model.addAttribute("car",akovalevDataAccessService.getCarById(id));
+    public String editCar(Model model, @RequestParam long id) {
+        model.addAttribute("car", akovalevDataAccessService.getCarById(id));
         return "editcar";
     }
 
     @RequestMapping(value = "/savecar", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public String saveCar(Model model, @RequestBody Car car){
-        model.addAttribute("isSaveCar",akovalevDataAccessService.updateCar(car));
-        model.addAttribute("car",car);
+    public String saveCar(Model model, @RequestBody Car car) {
+        model.addAttribute("isSaveCar", akovalevDataAccessService.updateCar(car));
+        model.addAttribute("car", car);
         return "editcar";
     }
 
     @RequestMapping("/addcar")
-    public String addCar(Model model, @RequestBody Car car){
+    public String addCar(Model model, @RequestBody Car car) {
         akovalevDataAccessService.addCar(car);
         return "listcars";
     }
