@@ -125,6 +125,16 @@ public class AppController {
         return "index";
     }
 
+    @RequestMapping("/rostislav/listCarToCarCrossData")
+    public String listCarToCarCrossData(Model model) {
+        model.addAttribute("name", "Хороший человек");
+        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+        model.addAttribute("information", "Вот декартово произведение всех тачек на все: "
+                + rostislavDataAccessService.getCarToCarCrossData().toString());
+        return "index";
+    }
+
+
     @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object addCompany(@RequestBody Company company){

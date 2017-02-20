@@ -14,10 +14,15 @@ public interface RostislavDataAccessService {
     public List<Map<String, Object>> getAllCars();
 
     /**
-     * Получить сведения машинах определённого типа.
-     * @param carType тип машины
+     * Получить сведения машинах определённой модели.
+     * @param carModel тип машины
      * @return
      */
-    public List<Map<String, Object>> getCars(String carType);
+    public List<Map<String, Object>> getCars(String carModel);
 
+    /**
+     * Получить дурацкий никому не нужный результирующий набор из декартова произведения всех машин на все.
+     * @return
+     */
+    List<Map<String, Object>> getCarToCarCrossData();
 }
