@@ -71,6 +71,8 @@ public class AppConfig {
     }
 
     @Bean
-    public PskvorDataAccessService pskvorDataAccessService() { return ( new PskvorDataAccessService(pskvorDataAccess()));}
+    public PskvorDataAccessService pskvorDataAccessService() { return new PskvorDataAccessService(pskvorDataAccess());}
 
+    @Bean
+    public CompanyService companyService() { return new CompanyServiceImpl();}
 }
