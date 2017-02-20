@@ -23,13 +23,17 @@ public class MadvController {
     @RequestMapping("/truncate")
     public String create(Model model) {
         model.addAttribute("truncate", madvDataAcces.truncate("cars"));
-        System.out.println("Привет семье!");
         return "truncate";
     }
     @RequestMapping("/test")
     public String test(Model model) {
         System.out.println(madvDataAccesService.test());
-
+        System.out.println(madvDataAccesService.createDogs());
+        String[] arString=(String[]) madvDataAccesService.selectAllDogs().toArray();
+        System.out.println("Все собаки");
+        for (String str:arString ) {
+            System.out.println(str);
+        }
         return "truncate";
     }
 }
