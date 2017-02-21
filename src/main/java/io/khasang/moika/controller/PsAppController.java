@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class PsAppController {
     @Autowired
@@ -52,7 +55,13 @@ public class PsAppController {
 
     @RequestMapping(value = "/ps-selectjoin", method = RequestMethod.GET)
     public String selectJoin(Model model) {
-        String res = pskvorDataAccessService.joinSelect("public.cars", "public.car_types", "id_type", "carnum = ?", new Object[]{"DDDDD"}); // поменять на № машины
+        List<String> tables = new ArrayList<>();
+        tables.add("public.cars");
+        tables.add("public.car_types");
+        List<String[]> fieldsArr = new ArrayList<>();
+        String[] fields = new String[]{"id_type", "id_type"};
+        fieldsArr.add(fields);
+        String res = pskvorDataAccessService.joinSelect(tables, fieldsArr, "carnum = ?", new Object[]{"DDDDD"}); // поменять на № машины
         model.addAttribute("selecttable", res);
         return "ps-queries"; //имя jsp
     }
@@ -66,7 +75,7 @@ public class PsAppController {
 
     @RequestMapping(value = "/backup", method = RequestMethod.GET)
     public String backupData(Model model) {
-        String res = pskvorDataAccessService.backupData("c:\\backup\\carwash.sql");
+        String res = pskvorDataAccessService.backupData("C:\\Program Files (x86)\\pgAdmin 4\\v1\r\\untime\\","c:\\backup\\carwash.sql", false);
         model.addAttribute("selecttable", res);
         return "ps-queries"; //имя jsp
     }
