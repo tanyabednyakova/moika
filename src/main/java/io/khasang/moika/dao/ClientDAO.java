@@ -11,5 +11,4 @@ public interface ClientDAO {
     Client getClientById(long id);
     void deleteClientById(Client client);
     boolean containClientById(long id);
-    boolean containClient(Client client);
 }

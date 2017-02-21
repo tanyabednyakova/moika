@@ -5,12 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-    <h3>Clients list</h3>
-    <ul>
-    <c:forEach items="${clients}" var="client">
-        <li>${client.id}: ${client.lastname} ${client.name}</li>
+<h3>Cats list</h3>
+<ul>
+    <c:forEach items="${cats}" var="cat">
+        <li>${cat.id}: ${cat.additionalInfo} ${cat.description}</li>
     </c:forEach>
-    </ul>
-    <div>Client: ${contClientId}</div>
+</ul>
 </body>
 </html>

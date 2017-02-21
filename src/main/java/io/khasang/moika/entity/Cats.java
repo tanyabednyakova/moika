@@ -1,13 +1,13 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Cats {
+public class Cats implements Serializable{
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "number")
     private long id;
 

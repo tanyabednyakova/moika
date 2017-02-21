@@ -50,11 +50,6 @@ public class ClientDAOImpl implements ClientDAO {
                 createQuery("select COUNT(c.id) from Client c where c.id=:id", Long.class).
                 setParameter("id", id).
                 getSingleResult();
-        return !countClients.equals(0);
-    }
-
-    @Override
-    public boolean containClient(Client client) {
-        return sessionFactory.getCurrentSession().contains(client);
+        return countClients==0?false:true;
     }
 }
