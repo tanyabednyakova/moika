@@ -52,8 +52,8 @@ public class PsAppController {
 
     @RequestMapping(value = "/ps-selectjoin", method = RequestMethod.GET)
     public String selectJoin(Model model) {
-        String res = pskvorDataAccessService.joinSelect("public.cars", "public.car_types", "id_type", "carnum = ?", new Object[]{"DDDDD"}); // поменять на № машины
-        model.addAttribute("selecttable", res);
+        // TODO: 22.02.2017         String res = pskvorDataAccessService.joinSelect("public.cars", "public.car_types", "id_type", "carnum = ?", new Object[]{"DDDDD"}); // поменять на № машины
+//        model.addAttribute("selecttable", res);
         return "ps-queries"; //имя jsp
     }
 
@@ -66,8 +66,8 @@ public class PsAppController {
 
     @RequestMapping(value = "/backup", method = RequestMethod.GET)
     public String backupData(Model model) {
-        String res = pskvorDataAccessService.backupData("c:\\backup\\carwash.sql");
-        model.addAttribute("selecttable", res);
+        // TODO: 22.02.2017   String res = pskvorDataAccessService.backupData("c:\\backup\\carwash.sql");
+//        model.addAttribute("selecttable", res);
         return "ps-queries"; //имя jsp
     }
 }
