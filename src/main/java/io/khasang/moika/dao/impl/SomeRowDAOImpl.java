@@ -14,9 +14,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-/**
- * Created by blajimir on 14.02.2017.
- */
 @Repository
 @Transactional
 public class SomeRowDAOImpl implements SomeRowDAO {

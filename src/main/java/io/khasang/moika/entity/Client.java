@@ -3,9 +3,12 @@ package io.khasang.moika.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
-@Entity(name = "clients")
-public class Client {
+@Entity
+@Table(name = "clients")
+public class Client implements Serializable {
     @Id
     private long id;
     private String name;

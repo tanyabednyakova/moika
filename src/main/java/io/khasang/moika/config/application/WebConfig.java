@@ -34,6 +34,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         SomeTest someTest = new SomeTest(appContext.getDisplayName());
         return someTest;
     }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/views/css/");
