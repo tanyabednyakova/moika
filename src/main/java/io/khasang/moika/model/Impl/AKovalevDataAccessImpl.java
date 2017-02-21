@@ -1,4 +1,4 @@
-package io.khasang.moika.model.Impl;
+package io.khasang.moika.model.impl;
 
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.entity.Client;
@@ -9,10 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.*;
