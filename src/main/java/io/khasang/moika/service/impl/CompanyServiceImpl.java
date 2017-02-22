@@ -31,6 +31,18 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDao.getCompanyById(id);
     }
 
+    @Override
+    public void updateCompany(Company company) {
+        companyDao.updateCompany(company);
+    }
+
+    @Override
+    public void deleteCompany(long id) {
+        Company company = new Company();
+        company.setId(id);
+        companyDao.deleteCompany(company);
+    }
+
     public List<Company> getCompanyGazpromList(){
         return companyDao.getCompanyList();
     }
