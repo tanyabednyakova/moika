@@ -1,6 +1,5 @@
 package io.khasang.moika.config.application;
 
-import io.khasang.moika.sometest.SomeTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -27,12 +26,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         viewResolver.setSuffix(".jsp");
         viewResolver.setContentType("text/html; charset=utf-8");
         return viewResolver;
-    }
-    @Bean
-    public SomeTest someTest(){
-        //SomeTest someTest = new SomeTest("Hello from WebConfig! =)");
-        SomeTest someTest = new SomeTest(appContext.getDisplayName());
-        return someTest;
     }
 
     @Override
