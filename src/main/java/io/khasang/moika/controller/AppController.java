@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -65,9 +66,11 @@ public class AppController {
         return "index";
     }
 
-    @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/add/{id}", method = RequestMethod.POST,
+            produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object addCompany(@RequestBody Company company){
+    public Company addCompany(@RequestBody Company company, @PathVariable("id") String id){
+        company.setAmount(BigDecimal.valueOf(Long.parseLong(id)));
         companyService.addCompany(company);
         return company;
     }
