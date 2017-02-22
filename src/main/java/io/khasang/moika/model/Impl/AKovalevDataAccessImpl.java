@@ -13,10 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.util.*;
 
-/**
- * Created by Благомир on 18.02.2017..
- *
- */
+
 @Service
 public class AKovalevDataAccessImpl implements AKovalevDataAccess {
     private JdbcTemplate jdbcTemplate;
