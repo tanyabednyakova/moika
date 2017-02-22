@@ -1,7 +1,5 @@
 package io.khasang.moika.config.application;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +14,6 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan({"io.khasang.moika.controller","io.khasang.moika.config","io.khasang.moika.dao","io.khasang.moika.model",
         "io.khasang.moika.service"})
 public class WebConfig extends WebMvcConfigurerAdapter {
-    @Autowired
-    private ApplicationContext appContext;
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();

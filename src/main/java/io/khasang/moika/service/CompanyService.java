@@ -2,8 +2,14 @@ package io.khasang.moika.service;
 
 import io.khasang.moika.entity.Company;
 
+import java.util.List;
+
 public interface CompanyService {
-    public void addCompany(Company company);
-    public void addCompany(Company company, String name);
-    public Company getCompanyById(int id);
+    void addCompany(Company company);
+
+    void addCompany(Company company, String name);
+
+    Company getCompanyById(int id);
+
+    List<Company> getCompanyGazpromList();
 }

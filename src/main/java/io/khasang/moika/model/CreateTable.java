@@ -5,11 +5,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class CreateTable {
     private JdbcTemplate jdbcTemplate;
 
-    public CreateTable() {
-    }
-
     public CreateTable(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public CreateTable() {
     }
 
     public JdbcTemplate getJdbcTemplate() {
@@ -22,8 +22,8 @@ public class CreateTable {
 
     private String create() {
         try {
-            jdbcTemplate.execute("DROP TABLE IF EXISTS films");
-            jdbcTemplate.execute("CREATE TABLE films (\n" +
+            jdbcTemplate.execute("DROP TABLE IF EXISTS \"Test\"");
+            jdbcTemplate.execute("CREATE TABLE public.\"Test\" (\n" +
                     "    code        char(5) CONSTRAINT firstkey PRIMARY KEY,\n" +
                     "    title       varchar(40) NOT NULL,\n" +
                     "    did         integer NOT NULL,\n" +
