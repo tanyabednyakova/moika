@@ -3,6 +3,7 @@ package io.khasang.moika.controller;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
+import io.khasang.moika.service.OrlovDataAccessService;
 import io.khasang.moika.service.RostislavDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,8 @@ public class AppController {
     RostislavDataAccessService rostislavDataAccessService;
     @Autowired
     CompanyService companyService;
+    @Autowired
+    OrlovDataAccessService orlovDataAccessService;
 
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
@@ -90,5 +93,11 @@ public class AppController {
     public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
 //        companyService.deleteCompany(company);
         return "redirect:ya.ru";
+    }
+
+    @RequestMapping("/dorlov")
+    public String selectDorlovCars(Model model) {
+        model.addAttribute("cars", orlovDataAccessService.select());
+        return "dorlov";
     }
 }
