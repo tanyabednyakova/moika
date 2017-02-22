@@ -7,7 +7,7 @@ import java.util.Date;
 @Entity
 public class Cats implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "number")
     private long id;
 
