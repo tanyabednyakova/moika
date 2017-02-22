@@ -15,6 +15,9 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     CompanyDao companyDao;
 
+    public CompanyServiceImpl() {
+    }
+
     public void addCompany(Company company) {
         companyDao.addCompany(company);
     }
