@@ -2,6 +2,7 @@ package io.khasang.demo.company;
 
 import io.khasang.moika.entity.Company;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class CompanyIntegrationTest {
 
+    @Ignore
     @Test
     public void createCompany() {
         HttpHeaders headers = new HttpHeaders();
