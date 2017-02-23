@@ -26,19 +26,10 @@ public class RostislavDataAccessServiceImpl implements RostislavDataAccessServic
     }
 
     @Override
-<<<<<<< HEAD
     public List<Map<String, Object>> getCars(String carType) {
 
         Map<String, Pair<String, String>> filter = new HashMap<>();
         filter.put("carmodel", new Pair<>("=", carType));
-
-        return rostislavDataAccess.getSelectedDataFromDbEntity("Cars", filter);
-    }
-=======
-    public List<Map<String, Object>> getCars(String carModel) {
-
-        Map<String, Pair<String, String>> filter = new HashMap<>();
-        filter.put("carmodel", new Pair<>("=", carModel));
 
         return rostislavDataAccess.getSelectedDataFromDbEntity("Cars", filter);
     }
@@ -50,5 +41,4 @@ public class RostislavDataAccessServiceImpl implements RostislavDataAccessServic
     }
 
 
->>>>>>> origin/development
 }

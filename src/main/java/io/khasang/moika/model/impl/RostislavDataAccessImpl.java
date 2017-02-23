@@ -20,21 +20,17 @@ public class RostislavDataAccessImpl implements RostislavDataAccess {
     }
 
     @Override
-<<<<<<< HEAD
-    public List<Map<String, Object>> getSelectedDataFromDbEntity(String tableName, Map<String, Pair<String, String>> filters) {
-=======
+
     public List<Map<String, Object>> getSelectedDataFromDbEntity(
             String tableName,
             Map<String, Pair<String, String>> filters
     ) {
->>>>>>> origin/development
 
         final StringBuilder sqlQueryBuilder = new StringBuilder("select * from ").append(tableName);
         final ArrayList<String> filterValues = new ArrayList<>();
 
         if (filters != null && !filters.isEmpty()) {
             sqlQueryBuilder.append(" where ");
-<<<<<<< HEAD
 
             String where = filters.entrySet().stream()
                     .map(condition -> {
@@ -55,11 +51,10 @@ public class RostislavDataAccessImpl implements RostislavDataAccess {
 
     }
 
-    @Override
-    public List<Map<String, Object>> getSelectedDataFromJoinedDbEntities(String leftTableName, String rightTableName, Map<String, Pair<String, String>> joinType, Map<String, Pair<String, String>> filters) {
+    public void getSelectedDataFromJoinedDbEntities(String leftTableName, String rightTableName, Map<String,
+            Pair<String, String>> joinType, Map<String, Pair<String, String>> filters) {
         //TODO: реализовать метод
-        throw new RuntimeException("Mетод ещё не реализован!");
-=======
+   /*     throw new RuntimeException("Mетод ещё не реализован!");
             prepareFilter(filters, sqlQueryBuilder, filterValues);
         }
 
@@ -67,7 +62,7 @@ public class RostislavDataAccessImpl implements RostislavDataAccess {
             return jdbcTemplate.queryForList(sqlQueryBuilder.toString(), filterValues.toArray());
         } else {
             return jdbcTemplate.queryForList(sqlQueryBuilder.toString());
-        }
+        }*/
 
     }
 
@@ -126,6 +121,5 @@ public class RostislavDataAccessImpl implements RostislavDataAccess {
         sqlQueryBuilder.append(where);
 
 
->>>>>>> origin/development
     }
 }

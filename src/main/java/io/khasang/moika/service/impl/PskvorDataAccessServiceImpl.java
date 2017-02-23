@@ -1,22 +1,23 @@
-package io.khasang.moika.service;
+package io.khasang.moika.service.impl;
 
 import io.khasang.moika.model.PskvorDataAccess;
+import io.khasang.moika.service.PskvorDataAccessService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class PskvorDataAccessService {
+public class PskvorDataAccessServiceImpl implements PskvorDataAccessService {
     PskvorDataAccess pskvorDataAccess;
 
-    public PskvorDataAccessService() {
+    public PskvorDataAccessServiceImpl() {
     }
 
-    public PskvorDataAccessService(PskvorDataAccess pskvorDataAcces) {
-        this.pskvorDataAccess = pskvorDataAcces;
+    public PskvorDataAccessServiceImpl(PskvorDataAccess pskvorDataAccess) {
+        this.pskvorDataAccess = pskvorDataAccess;
     }
 
-    public String getRowsAsString(List<String> strings) {
+    private String getRowsAsString(List<String> strings) {
         StringBuilder sb = new StringBuilder();
         for (String s : strings) {
             sb.append(s);
@@ -34,43 +35,43 @@ public class PskvorDataAccessService {
         this.pskvorDataAccess = pskvorDataAccess;
     }
 
+    @Override
     public String select(String tableName) {
-        List<String> strings = pskvorDataAccess.readData(tableName);
-        return getRowsAsString(strings);
+        return getRowsAsString(pskvorDataAccess.readData(tableName));
     }
 
+    @Override
     public String select(String tableName, String cond, Object[] args) {
-        List<String> strings = pskvorDataAccess.readData(tableName, cond, args);
-        return getRowsAsString(strings);
+        return getRowsAsString(pskvorDataAccess.readData(tableName, cond, args));
     }
 
+    @Override
     public String createData(String tableName, String[] fields, String[] fieldsTypes, String constraint) {
-        String res = pskvorDataAccess.createData(tableName, fields, fieldsTypes, constraint);
-        return res;
+        return pskvorDataAccess.createData(tableName, fields, fieldsTypes, constraint);
     }
 
+    @Override
     public String changeData(String tableName, String[] fields, String cond, Object[] args) {
-        String res = pskvorDataAccess.changeData(tableName, fields, cond, args);
-        return res;
+        return pskvorDataAccess.changeData(tableName, fields, cond, args);
     }
 
+    @Override
     public String addData(String tableName, Object[] args){
-        String res = pskvorDataAccess.addData(tableName, args);
-        return res;
+        return pskvorDataAccess.addData(tableName, args);
     }
 
+    @Override
     public String joinSelect(List<String> tableNames, List<String[]> joinFields, String condition, Object[] args){
-        List<String> strings = pskvorDataAccess.joinData(tableNames, joinFields, condition, args);
-        return getRowsAsString(strings);
+        return getRowsAsString(pskvorDataAccess.joinData(tableNames, joinFields, condition, args));
     }
 
+    @Override
     public String deleteData(String tableName, String cond, Object[] args) {
-        String res = pskvorDataAccess.deleteData(tableName, cond, args);
-        return res;
+        return pskvorDataAccess.deleteData(tableName, cond, args);
     }
 
+    @Override
     public String backupData(String pgDumpPath, String fileName, boolean isExecute) {
-        String res = pskvorDataAccess.backupData(pgDumpPath, fileName, false);
-        return res;
+        return pskvorDataAccess.backupData(pgDumpPath, fileName, false);
     }
 }

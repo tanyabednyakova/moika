@@ -46,12 +46,8 @@ public interface RostislavDataAccess {
     List<Map<String, Object>> getSelectedDataFromJoinedDbEntities(
             String leftTableName,
             String rightTableName,
-<<<<<<< HEAD
-            Map<String, Pair<String, String>> joinType,
-=======
             String joinType,
             Map<String, Pair<String, String>> joiners,
->>>>>>> origin/development
             Map<String, Pair<String, String>> filters
     );
 

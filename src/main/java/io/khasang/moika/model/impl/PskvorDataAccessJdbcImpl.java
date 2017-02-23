@@ -17,10 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Pauls on 17.02.2017.
- */
-
 public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
     @Autowired
     private Environment environment;
