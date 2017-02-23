@@ -77,11 +77,13 @@ public class AppConfig {
 
     @Bean
     public PskvorDataAccess pskvorDataAccess(){
-         return (new PskvorDataAccessJdbcImpl(jdbcTemplate()));
+         return new PskvorDataAccessJdbcImpl(jdbcTemplate());
     }
 
     @Bean
-    public PskvorDataAccessService pskvorDataAccessService() { return new PskvorDataAccessService(pskvorDataAccess());}
+    public PskvorDataAccessService pskvorDataAccessService() {
+        return new PskvorDataAccessService(pskvorDataAccess());
+    }
 
     @Bean
     public CompanyService companyService() { return new CompanyServiceImpl();}
