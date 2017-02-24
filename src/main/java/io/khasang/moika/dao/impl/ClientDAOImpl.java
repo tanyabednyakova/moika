@@ -40,7 +40,7 @@ public class ClientDAOImpl implements ClientDAO {
     }
 
     @Override
-    public void deleteClientById(Client client) {
+    public void deleteClient(Client client) {
         sessionFactory.getCurrentSession().delete(client);
     }
 

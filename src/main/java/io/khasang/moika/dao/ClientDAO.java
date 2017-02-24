@@ -9,6 +9,6 @@ public interface ClientDAO {
     void updateClient(Client client);
     List<Client> getAllClients();
     Client getClientById(long id);
-    void deleteClientById(Client client);
+    void deleteClient(Client client);
     boolean containClientById(long id);
 }

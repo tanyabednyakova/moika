@@ -15,14 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 @Controller
 public class AppController {
     @Autowired
     private CreateTable createTable;
-   
+
     @Autowired
     CompanyService companyService;
 
@@ -48,21 +45,21 @@ public class AppController {
 
     @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object addCompany(@RequestBody Company company){
+    public Object addCompany(@RequestBody Company company) {
         companyService.addCompany(company);
         return company;
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
-    public String getCompanyList(Model model){
+    public String getCompanyList(Model model) {
         model.addAttribute("companies", companyService.getCompanyGazpromList());
         return "companies";
     }
 
     @RequestMapping(value = "company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateCompany(@RequestBody Company company){
-       companyService.updateCompany(company);
+    public Object updateCompany(@RequestBody Company company) {
+        companyService.updateCompany(company);
         return company;
     }
 

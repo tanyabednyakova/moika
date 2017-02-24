@@ -4,12 +4,12 @@ import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component("CompanyServiceImpl")
+@Service("CompanyServiceImpl")
 @Transactional
 public class CompanyServiceImpl implements CompanyService {
     @Autowired
@@ -43,7 +43,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDao.deleteCompany(company);
     }
 
-    public List<Company> getCompanyGazpromList(){
+    public List<Company> getCompanyGazpromList() {
         return companyDao.getCompanyList();
     }
 }
