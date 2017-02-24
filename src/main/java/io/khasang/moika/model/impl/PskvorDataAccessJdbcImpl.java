@@ -1,4 +1,4 @@
-package io.khasang.moika.model.rimpl;
+package io.khasang.moika.model.impl;
 
 import io.khasang.moika.model.PskvorDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
