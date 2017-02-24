@@ -1,9 +1,7 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Entity(name = "cars")
@@ -15,29 +13,33 @@ public class Car {
     private int id;
 
     @Column(name = "id_car_type")
-    private int idCarType;
+    private Short idCarType;
     @ManyToOne
-    @JoinColumn(name = "id_car_type", foreignKey = @ForeignKey(name = "fk_car_type") )
+    @JoinColumn(name = "id_car_type", foreignKey = @ForeignKey(name = "fk_car_type"), insertable=false, updatable=false )
     private CarType CarTypeEntity;
 
     @Column(name = "carnum")
     private String carNumber;
     @Column(name = "carmodel")
     private String carModel;
-    @Column(name = "descr")
+    @Column(name = "description")
     private String description;
     @Column(name = "status")
-    private int status;
+    private Short status;
     @Column(name = "note")
     private String note;
     @Column(name = "date_reg")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateReg;
-    @Column(name = "dateLastWash")
+    private Calendar dateReg;
+    @Column(name = "date_Last_Wash")
     @Temporal(TemporalType.DATE)
     private Date dateLastWash;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "clients")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "r_client_car", joinColumns = {
+            @JoinColumn(name = "id_car", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "id_client",
+                    nullable = false, updatable = false) })
     private List<Client> clients = new ArrayList<>();
 
     public Car() {
@@ -55,7 +57,7 @@ public class Car {
         return idCarType;
     }
 
-    public void setIdCarType(int idCarType) {
+    public void setIdCarType(Short idCarType) {
         this.idCarType = idCarType;
     }
 
@@ -87,7 +89,7 @@ public class Car {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Short status) {
         this.status = status;
     }
 
@@ -99,12 +101,8 @@ public class Car {
         this.note = note;
     }
 
-    public Date getDateReg() {
+    public Calendar getDateReg() {
         return dateReg;
-    }
-
-    public void setDateReg(Date dateReg) {
-        this.dateReg = dateReg;
     }
 
     public Date getDateLastWash() {

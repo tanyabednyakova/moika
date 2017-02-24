@@ -3,13 +3,18 @@ package io.khasang.moika.config;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.model.MadvDataAcces;
 import io.khasang.moika.model.PskvorDataAccess;
+import io.khasang.moika.model.RostislavDataAccess;
 import io.khasang.moika.model.impl.MadvDataAccesImpl;
 import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
+import io.khasang.moika.model.impl.RostislavDataAccessImpl;
 import io.khasang.moika.service.CompanyService;
-import io.khasang.moika.service.impl.PskvorDataAccessService;
+import io.khasang.moika.service.PskvorDataAccessService;
 import io.khasang.moika.service.MadvDataAccesService;
+import io.khasang.moika.service.PskvorTestDaoService;
 import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
+import io.khasang.moika.service.impl.PskvorDataAccessServiceImpl;
+import io.khasang.moika.service.impl.PskvorTestDaoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,7 +31,7 @@ import java.util.Date;
 @Configuration
 @PropertySource(value = {"classpath:util.properties"})
 @PropertySource(value = {"classpath:auth.properties"})
-@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service"})
+@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service.*", "io.khasang.moika.dao.*",})
 public class AppConfig {
     @Autowired
     Environment environment;
@@ -62,10 +67,7 @@ public class AppConfig {
     public Date testDate() {
         return new Date();
     }
-    @Bean
-    public MadvDataAcces madvDataAcces(){return new MadvDataAccesImpl(jdbcTemplate());}
-    @Bean
-    public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
+
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
@@ -74,15 +76,17 @@ public class AppConfig {
         jdbcImpl.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("rolesByQuery"));
         return jdbcImpl;
     }
-
     @Bean
     public PskvorDataAccess pskvorDataAccess(){
-         return (new PskvorDataAccessJdbcImpl(jdbcTemplate()));
+         return new PskvorDataAccessJdbcImpl(jdbcTemplate());
     }
 
     @Bean
-    public PskvorDataAccessService pskvorDataAccessService() { return new PskvorDataAccessService(pskvorDataAccess());}
+    public PskvorDataAccessService pskvorDataAccessService() { return new PskvorDataAccessServiceImpl(pskvorDataAccess());}
 
     @Bean
     public CompanyService companyService() { return new CompanyServiceImpl();}
+
+ //   @Bean
+  //  public PskvorTestDaoService testDaoService () {return new PskvorTestDaoServiceImpl();}
 }

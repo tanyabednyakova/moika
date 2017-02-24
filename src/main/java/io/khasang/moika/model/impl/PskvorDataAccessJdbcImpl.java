@@ -1,12 +1,10 @@
 package io.khasang.moika.model.impl;
 
-import io.khasang.moika.config.AppConfig;
 import io.khasang.moika.model.PskvorDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.util.StringUtils;
-
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -17,9 +15,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
     @Autowired
     private Environment environment;
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public PskvorDataAccessJdbcImpl(JdbcTemplate jdbcTemplate) {
@@ -88,7 +88,6 @@ public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
             return strings;
         }
     }
-
 
     @Override
     public List<String> readData(String tableName) {

@@ -11,5 +11,5 @@ public interface CompanyService {
 
     Company getCompanyById(int id);
 
-    List<Company> getCompanyGazpromList();
+    List<Company> getCompanyList();
 }

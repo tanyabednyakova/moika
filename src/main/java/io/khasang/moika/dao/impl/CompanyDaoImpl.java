@@ -10,12 +10,13 @@ import org.hibernate.query.Query;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
 @Transactional
+@Repository("company")
 public class CompanyDaoImpl implements CompanyDao {
     private final SessionFactory sessionFactory;
 
@@ -76,7 +77,7 @@ public class CompanyDaoImpl implements CompanyDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Company> getCompanyList() {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from Company;");
+        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from company;");
         query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }

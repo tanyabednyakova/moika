@@ -18,7 +18,7 @@ public class WashFacility {
     @Column(name = "name")
     private String  name ;
     @Column(name = "id_addr")
-    private String  idAddr;
+    private int  idAddr;
     @Column(name = "descr")
     private String  description;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -53,11 +53,11 @@ public class WashFacility {
         this.name = name;
     }
 
-    public String getIdAddr() {
+    public int getIdAddr() {
         return idAddr;
     }
 
-    public void setIdAddr(String idAddr) {
+    public void setIdAddr(int idAddr) {
         this.idAddr = idAddr;
     }
 

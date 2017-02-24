@@ -1,9 +1,7 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity(name = "clients")
 public class Client {
@@ -21,11 +19,11 @@ public class Client {
     @Column(name = "tel")
     private String tel;
     @Column(name = "status", nullable = false)
-    private int status;
+    private Short status;
     @Column(name = "date_reg")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateReg;
-    @Column(name = "dateLastWash")
+    private Calendar dateReg;
+    @Column(name = "date_Last_Wash")
     @Temporal(TemporalType.DATE)
     private Date dateLastWash;
 
@@ -94,11 +92,11 @@ public class Client {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Short status) {
         this.status = status;
     }
 
-    public Date getDateReg() {
+    public Calendar getDateReg() {
         return dateReg;
     }
 

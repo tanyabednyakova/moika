@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Service
+
 public class RostislavDataAccessImpl implements RostislavDataAccess {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public RostislavDataAccessImpl() {
+    public RostislavDataAccessImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-
     public List<Map<String, Object>> getSelectedDataFromDbEntity(
             String tableName,
             Map<String, Pair<String, String>> filters

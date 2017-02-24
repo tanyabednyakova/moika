@@ -18,13 +18,13 @@ public class WashBox {
     @Column(name = "id_fclt")
     private int idFacility;
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_box_facility"))
+    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_box_facility"), insertable=false, updatable=false )
     private WashFacility washFacility;
 
     @Column(name = "id_type")
     private int idType;
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn( name = "box_type", foreignKey = @ForeignKey(name = "fk_box_type"))
+    @JoinColumn( name = "id_type", foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
     private BoxType boxTypeEntity;
 
     @Column(name = "name", unique = true)
@@ -34,9 +34,9 @@ public class WashBox {
     private String description;
 
     @Column(name = "status")
-    private int boxStatus;
+    private Short boxStatus;
     @ManyToOne
-    @JoinColumn(name = "status", foreignKey = @ForeignKey(name = "fk_box_status"))
+    @JoinColumn(name = "status", foreignKey = @ForeignKey(name = "fk_box_status"), insertable=false, updatable=false )
     private BoxStatus boxStatusEntity;
 
 
@@ -91,7 +91,7 @@ public class WashBox {
         return boxStatus;
     }
 
-    public void setBoxStatus(int boxStatus) {
+    public void setBoxStatus(Short boxStatus) {
         this.boxStatus = boxStatus;
     }
 

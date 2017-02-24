@@ -20,8 +20,8 @@ import java.util.Objects;
 public class AppController {
     @Autowired
     CreateTable createTable;
-    @Autowired
-    RostislavDataAccessService rostislavDataAccessService;
+//    @Autowired
+//    RostislavDataAccessService rostislavDataAccessService;
     @Autowired
     CompanyService companyService;
 
@@ -47,24 +47,6 @@ public class AppController {
         return modelAndView;
     }
 
-
-    @RequestMapping("/rostislav/listAllCars")
-    public String listAllCars(Model model) {
-        model.addAttribute("name", "Хороший человек");
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        model.addAttribute("information", "Вот все тачки, что у нас зарегистрированы: " + rostislavDataAccessService.getAllCars().toString());
-        return "index";
-    }
-
-    @RequestMapping("/rostislav/listCarsOfType")
-    public String listCarsOfType(Model model) {
-        model.addAttribute("name", "Хороший человек");
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        model.addAttribute("information", "Вот все тачки типа LADA, что у нас зарегистрированы: "
-                + rostislavDataAccessService.getCars("lada").toString());
-        return "index";
-    }
-
     @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object addCompany(@RequestBody Company company){
@@ -74,7 +56,7 @@ public class AppController {
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
     public String getCompanyList(Model model){
-        model.addAttribute("companies", companyService.getCompanyGazpromList());
+        model.addAttribute("companies", companyService.getCompanyList());
         return "companies";
     }
 

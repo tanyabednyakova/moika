@@ -10,7 +10,7 @@ public class CarType {
     private int id;
     @Column(name = "type_code", unique = true, nullable = false)
     private String typeCode;
-    @Column(name = "type name")
+    @Column(name = "type_name")
     private String typeName;
     @Column(name = "descr")
     private String description;

@@ -57,14 +57,14 @@ public class ClientDaoImpl implements ClientDao{
     }
 
     @Override
-    public Client getClientByName(String firstName, String middelName, String lastName) {
+    public List<Client> getClientByName(String firstName, String middelName, String lastName) {
         Criteria criteria = sessionFactory.
                 getCurrentSession().
                 createCriteria(Client.class);
         criteria.add(Restrictions.like("first_name", firstName));
         criteria.add(Restrictions.like("middel_Name", middelName));
         criteria.add(Restrictions.like("last_Name", lastName));
-        return (Client) criteria.uniqueResult();
+        return (List<Client>) criteria.list() ;
     }
 
     @Override

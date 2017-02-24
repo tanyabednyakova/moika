@@ -31,7 +31,7 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDao.getCompanyById(id);
     }
 
-    public List<Company> getCompanyGazpromList(){
+    public List<Company> getCompanyList(){
         return companyDao.getCompanyList();
     }
 }

@@ -12,7 +12,7 @@ public interface ClientDao {
     void updateClient(Client client);
     void deleteClient(Client client);
     Client getClientById(int id);
-    Client getClientByName(String firstName, String middelName, String lastName);
+    List<Client> getClientByName(String firstName, String middelName, String lastName);
     Client getClientByTel(String tel);
     List<Car> getCarsByClient(Client client);
     List<Client> getClientsList();

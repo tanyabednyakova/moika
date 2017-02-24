@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Transactional
-@Repository("boxStatusDao")
+@Repository("boxTypeDao")
 public class BoxTypeDaoImpl implements BoxTypeDao {
     private final SessionFactory sessionFactory;
 

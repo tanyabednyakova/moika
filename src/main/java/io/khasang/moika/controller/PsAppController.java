@@ -1,8 +1,10 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.entity.Test;
+import io.khasang.moika.service.PskvorTestDaoService;
 import org.springframework.stereotype.Controller;
 import io.khasang.moika.model.CreateTable;
-import io.khasang.moika.service.impl.PskvorDataAccessService;
+import io.khasang.moika.service.PskvorDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ public class PsAppController {
     CreateTable createTable;
     @Autowired
     PskvorDataAccessService pskvorDataAccessService;
+    @Autowired
+    PskvorTestDaoService pskvorTestDaoService;
 
     @RequestMapping(value = "/ps-queries", method = RequestMethod.GET)
     public String SelectAll(Model model) {
@@ -73,10 +77,24 @@ public class PsAppController {
         return "ps-queries"; //имя jsp
     }
 
-    @RequestMapping(value = "/backup", method = RequestMethod.GET)
+    @RequestMapping(value = "/ps-backup", method = RequestMethod.GET)
     public String backupData(Model model) {
         String res = pskvorDataAccessService.backupData("C:\\Program Files (x86)\\pgAdmin 4\\v1\r\\untime\\","c:\\backup\\carwash.sql", false);
         model.addAttribute("selecttable", res);
         return "ps-queries"; //имя jsp
+    }
+
+
+    @RequestMapping(value = "/testlist", method = RequestMethod.GET)
+    public String getTestList(Model model){
+        model.addAttribute("testlist", pskvorTestDaoService.getAllTests());
+        return "ps-dao-test";
+    }
+
+    @RequestMapping(value = "test/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object addTest(@RequestBody Test test){
+        pskvorTestDaoService.addTest(test);
+        return test;
     }
 }
