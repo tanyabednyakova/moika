@@ -33,7 +33,7 @@ public class AppController {
 
         return "index";
     }
-
+//impl
     @RequestMapping("/db/create")
     public String create(Model model) {
         model.addAttribute("create", createTable.createTableStatus());
