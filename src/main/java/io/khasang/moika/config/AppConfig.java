@@ -1,5 +1,5 @@
 package io.khasang.moika.config;
-
+//
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.model.MadvDataAcces;
 import io.khasang.moika.model.PskvorDataAccess;
