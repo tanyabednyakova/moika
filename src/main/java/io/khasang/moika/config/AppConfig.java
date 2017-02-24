@@ -2,7 +2,7 @@ package io.khasang.moika.config;
 
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.model.PskvorDataAccess;
-import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
+import io.khasang.moika.model.PskvorDataAccessJdbcImpl;
 import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.PskvorDataAccessService;
 import io.khasang.moika.service.impl.CompanyServiceImpl;
@@ -23,7 +23,7 @@ import java.util.Date;
 @Configuration
 @PropertySource(value = {"classpath:util.properties"})
 @PropertySource(value = {"classpath:auth.properties"})
-@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service.*", "io.khasang.moika.dao.*",})
+@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service.*"})
 public class AppConfig {
     @Autowired
     Environment environment;
@@ -34,7 +34,7 @@ public class AppConfig {
     }
 
     @Bean
-    public DriverManagerDataSource dataSource() {
+    public DriverManagerDataSource JdbcDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.postgresql.driverClass"));
         dataSource.setUrl(environment.getProperty("jdbc.postgresql.url"));
@@ -46,7 +46,7 @@ public class AppConfig {
     @Bean
     public JdbcTemplate jdbcTemplate() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        jdbcTemplate.setDataSource(dataSource());
+        jdbcTemplate.setDataSource(JdbcDataSource());
         return jdbcTemplate;
     }
 
@@ -63,7 +63,7 @@ public class AppConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
-        jdbcImpl.setDataSource(dataSource());
+        jdbcImpl.setDataSource(JdbcDataSource());
         jdbcImpl.setUsersByUsernameQuery(environment.getRequiredProperty("usersByQuery"));
         jdbcImpl.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("rolesByQuery"));
         return jdbcImpl;
@@ -79,6 +79,4 @@ public class AppConfig {
     @Bean
     public CompanyService companyService() { return new CompanyServiceImpl();}
 
- //   @Bean
-  //  public PskvorTestDaoService testDaoService () {return new PskvorTestDaoServiceImpl();}
 }

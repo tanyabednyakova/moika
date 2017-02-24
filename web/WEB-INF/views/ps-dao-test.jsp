@@ -10,13 +10,14 @@
 <table>
     <tr >
         <td>ID</td>
-        <td>Name</td>
+        <td>Name1</td>
+        <td>Name2</td>
     </tr>
     <c:forEach items="${testlist}" var="testlist">
         <tr>
-            <td><c:out value="${test.id}"/></td>
-            <td><c:out value="${test.name1}"/></td>
-            <td><c:out value="${test.name2}"/></td>
+            <td><c:out value="${testlist.id}"/></td>
+            <td><c:out value="${testlist.name1}"/></td>
+            <td><c:out value="${testlist.name2}"/></td>
         </tr>
     </c:forEach>
 

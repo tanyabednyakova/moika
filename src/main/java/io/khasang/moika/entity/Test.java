@@ -16,6 +16,9 @@ public class Test {
     @Column(name = "name2")
     private String name2;
 
+    public Test() {
+    }
+
     public int getId() {
         return id;
     }

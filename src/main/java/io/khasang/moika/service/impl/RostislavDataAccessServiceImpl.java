@@ -14,7 +14,6 @@ import java.util.Map;
 @Service
 public class RostislavDataAccessServiceImpl implements RostislavDataAccessService {
 
-    @Autowired
     RostislavDataAccess rostislavDataAccess;
 
     public RostislavDataAccessServiceImpl() {

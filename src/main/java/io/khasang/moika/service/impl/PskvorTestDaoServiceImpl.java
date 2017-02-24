@@ -14,7 +14,10 @@ import java.util.List;
 @Transactional
 public class PskvorTestDaoServiceImpl implements PskvorTestDaoService{
     @Autowired
-    TestDao testDao;
+    private TestDao testDao;
+
+    public PskvorTestDaoServiceImpl() {
+    }
 
     @Override
     public void addTest(Test test) {

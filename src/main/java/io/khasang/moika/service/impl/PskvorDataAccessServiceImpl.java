@@ -10,8 +10,7 @@ import java.util.List;
 public class PskvorDataAccessServiceImpl implements PskvorDataAccessService {
     PskvorDataAccess pskvorDataAccess;
 
-    public PskvorDataAccessServiceImpl() {
-    }
+    public PskvorDataAccessServiceImpl() {}
 
     public PskvorDataAccessServiceImpl(PskvorDataAccess pskvorDataAccess) {
         this.pskvorDataAccess = pskvorDataAccess;

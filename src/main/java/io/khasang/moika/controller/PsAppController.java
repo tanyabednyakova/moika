@@ -79,21 +79,20 @@ public class PsAppController {
 
     @RequestMapping(value = "/ps-backup", method = RequestMethod.GET)
     public String backupData(Model model) {
-        String res = pskvorDataAccessService.backupData("C:\\Program Files (x86)\\pgAdmin 4\\v1\r\\untime\\","c:\\backup\\carwash.sql", false);
+        String res = pskvorDataAccessService.backupData("C:\\Program Files (x86)\\pgAdmin 4\\v1\r\\untime\\", "c:\\backup\\carwash.sql", false);
         model.addAttribute("selecttable", res);
         return "ps-queries"; //имя jsp
     }
 
-
     @RequestMapping(value = "/testlist", method = RequestMethod.GET)
-    public String getTestList(Model model){
+    public String getTestList(Model model) {
         model.addAttribute("testlist", pskvorTestDaoService.getAllTests());
         return "ps-dao-test";
     }
 
     @RequestMapping(value = "test/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object addTest(@RequestBody Test test){
+    public Object addTest(@RequestBody Test test) {
         pskvorTestDaoService.addTest(test);
         return test;
     }

@@ -1,8 +1,11 @@
 package io.khasang.moika.config;
 
+import io.khasang.moika.service.PskvorTestDaoService;
+import io.khasang.moika.service.impl.PskvorTestDaoServiceImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -18,6 +21,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource(value = {"classpath:hibernate.properties"})
+@ComponentScan({"io.khasang.moika.dao.*"})
 public class HibernateConfig {
     @Autowired
     private Environment environment;
@@ -25,14 +29,14 @@ public class HibernateConfig {
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setDataSource(hbrDataSource());
         sessionFactory.setPackagesToScan("io.khasang.moika.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource hbrDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("jdbc.driverClassName"));
         dataSource.setUrl(environment.getRequiredProperty("jdbc.url"));
@@ -63,4 +67,7 @@ public class HibernateConfig {
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
+
+    @Bean
+    public PskvorTestDaoService pskvorTestDaoService() { return new PskvorTestDaoServiceImpl();}
 }

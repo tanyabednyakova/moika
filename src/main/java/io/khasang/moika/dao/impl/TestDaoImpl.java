@@ -11,14 +11,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("testDao")
-public class TestDaoImpl implements TestDao{
-    private final SessionFactory sessionFactory;
+public class TestDaoImpl implements TestDao {
+    private SessionFactory sessionFactory;
 
     @Autowired
     public TestDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
+    public TestDaoImpl() {
+    }
 
     @Override
     public void addTest(Test test) {
@@ -46,7 +48,7 @@ public class TestDaoImpl implements TestDao{
 
     @Override
     public List<Test> getAllTests() {
-        return  sessionFactory.getCurrentSession().createQuery("from Test tt").list();
+        return sessionFactory.getCurrentSession().createQuery("from test").list();
     }
 
     @Override
