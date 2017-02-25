@@ -4,10 +4,7 @@ import io.khasang.moika.entity.Company;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 public class CompanyIntegrationTest {
@@ -36,5 +33,18 @@ public class CompanyIntegrationTest {
         Assert.assertNotNull(result);
         Assert.assertEquals("Рога и копыта", result.getName());
         Assert.assertNotNull(result.getId());
+
+        ResponseEntity<Company> responseEntity = restTemplate.exchange(
+                "http://localhost:8080/company/{id}",
+                HttpMethod.GET,
+                null,
+                Company.class,
+                result.getId()
+        );
+        Company resultCompany = responseEntity.getBody();
+        Assert.assertNotNull(resultCompany);
+        Assert.assertEquals(resultCompany.getName(), result.getName());
+
     }
+
 }
