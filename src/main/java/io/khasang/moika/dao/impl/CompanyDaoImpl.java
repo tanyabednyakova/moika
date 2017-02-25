@@ -42,7 +42,7 @@ public class CompanyDaoImpl implements CompanyDao {
     }
 
     @Override
-    public Company getCompanyById(int id) {
+    public Company getCompanyById(long id) {
         Criteria criteria = sessionFactory.
                 getCurrentSession().
                 createCriteria(Company.class);
@@ -79,5 +79,11 @@ public class CompanyDaoImpl implements CompanyDao {
         Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from Company;");
         query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Company> getCompanyHqlList() {
+        List<Company> companyList = sessionFactory.getCurrentSession().createQuery("FROM Company").list();
+        return companyList;
     }
 }

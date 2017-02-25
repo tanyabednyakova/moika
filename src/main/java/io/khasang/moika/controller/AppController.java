@@ -1,5 +1,6 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -28,12 +30,12 @@ public class AppController {
     CompanyService companyService;
     @Autowired
     OrlovDataAccessService orlovDataAccessService;
+    CompanyDao companyDao;
 
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
         model.addAttribute("name", name);
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-
         return "index";
     }
 
@@ -72,21 +74,21 @@ public class AppController {
     @RequestMapping(value = "/company/add/{id}", method = RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Company addCompany(@RequestBody Company company, @PathVariable("id") String id){
+    public Company addCompany(@RequestBody Company company, @PathVariable("id") String id) {
         company.setAmount(BigDecimal.valueOf(Long.parseLong(id)));
         companyService.addCompany(company);
         return company;
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
-    public String getCompanyList(Model model){
+    public String getCompanyList(Model model) {
         model.addAttribute("companies", companyService.getCompanyGazpromList());
         return "companies";
     }
 
     @RequestMapping(value = "company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateCompany(@RequestBody Company company){
+    public Object updateCompany(@RequestBody Company company) {
 //        companyService.updateCompany(company);
         return company;
     }
@@ -102,5 +104,16 @@ public class AppController {
     public String selectDorlovCars(Model model) {
         model.addAttribute("cars", orlovDataAccessService.select());
         return "dorlov";
+
+    @RequestMapping("/restHql")
+    public String testHql() {
+        List<Company> companyList = companyDao.getCompanyHqlList();
+        return "redirect:yandex.ru";
+    }
+
+    @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Company company(@PathVariable(value = "id") String id){
+        return companyService.getCompanyById(Long.parseLong(id));
     }
 }
