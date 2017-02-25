@@ -1,7 +1,11 @@
 package io.khasang.moika.model.impl;
 
+import io.khasang.moika.config.AppConfig;
 import io.khasang.moika.model.PskvorDataAccess;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
 
 
 import java.sql.Connection;
@@ -18,6 +22,8 @@ import java.util.Map;
  */
 
 public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
+    @Autowired
+    private Environment environment;
     private JdbcTemplate jdbcTemplate;
 
     public PskvorDataAccessJdbcImpl(JdbcTemplate jdbcTemplate) {
@@ -37,25 +43,25 @@ public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
 
     public List<String> getTableName() {
         String[] types = {"TABLE"};
-        List<String> table = new ArrayList<String>();
+        List<String> tables = new ArrayList<>();
         try {
             Connection conn = jdbcTemplate.getDataSource().getConnection();
             DatabaseMetaData md = conn.getMetaData();
             ResultSet rs = md.getTables(null, null, "%", types);
             while (rs.next()) {
-                table.add(rs.getString("TABLE_NAME"));
+                tables.add(rs.getString("TABLE_NAME"));
             }
+            return tables;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            return table;
+            return null;
         }
     }
 
     private List<String> getSelectedRows(String sqlStr, Object[] args) {
-        List<Map<String, Object>> rows = new ArrayList<>();
-        List<String> strings = new ArrayList<String>();
-        String sqlQuery = sqlStr; // "Select * from " + tableName;
+        List<Map<String, Object>> rows;
+        List<String> strings = new ArrayList<>();
+        String sqlQuery = sqlStr;
         try {
             if (args != null)
                 rows = jdbcTemplate.queryForList(sqlQuery, args);
@@ -63,10 +69,8 @@ public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
                 rows = jdbcTemplate.queryForList(sqlQuery);
             if (rows.size() > 0) {
                 StringBuilder strb = new StringBuilder();
-                for (Map.Entry<String, Object> entry : rows.get(0).entrySet()) strb.append(entry.getKey() + " | ");
+                for (Map.Entry<String, Object> entry : rows.get(0).entrySet()) strb.append(entry.getKey()).append(" | ");
                 strings.add(strb.toString());
-                //int i = 1;
-                //for (Map<String, Object> fields : rows) {
                 for (int i = 0; i < rows.size(); i++) { //прошлись по записям
                     strb.setLength(0);
                     Iterator entries = rows.get(i).entrySet().iterator();
@@ -74,9 +78,10 @@ public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
                         Map.Entry thisEntry = (Map.Entry) entries.next();
                         Object value = thisEntry.getValue();
                         if (value != null)
-                            strb.append(value.toString() + " | ");
-                        else
+                            strb.append(value.toString()).append(" | ");
+                        else {
                             strb.append(" null | ");
+                        }
                     }
                     strings.add(strb.toString());
                 }
@@ -167,9 +172,18 @@ public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
     }
 
     @Override
-    public List<String> joinData(String tableName1, String tableName2, String joinfield, String condition, Object[] args) {
-        final String sqlStr = "select * from " + tableName1 + "inner join " + tableName1 + "on " + joinfield + " where " + condition;
-        return getSelectedRows(sqlStr, args);
+    public List<String> joinData(List<String> tableNames, List<String[]> joinFields, String condition, Object[] args) {
+        if (tableNames.size() > 1) {
+            StringBuilder sqlStr = new StringBuilder("SELECT * FROM " + tableNames.get(0));
+                for (int i = 1; i < tableNames.size(); i++) {
+                sqlStr.append(" INNER JOIN " + tableNames.get(i));
+                sqlStr.append(" ON " + tableNames.get(i-1) + "." +joinFields.get(i-1)[0] + " = " + tableNames.get(i) + "." +joinFields.get(i)[1]);
+            }
+            sqlStr.append(" WHERE " + condition);
+            return getSelectedRows(sqlStr.toString(), args);
+        } else {
+            return readData(tableNames.get(0), condition, args);
+        }
     }
 
     @Override
@@ -183,23 +197,48 @@ public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
     @Override
     public List<String> caseSelectData(String tableName, String field, String caseWhen, String caseThen, String caseElse, String condition, Object[] args) {
         StringBuilder sqlStr = new StringBuilder("select (case when ");
-        sqlStr.append(caseWhen );
-        sqlStr.append(" then "+caseThen );
-        sqlStr.append( (caseElse != null) ? " else  " + caseElse : "");
-        sqlStr.append( " end )");
-        sqlStr.append(" from "+tableName);
-        sqlStr.append((condition != null ) ? " where " + condition + ";" : ";");
+        sqlStr.append(caseWhen);
+        sqlStr.append(" then " + caseThen);
+        sqlStr.append((caseElse != null) ? " else  " + caseElse : "");
+        sqlStr.append(" end )");
+        sqlStr.append(" from " + tableName);
+        sqlStr.append((condition != null) ? " where " + condition + ";" : ";");
         return getSelectedRows(sqlStr.toString(), args);
     }
 
     @Override
-    public String backupData(String fileName) {
-        String res = null;
+    public String backupData(String pgDumpPath, String fileName, boolean isExecute) {
+        StringBuilder executeCmd = new StringBuilder(pgDumpPath + "pg_dump ");
         try {
-            res = "pgdump " + jdbcTemplate.getDataSource().getConnection().getCatalog() + " > " + fileName;
+            String url = jdbcTemplate.getDataSource().getConnection().getMetaData().getURL();
+            int prefInd = url.indexOf("://");
+            int postInd = url.indexOf(":", prefInd);
+            String host = url.substring(prefInd,postInd);
+            prefInd = postInd;
+            postInd = url.indexOf("/", prefInd);
+            String post = url.substring(prefInd,postInd);
+            executeCmd.append(" -h " + host);
+            executeCmd.append(" -p " + host);
+            executeCmd.append(" -d " + jdbcTemplate.getDataSource().getConnection().getCatalog());
+            executeCmd.append(" -U " + jdbcTemplate.getDataSource().getConnection().getMetaData().getUserName());
+            executeCmd.append(" -w  > " + fileName);
+            if (isExecute) {
+                Process runtimeProcess;
+                try {
+                    runtimeProcess = Runtime.getRuntime().exec(executeCmd.toString());
+                    int processComplete = runtimeProcess.waitFor();
+                    if (processComplete == 0) {
+                        return "Backup created successfully";
+                    } else {
+                        return "Could not create the backup";
+                    }
+                } catch (Exception ex) {
+                   return ex.getLocalizedMessage();
+                }
+            }
         } catch (SQLException e) {
-            res = e.getLocalizedMessage();
+            return e.getLocalizedMessage();
         }
-        return res;
+        return executeCmd.toString();
     }
 }

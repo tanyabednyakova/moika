@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component("CompanyServiceImpl")
@@ -15,7 +16,16 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     CompanyDao companyDao;
 
+    public CompanyServiceImpl() {
+    }
+
     public void addCompany(Company company) {
+        if(company.getName().startsWith("a")){
+            company.setAmount(BigDecimal.valueOf(100L));
+        }
+        if(company.getName().startsWith("b")){
+            company.setAmount(BigDecimal.valueOf(50L));
+        }
         companyDao.addCompany(company);
     }
 
@@ -24,7 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDao.addCompany(company);
     }
 
-    public Company getCompanyById(int id) {
+    public Company getCompanyById(long id) {
         return companyDao.getCompanyById(id);
     }
 

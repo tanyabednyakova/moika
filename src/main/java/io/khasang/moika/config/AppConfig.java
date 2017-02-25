@@ -5,8 +5,10 @@ import io.khasang.moika.model.MadvDataAcces;
 import io.khasang.moika.model.PskvorDataAccess;
 import io.khasang.moika.model.impl.MadvDataAccesImpl;
 import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
+import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.MadvDataAccesService;
 import io.khasang.moika.service.PskvorDataAccessService;
+import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,6 +30,11 @@ import java.util.Date;
 public class AppConfig {
     @Autowired
     Environment environment;
+
+    @Bean
+    public Environment getEnvironment() {
+        return environment;
+    }
 
     @Bean
     public DriverManagerDataSource dataSource() {
@@ -70,12 +77,14 @@ public class AppConfig {
 
     @Bean
     public PskvorDataAccess pskvorDataAccess(){
-         return (new PskvorDataAccessJdbcImpl(jdbcTemplate()));
+         return new PskvorDataAccessJdbcImpl(jdbcTemplate());
     }
 
     @Bean
-    public PskvorDataAccessService pskvorDataAccessService() {return ( new PskvorDataAccessService(pskvorDataAccess()));}
+    public PskvorDataAccessService pskvorDataAccessService() {
+        return new PskvorDataAccessService(pskvorDataAccess());
+    }
 
-
-
+    @Bean
+    public CompanyService companyService() { return new CompanyServiceImpl();}
 }

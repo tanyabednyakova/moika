@@ -11,9 +11,11 @@ public interface CompanyDao {
 
     void deleteCompany(Company company);
 
-    Company getCompanyById(int id);
+    Company getCompanyById(long id);
 
     Company getCompanyByName(String name);
 
     List<Company> getCompanyList();
+
+    List<Company> getCompanyHqlList();
 }
