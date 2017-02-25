@@ -40,7 +40,6 @@ public class WashBox {
     private BoxStatus boxStatusEntity;
 
 
-
     public WashBox() {
     }
 

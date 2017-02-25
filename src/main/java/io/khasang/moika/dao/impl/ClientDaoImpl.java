@@ -20,19 +20,20 @@ import java.util.List;
 @Transactional
 @Repository("clientDao")
 public class ClientDaoImpl implements ClientDao{
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
+
+    public ClientDaoImpl() {
+    }
 
     @Autowired
     public ClientDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-
     @Override
     public void addClient(Client client) {
         sessionFactory.getCurrentSession().save(client);
     }
-
 
     @Override
     public void updateClient(Client client) {

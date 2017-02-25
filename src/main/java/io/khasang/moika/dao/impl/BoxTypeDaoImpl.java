@@ -8,6 +8,7 @@ import io.khasang.moika.entity.BoxType;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +18,15 @@ import java.util.List;
 @Transactional
 @Repository("boxTypeDao")
 public class BoxTypeDaoImpl implements BoxTypeDao {
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
+    public BoxTypeDaoImpl() {
+    }
 
+    @Autowired
     public BoxTypeDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
 
     @Override
     public void addBoxType(BoxType boxType) {

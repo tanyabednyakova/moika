@@ -6,6 +6,7 @@ import io.khasang.moika.entity.BoxStatus;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +17,15 @@ import java.util.List;
 @Transactional
 @Repository("boxStatusDao")
 public class BoxStatusDaoImpl implements BoxStatusDao {
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
-
+    @Autowired
     public BoxStatusDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
+    public BoxStatusDaoImpl() {
+    }
 
     @Override
     public void addBoxStatus(BoxStatus boxStatus) {

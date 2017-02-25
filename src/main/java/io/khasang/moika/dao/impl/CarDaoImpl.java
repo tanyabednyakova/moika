@@ -18,13 +18,15 @@ import java.util.List;
 @Transactional
 @Repository("carDao")
 public class CarDaoImpl implements CarDao{
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
+
+    public CarDaoImpl() {
+    }
 
     @Autowired
     public CarDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
 
     @Override
     public void addCar(Car car) {
@@ -70,9 +72,10 @@ public class CarDaoImpl implements CarDao{
 
     @Override
     public List<Car> getCarList() {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from cars;");
-        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-        return query.list();
+       // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from cars;");
+       // query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+       // return query.list();
+        return sessionFactory.getCurrentSession().createQuery("from cars").list();
     }
 
     @Override

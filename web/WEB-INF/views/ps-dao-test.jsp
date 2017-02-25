@@ -7,6 +7,7 @@
 </head>
 <body>
 <p>Текущее время ${currentTime}</p>
+<p>CRUD type: ${CrudType}</p>
 <table>
     <tr >
         <td>ID</td>
@@ -20,7 +21,7 @@
             <td><c:out value="${testlist.name2}"/></td>
         </tr>
     </c:forEach>
-
 </table>
+<p>${nrows}</p>
 </body>
 </html>

@@ -10,7 +10,7 @@ public class BoxStatus {
     private int id;
     @Column(name = "code", unique = true, nullable = false)
     private String code;
-
+    @Column(name = "name")
     private String name;
 
     public BoxStatus() {

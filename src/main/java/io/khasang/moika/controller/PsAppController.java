@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -86,14 +89,68 @@ public class PsAppController {
 
     @RequestMapping(value = "/testlist", method = RequestMethod.GET)
     public String getTestList(Model model) {
-        model.addAttribute("testlist", pskvorTestDaoService.getAllTests());
+        model.addAttribute("CrudType", "Select *");
+        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+        List<Test> testList = pskvorTestDaoService.getAllTests();
+        model.addAttribute("testlist", testList);
+        model.addAttribute("nrows", testList.size() + " rows affected");
         return "ps-dao-test";
     }
 
     @RequestMapping(value = "test/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object addTest(@RequestBody Test test) {
+    //@ResponseBody
+    public Object addTest(@RequestBody Test test, Model model) {
+        model.addAttribute("CrudType", "Insert");
+        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         pskvorTestDaoService.addTest(test);
-        return test;
+        List<Test> testList = new ArrayList<>();
+        testList.add(test);
+        model.addAttribute("testlist", testList);
+        model.addAttribute("nrows", "ID: "+test.getId() + " added");
+        return "ps-dao-test";
+    }
+
+    @RequestMapping(value = "test/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+   // @ResponseBody
+    public Object updateTest(@RequestBody Test test, Model model) {
+        model.addAttribute("CrudType", "Update");
+        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+        pskvorTestDaoService.updateTest(test);
+        List<Test> testList = new ArrayList<>();
+        testList.add(test);
+        model.addAttribute("testlist", testList);
+        model.addAttribute("nrows", "ID: "+test.getId() + " updated");
+        return "ps-dao-test";
+    }
+
+    @RequestMapping(value = "/test/{id}", method = RequestMethod.GET)
+    public String getTest(@PathVariable(value = "id") String inputId, HttpServletResponse response, Model model) {
+          Test test = pskvorTestDaoService.getTestByID(Integer.valueOf(inputId));
+          model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+          model.addAttribute("CrudType", "Select  id = " + inputId);
+          if (test != null) {
+              List<Test> testList = new ArrayList<>();
+              testList.add(test);
+              model.addAttribute("testlist", testList);
+          }
+          else
+          {model.addAttribute("nrows", inputId + "doesn`t exists ");}
+        return "ps-dao-test";
+    }
+
+    @RequestMapping(value = "/test/delete/{id}", method = RequestMethod.POST)
+    //@ResponseBody
+    public String deleteTest(@PathVariable(value = "id") String inputId, HttpServletResponse response, Model model) {
+        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+        model.addAttribute("CrudType", "Delete id = " + inputId);
+        Test test = pskvorTestDaoService.getTestByID(Integer.valueOf(inputId));
+        if (test != null) {
+            int id = test.getId();
+            pskvorTestDaoService.deleteTest(test);
+            model.addAttribute("nrows", id + " deleted");
+        }
+        else
+        {model.addAttribute("nrows", inputId + "doesn`t exists ");}
+        return "ps-dao-test";
     }
 }

@@ -18,7 +18,10 @@ import java.util.List;
 @Transactional
 @Repository("company")
 public class CompanyDaoImpl implements CompanyDao {
-    private final SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
+
+    public CompanyDaoImpl() {
+    }
 
     @Autowired
     public CompanyDaoImpl(SessionFactory sessionFactory) {

@@ -9,7 +9,7 @@ public interface PskvorTestDaoService {
     void updateTest(Test test);
     void deleteTest(Test test);
     Test getTestByID(int id);
-    List getAllTests();
+    List<Test> getAllTests();
     List<Test> getTestsByName(String name1, String name2);
 
 }
