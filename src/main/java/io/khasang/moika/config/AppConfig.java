@@ -24,12 +24,17 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import java.util.Date;
 
 @Configuration
+//@EnableCaching
 @PropertySource(value = {"classpath:util.properties"})
 @PropertySource(value = {"classpath:auth.properties"})
 @ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service"})
 public class AppConfig {
+    final private Environment environment;
+
     @Autowired
-    Environment environment;
+    public AppConfig(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public Environment getEnvironment() {
@@ -58,14 +63,22 @@ public class AppConfig {
         return new CreateTable(jdbcTemplate()
         );
     }
+
     @Bean
     public Date testDate() {
         return new Date();
     }
+
     @Bean
-    public MadvDataAcces madvDataAcces(){return new MadvDataAccesImpl(jdbcTemplate());}
+    public MadvDataAcces madvDataAcces() {
+        return new MadvDataAccesImpl(jdbcTemplate());
+    }
+
     @Bean
-    public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
+    public MadvDataAccesService madvDataAccesService() {
+        return new MadvDataAccesServiceImpl(madvDataAcces());
+    }
+
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
@@ -76,13 +89,32 @@ public class AppConfig {
     }
 
     @Bean
-    public PskvorDataAccess pskvorDataAccess(){
-         return (new PskvorDataAccessJdbcImpl(jdbcTemplate()));
+    public PskvorDataAccess pskvorDataAccess() {
+        return (new PskvorDataAccessJdbcImpl(jdbcTemplate()));
     }
 
     @Bean
-    public PskvorDataAccessService pskvorDataAccessService() { return new PskvorDataAccessService(pskvorDataAccess());}
+    public PskvorDataAccessService pskvorDataAccessService() {
+        return new PskvorDataAccessService(pskvorDataAccess());
+    }
 
     @Bean
-    public CompanyService companyService() { return new CompanyServiceImpl();}
+    public CompanyService companyService() {
+        return new CompanyServiceImpl();
+    }
+
+/*
+    @Bean
+    public CacheManager cacheManager() {
+        return new EhCacheCacheManager(ehCacheCacheManager().getObject());
+    }
+
+    @Bean
+    public EhCacheManagerFactoryBean ehCacheCacheManager() {
+        EhCacheManagerFactoryBean cmfb = new EhCacheManagerFactoryBean();
+        cmfb.setConfigLocation(new ClassPathResource("ehcache.xml.off"));
+        cmfb.setShared(true);
+        return cmfb;
+    }
+*/
 }

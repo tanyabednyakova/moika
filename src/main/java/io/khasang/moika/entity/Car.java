@@ -1,10 +1,18 @@
 package io.khasang.moika.entity;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.cache.annotation.Cacheable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity(name = "cars")
-public class Car {
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Car implements Serializable {
     @Id
     private long id;
     private String carType;
@@ -53,5 +61,18 @@ public class Car {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Car)) return false;
+        Car car = (Car) o;
+        return getId() == car.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
