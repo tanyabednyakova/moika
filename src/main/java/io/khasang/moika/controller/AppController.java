@@ -18,8 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -52,7 +50,7 @@ public class AppController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "company/add/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Company addCompany(@RequestBody Company company, @PathVariable("id") String id) {
         company.setAmount(BigDecimal.valueOf(Long.parseLong(id)));
@@ -66,18 +64,18 @@ public class AppController {
         return "companies";
     }
 
-    @RequestMapping(value = "company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateCompany(@RequestBody Company company) {
+    public Company updateCompany(@RequestBody Company company) {
         companyService.updateCompany(company);
         return company;
     }
 
-    @RequestMapping(value = "/company/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/company/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-//        companyService.deleteCompany(company);
-        return "redirect:/company";
+      companyService.deleteCompany(Long.parseLong(inputId));
+      return "redirect:/company";
     }
 
     @RequestMapping("/restHql")

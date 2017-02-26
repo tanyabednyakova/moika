@@ -1,6 +1,7 @@
 package io.khasang.moika.service.impl;
 
 import io.khasang.moika.dao.CompanyDao;
+import io.khasang.moika.entity.Butterfly;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     public List<Company> getCompanyGazpromList() {
         return companyDao.getCompanyList();
+    }
+
+    @Override
+    public void addButterfly(Butterfly butterfly) {
+        this.addCompany(butterfly);
     }
 }

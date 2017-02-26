@@ -6,6 +6,7 @@ import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.service.CompanyService;
+import io.khasang.moika.entity.Butterfly;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 
-import static javafx.scene.input.KeyCode.L;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -81,13 +80,13 @@ public class CompanyServiceImplTest {
         Company resultCompanyB = companyDao.getCompanyByName("butterfly");
         assertEquals(BigDecimal.valueOf(50).setScale(0), resultCompanyB.getAmount());
 
-        assertNotNull(new Butterfly);
-        Butterfly butterfly = new Company();
+        assertNotNull(new Butterfly());
+        //Butterfly butterfly = (Butterfly) new Company();
+        Butterfly butterfly = new Butterfly();
         butterfly.setName("butterfly");
         butterfly.setAmount(BigDecimal.valueOf(10L));
         butterfly.setDescription("We love butterfly");
         companyService.addButterfly(butterfly);
-
         Butterfly resultButterfly = companyDao.getButterflyByName("butterfly");
         assertEquals(BigDecimal.valueOf(50).setScale(0), resultButterfly.getAmount());
     }
