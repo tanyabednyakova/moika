@@ -1,5 +1,6 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
@@ -15,6 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 @Controller
 public class AppController {
     @Autowired
@@ -22,6 +29,8 @@ public class AppController {
 
     @Autowired
     CompanyService companyService;
+    @Autowired
+    CompanyDao companyDao;
 
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
@@ -45,7 +54,8 @@ public class AppController {
 
     @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object addCompany(@RequestBody Company company) {
+    public Company addCompany(@RequestBody Company company, @PathVariable("id") String id) {
+        company.setAmount(BigDecimal.valueOf(Long.parseLong(id)));
         companyService.addCompany(company);
         return company;
     }
@@ -63,10 +73,22 @@ public class AppController {
         return company;
     }
 
-    @RequestMapping(value = "/company/delete/{id}", method = RequestMethod.POST)
-    public String deleteCompany(@PathVariable("id") String inputId) {
-        companyService.deleteCompany(Long.parseLong(inputId));
+    @RequestMapping(value = "/company/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+//        companyService.deleteCompany(company);
         return "redirect:/company";
     }
 
+    @RequestMapping("/restHql")
+    public String testHql() {
+        List<Company> companyList = companyDao.getCompanyHqlList();
+        return "redirect:yandex.ru";
+    }
+
+    @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Company company(@PathVariable(value = "id") String id){
+        return companyService.getCompanyById(Long.parseLong(id));
+    }
 }
