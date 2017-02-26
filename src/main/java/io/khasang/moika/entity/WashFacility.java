@@ -25,6 +25,9 @@ public class WashFacility {
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
     private List<WashBox> washBowes  = new ArrayList<>();
 
+    public WashFacility() {
+    }
+
     public int getId() {
         return id;
     }

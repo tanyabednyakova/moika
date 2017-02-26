@@ -63,10 +63,11 @@ public class WashBoxDaoImpl implements WashBoxDao{
 
     @Override
     public List<WashBox> getWashBoxesOnFacility(int idFacility) {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_fclt = ?;")
-                .addEntity(WashBox.class);
-        query.setParameter(1, idFacility);
-        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+       // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_fclt = ?;")
+      //          .addEntity(WashBox.class);
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_box where idFacility = ?");
+        query.setParameter(0, idFacility);
+     //   query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
 
@@ -77,19 +78,21 @@ public class WashBoxDaoImpl implements WashBoxDao{
 
     @Override
     public List<WashBox> getWashBoxesByType(int boxType) {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_type = ?;")
-                .addEntity(WashBox.class);
-        query.setParameter(1, boxType);
-        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+     //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_type = ?;")
+     //           .addEntity(WashBox.class);
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_box where idType = ?");
+        query.setParameter(0, boxType);
+      //  query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
 
     @Override
     public List<WashBox> getWashBoxesByStatus(int boxStatus) {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where status = ?;")
-                .addEntity(WashBox.class);
-        query.setParameter(1, boxStatus);
-        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+     //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where status = ?;")
+      //          .addEntity(WashBox.class);
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_box where boxStatus = ?");
+        query.setParameter(0, boxStatus);
+     //   query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
 

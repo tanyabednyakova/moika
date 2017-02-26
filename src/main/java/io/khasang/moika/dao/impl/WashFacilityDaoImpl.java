@@ -7,6 +7,7 @@ import io.khasang.moika.entity.WashFacility;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class WashFacilityDaoImpl implements WashFacilityDao{
     }
 
     @Override
-    public void createWashFacility(WashFacility washFacility) {
+    public void addWashFacility(WashFacility washFacility) {
         sessionFactory.getCurrentSession().save(washFacility);
     }
 
@@ -47,7 +48,7 @@ public class WashFacilityDaoImpl implements WashFacilityDao{
         Criteria criteria = sessionFactory.
                 getCurrentSession().
                 createCriteria(WashFacility.class);
-        criteria.add(Restrictions.eq("id_fclt", id));
+        criteria.add(Restrictions.eq("id", id));
         return (WashFacility) criteria.uniqueResult();
     }
 
@@ -67,16 +68,20 @@ public class WashFacilityDaoImpl implements WashFacilityDao{
 
     @Override
     public List<WashFacility> getAllWashFacilities() {
-        return  sessionFactory.getCurrentSession().createQuery("from wash_facility wf").list();
+        return  sessionFactory.getCurrentSession().createQuery("from wash_facility").list();
     }
 
     @Override
     public List<WashBox> getWashBoxesOnFacility(WashFacility washFacility) {
-        return null;
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_box where idFacility = ?");
+        query.setParameter(0, washFacility.getId());
+        return query.list();
     }
 
     @Override
-    public List<WashBox> getWashBoxesOnFacility(int idFacility) {
-        return null;
+    public List<WashBox> getWashBoxesOnFacility(int idFacility){
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_box where idFacility = ?");
+        query.setParameter(0, idFacility);
+        return query.list();
     }
 }

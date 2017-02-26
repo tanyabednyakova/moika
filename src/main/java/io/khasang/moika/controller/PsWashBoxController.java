@@ -24,7 +24,7 @@ public class PsWashBoxController {
     @Autowired
     PskvorWashBoxDaoService pskvorWashBoxDaoService;
 
-    @RequestMapping(value = "/washboxlist", method = RequestMethod.GET)
+    @RequestMapping(value = "/washBoxlist", method = RequestMethod.GET)
     public String getWashBoxList(Model model) {
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         List<WashBox> washBoxList = pskvorWashBoxDaoService.getAllWashBoxes();
@@ -89,7 +89,7 @@ public class PsWashBoxController {
         } else {return  String.valueOf(response.SC_NOT_FOUND);}
     }
 
-    @RequestMapping(value = "/wasboxbytype/{type}", method = RequestMethod.GET)
+    @RequestMapping(value = "/wasBoxByType/{type}", method = RequestMethod.GET)
     public String getWashBoxListbyType(@PathVariable(value = "type") String typeId, Model model) {
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         List<WashBox> washBoxList = pskvorWashBoxDaoService.getWashBoxesByType(Integer.valueOf(typeId));
@@ -98,7 +98,7 @@ public class PsWashBoxController {
         return "ps-dao-carwashbox";
     }
 
-    @RequestMapping(value = "/wasboxbystatus/{status}", method = RequestMethod.GET)
+    @RequestMapping(value = "/wasBoxByStatus/{status}", method = RequestMethod.GET)
     public String getWashBoxListbyStatus(@PathVariable(value = "status") String status, Model model) {
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         List<WashBox> washBoxList = pskvorWashBoxDaoService.getWashBoxesByStatus(Integer.valueOf(status));
@@ -107,7 +107,7 @@ public class PsWashBoxController {
         return "ps-dao-carwashbox";
     }
 
-    @RequestMapping(value = "/facilityboxes/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/facilityBoxes/{id}", method = RequestMethod.GET)
     public String getFacilityBoxes(@PathVariable(value = "id") String inputId, Model model) {
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         List<WashBox> washBoxList = pskvorWashBoxDaoService.getWashBoxesOnFacility(Integer.valueOf(inputId));
