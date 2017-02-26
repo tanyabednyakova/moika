@@ -39,7 +39,7 @@ public class AppController {
         return "create";
     }
 
-    @RequestMapping(value = {"hello/{name}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/hello/{name}"}, method = RequestMethod.GET)
     public ModelAndView hello(@PathVariable("name") String name) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("encode");
@@ -47,9 +47,9 @@ public class AppController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object addCompany(@RequestBody Company company){
+    public Company addCompany(@RequestBody Company company){
         companyService.addCompany(company);
         return company;
     }
@@ -60,17 +60,24 @@ public class AppController {
         return "companies";
     }
 
-    @RequestMapping(value = "company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateCompany(@RequestBody Company company){
+    public Company updateCompany(@RequestBody Company company){
 //        companyService.updateCompany(company);
         return company;
     }
 
-    @RequestMapping(value = "/company/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/company/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-//        companyService.deleteCompany(company);
+     //   companyService.deleteCompany(inputId);
         return "redirect:ya.ru";
+    }
+
+    @RequestMapping(value = "/company/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Company getCompanybyId(@PathVariable(value = "id") String inputId, Model model){
+        Company company = companyService.getCompanyById(Integer.valueOf(inputId));
+        return company;
     }
 }

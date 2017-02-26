@@ -97,7 +97,7 @@ public class PsAppController {
         return "ps-dao-test";
     }
 
-    @RequestMapping(value = "test/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/test/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     //@ResponseBody
     public Object addTest(@RequestBody Test test, Model model) {
         model.addAttribute("CrudType", "Insert");
@@ -110,7 +110,7 @@ public class PsAppController {
         return "ps-dao-test";
     }
 
-    @RequestMapping(value = "test/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/test/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
    // @ResponseBody
     public Object updateTest(@RequestBody Test test, Model model) {
         model.addAttribute("CrudType", "Update");

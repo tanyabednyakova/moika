@@ -34,7 +34,7 @@ public class PsWashFacilityController {
         return "ps-dao-carwashfacility";
     }
 
-    @RequestMapping(value = "washFacility/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/washFacility/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     //@ResponseBody
     public Object addWashFacility(@RequestBody WashFacility washFacility, Model model) {
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
@@ -46,7 +46,7 @@ public class PsWashFacilityController {
         return "ps-dao-carwashfacility";
     }
 
-    @RequestMapping(value = "washFacility/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/washFacility/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object updateWashFacility(@RequestBody WashFacility washFacility) {
         pskvorWashFacilityDaoService.updateWashFacility(washFacility);

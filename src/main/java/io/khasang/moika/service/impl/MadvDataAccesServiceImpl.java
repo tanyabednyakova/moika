@@ -5,9 +5,6 @@ import io.khasang.moika.service.MadvDataAccesService;
 
 import java.util.List;
 
-/**
- * Created by madv on 20.02.2017.
- */
 public class MadvDataAccesServiceImpl implements MadvDataAccesService {
     private MadvDataAcces madvDataAcces;
 
