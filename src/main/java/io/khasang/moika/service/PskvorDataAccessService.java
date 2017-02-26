@@ -5,15 +5,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class PskvorDataAccessService {
-    PskvorDataAccess pskvorDataAccess;
+    private PskvorDataAccess pskvorDataAccess;
 
     public PskvorDataAccessService() {
     }
 
-    public PskvorDataAccessService(PskvorDataAccess pskvorDataAcces) {
-        this.pskvorDataAccess = pskvorDataAcces;
+    public PskvorDataAccessService(PskvorDataAccess pskvorDataAccess) {
+        this.pskvorDataAccess = pskvorDataAccess;
     }
 
     public String getRowsAsString(List<String> strings) {

@@ -9,7 +9,7 @@ public interface CompanyService {
 
     void addCompany(Company company, String name);
 
-    Company getCompanyById(int id);
+    Company getCompanyById(long id);
 
     List<Company> getCompanyGazpromList();
 }

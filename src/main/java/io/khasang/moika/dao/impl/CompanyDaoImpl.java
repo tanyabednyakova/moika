@@ -83,4 +83,10 @@ public class CompanyDaoImpl implements CompanyDao {
         query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
+
+    @SuppressWarnings("unchecked")
+    public List<Company> getCompanyHqlList() {
+        List<Company> companyList = sessionFactory.getCurrentSession().createQuery("FROM Company").list();
+        return companyList;
+    }
 }
