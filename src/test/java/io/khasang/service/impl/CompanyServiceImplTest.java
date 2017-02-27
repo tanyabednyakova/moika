@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {AppConfig.class, WebConfig.class, HibernateConfig.class})
+@ContextConfiguration(classes = {WebConfig.class})
 public class CompanyServiceImplTest {
     @Autowired
     CompanyService companyService;
@@ -81,7 +81,6 @@ public class CompanyServiceImplTest {
         assertEquals(BigDecimal.valueOf(50).setScale(0), resultCompanyB.getAmount());
 
         assertNotNull(new Butterfly());
-        //Butterfly butterfly = (Butterfly) new Company();
         Butterfly butterfly = new Butterfly();
         butterfly.setName("butterfly");
         butterfly.setAmount(BigDecimal.valueOf(10L));
