@@ -89,19 +89,24 @@ public class ClientDaoImpl implements ClientDao{
 
     @Override
     public List<Client> getClientsListByLastDateWash(Date dateStart, Date dateEnd) {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from clients where date_last_wash between ? and ?;");
-        query.setParameter(1, dateStart);
-        query.setParameter(2, dateEnd);
-        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+     //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from clients where date_last_wash between ? and ?;");
+     //   query.setParameter(1, dateStart);
+     //   query.setParameter(2, dateEnd);
+     //   query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        Query query  = sessionFactory.getCurrentSession().createQuery("from clients where dateLastWash between ? and ?");
+        query.setParameter(0, dateStart);
+        query.setParameter(1, dateEnd);
         return query.list();
     }
 
 
     @Override
     public List<Client> getClientListByStatus(int status) {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from clients where status = ?;");
-        query.setParameter(1, status);
-        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+      //  Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from clients where status = ?;");
+      //  query.setParameter(1, status);
+      //  query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        Query query  = sessionFactory.getCurrentSession().createQuery("from clients where status = ?");
+        query.setParameter(0, status);
         return query.list();
     }
 }

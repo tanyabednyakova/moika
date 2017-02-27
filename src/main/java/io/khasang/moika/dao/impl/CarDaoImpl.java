@@ -80,14 +80,18 @@ public class CarDaoImpl implements CarDao{
 
     @Override
     public List<Client> getClientsByCar(Car car) {
-        return null;
+        Query query  = sessionFactory.getCurrentSession().createQuery("from cars where clients = ?");
+        query.setParameter(0, car.getId());
+        return query.list();
     }
 
     @Override
     public List<Car> getCarListByStatus(int status) {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from cars where status = ?;");
-        query.setParameter(1, status);
-        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+       // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from cars where status = ?;");
+       // query.setParameter(1, status);
+       // query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        Query query  = sessionFactory.getCurrentSession().createQuery("from cars where status = ?");
+        query.setParameter(0, status);
         return query.list();
     }
 }

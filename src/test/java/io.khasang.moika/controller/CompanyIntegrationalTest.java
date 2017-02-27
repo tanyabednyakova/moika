@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 public class CompanyIntegrationalTest {
@@ -20,7 +21,9 @@ public class CompanyIntegrationalTest {
     System.out.println("Tests are beginning...");
     }
 
+    @Ignore
     @Test
+    @Transactional
     @Rollback
     public void createCompany(){
         HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders
@@ -40,6 +43,7 @@ public class CompanyIntegrationalTest {
         Assert.assertEquals("Рога и копыта", resultCompany.getName());
     }
 
+    @Ignore
     @Test
     public void getCompanyById(){
         HttpHeaders headers = new HttpHeaders(); //использовать именно из org.springframework.http.HttpHeaders

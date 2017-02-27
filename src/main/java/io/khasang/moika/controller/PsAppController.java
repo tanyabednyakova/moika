@@ -153,4 +153,15 @@ public class PsAppController {
         {model.addAttribute("nrows", inputId + "doesn`t exists ");}
         return "ps-dao-test";
     }
+
+    @RequestMapping(value = "/showtest", method = RequestMethod.GET)
+    public Object showTest(@RequestParam (value = "name1") String name1, @RequestParam (value = "name2") String name2, Model model) {
+        Test test = new Test();
+        test.setName1(name1);
+        test.setName2(name2);
+        pskvorTestDaoService.addTest(test);
+        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+        model.addAttribute("resobject", test.toString() );
+        return "ps-dao-testinput";
+    }
 }
