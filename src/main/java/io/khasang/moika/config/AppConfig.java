@@ -2,6 +2,7 @@ package io.khasang.moika.config;
 
 
 import io.khasang.moika.model.CreateTable;
+import io.khasang.moika.model.TatyanaDataAccessImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ public class AppConfig {
         dataSource.setDriverClassName(environment.getProperty("jdbc.postgresql.driverClass"));
         dataSource.setUrl(environment.getProperty("jdbc.postgresql.url"));
         dataSource.setUsername(environment.getProperty("jdbc.postgresql.username"));
-        dataSource.setUsername(environment.getProperty("jdbc.postgresql.password"));
+        dataSource.setPassword(environment.getProperty("jdbc.postgresql.password"));
         return dataSource;
     }
 
@@ -39,6 +40,10 @@ public class AppConfig {
         return new CreateTable(jdbcTemplate());
     }
 
+    @Bean
+    public TatyanaDataAccessImp tatyanaDataAccessImp(){
+        return new TatyanaDataAccessImp(jdbcTemplate());
+    }
 
 
 

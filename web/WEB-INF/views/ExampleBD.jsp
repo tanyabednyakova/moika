@@ -1,17 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: tanyabednyakova
-  Date: 12/02/2017
-  Time: 03:02
+  Date: 19/02/2017
+  Time: 20:24
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Пример работы с БД</title>
 </head>
 <body>
-${test}
-
+${bd}
 </body>
 </html>
