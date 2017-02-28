@@ -1,12 +1,13 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity(name = "clients")
-public class Client {
+@Entity
+@Table(name = "clients")
+public class Client implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String lastname;
