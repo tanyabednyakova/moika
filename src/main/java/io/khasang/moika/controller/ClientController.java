@@ -16,6 +16,11 @@ public class ClientController {
     @Autowired
     private ClientDAO clientDAO;
 
+    @RequestMapping(method =  RequestMethod.GET)
+    public String getClient(){
+        return "client";
+    }
+
     @RequestMapping("/list")
     public String getListClients(Model model){
         model.addAttribute("clients",clientDAO.getAllClients());

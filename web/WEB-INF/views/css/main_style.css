@@ -1,0 +1,14 @@
+.header{
+    min-height: 50px;
+    background-color:gray;
+}
+
+.main-content{
+    min-height: 250px;
+    background-color: lightgrey;
+}
+
+.footer{
+    min-height: 50px;
+    background-color:gray;
+}
