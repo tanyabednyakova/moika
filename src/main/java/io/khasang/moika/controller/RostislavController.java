@@ -1,8 +1,5 @@
 package io.khasang.moika.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.fasterxml.jackson.databind.util.JSONWrappedObject;
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.service.CarService;
 import io.khasang.moika.service.RostislavDataAccessService;
