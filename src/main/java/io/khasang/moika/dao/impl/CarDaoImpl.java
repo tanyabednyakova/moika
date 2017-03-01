@@ -1,6 +1,6 @@
 package io.khasang.moika.dao.impl;
 
-import io.khasang.moika.dao.CarDAO;
+import io.khasang.moika.dao.CarDao;
 import io.khasang.moika.entity.Car;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -16,11 +16,11 @@ import java.util.List;
 
 @Component
 @Transactional
-public class CarDAOImpl implements CarDAO {
+public class CarDaoImpl implements CarDao {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public CarDAOImpl(SessionFactory sessionFactory) {
+    public CarDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 

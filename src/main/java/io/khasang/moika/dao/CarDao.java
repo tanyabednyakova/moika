@@ -4,7 +4,7 @@ import io.khasang.moika.entity.Car;
 
 import java.util.List;
 
-public interface CarDAO {
+public interface CarDao {
 
     void addCar(Car Car);
 
