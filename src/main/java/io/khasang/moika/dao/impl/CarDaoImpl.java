@@ -51,7 +51,7 @@ public class CarDaoImpl implements CarDao {
     }
 
     @Override
-    public Car getCarByName(String name) {
+    public Car getCarByType(String name) {
         Criteria criteria = sessionFactory.
                 getCurrentSession().
                 createCriteria(Car.class);

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service("CarServiceImpl")
 @Transactional
 public class CarServiceImpl implements CarService {
@@ -24,6 +26,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car getCarById(long id) {
         return carDao.getCarById(id);
+    }
+
+    @Override
+    public List<Car> getCarList() {
+        return carDao.getCarList();
     }
 
     @Override

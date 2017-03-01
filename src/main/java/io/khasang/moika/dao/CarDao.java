@@ -14,7 +14,7 @@ public interface CarDao {
 
     Car getCarById(long id);
 
-    Car getCarByName(String name);
+    Car getCarByType(String name);
 
     List<Car> getCarList();
 

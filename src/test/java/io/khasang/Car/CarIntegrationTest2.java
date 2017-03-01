@@ -7,11 +7,9 @@ import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * Created by alyubarev on 01.03.2017.
- */
+
 public class CarIntegrationTest2 {
-}
+
     @Ignore
     
     @Test
