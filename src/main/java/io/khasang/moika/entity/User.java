@@ -1,5 +1,7 @@
 package io.khasang.moika.entity;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -9,18 +11,25 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false,unique = true)
+
+    @NaturalId
+    @Column(nullable = false, unique = true)
     private String login;
     @Column(unique = true)
     private String password;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id","role_id"}))
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
+    )
     private Set<Role> roles = new HashSet<>();
+
     private boolean enabled;
     @Column(nullable = false)
     private String firstName;
@@ -28,7 +37,7 @@ public class User implements Serializable {
     private String lastName;
     private Date birthday;
     private String phone;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     public User() {

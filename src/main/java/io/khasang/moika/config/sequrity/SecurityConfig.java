@@ -1,4 +1,4 @@
-package io.khasang.moika.config;
+package io.khasang.moika.config.sequrity;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +22,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/admin/**").access("hasAnyRole('ADMIN','USER')")
-                .antMatchers("/db/**").access("hasRole('DB')")
-                .and().csrf().disable().formLogin().defaultSuccessUrl("/", false);
-    }
+                .antMatchers("/client").permitAll()
+                .antMatchers("/user/create*").permitAll()
 
+                .antMatchers("/create*").access("hasAnyRole('ROLE_ADMIN')")
+                .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+                .antMatchers("/db/**").access("hasRole('ROLE_DB')")
+                .antMatchers("/**").fullyAuthenticated()
+                .and().csrf().disable().formLogin().defaultSuccessUrl("/", false)
+                //http://www.mkyong.com/spring-security/customize-http-403-access-denied-page-in-spring-security/
+                .and().exceptionHandling().accessDeniedPage("/accessDenied");
+    }
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
