@@ -12,7 +12,7 @@
     <properties>
         <spring.version>4.3.4.RELEASE</spring.version>
         <spring.security.version>4.2.0.RELEASE</spring.security.version>
-        <hibernate-version>5.2.4.Final</hibernate-version>
+        <hibernate.version>5.2.4.Final</hibernate.version>
         <jackson.version>2.7.8</jackson.version>
     </properties>
     <dependencies>
@@ -65,10 +65,11 @@
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
         </dependency>
+        <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jcache</artifactId>
-            <version>${hibernate-version}</version>
+            <version>${hibernate.version}</version>
         </dependency>
 
         <!--EHCACHE-->
@@ -84,11 +85,11 @@
             <version>${spring.version}</version>
         </dependency>-->
 
-        <!-- for JPA -->
+        <!-- Hibernate for JPA-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate-version}</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <!--JSP -->
         <dependency>

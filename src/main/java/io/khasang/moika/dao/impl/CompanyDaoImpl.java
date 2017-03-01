@@ -1,6 +1,7 @@
 package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.CompanyDao;
+import io.khasang.moika.entity.Butterfly;
 import io.khasang.moika.entity.Company;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -87,5 +88,14 @@ public class CompanyDaoImpl implements CompanyDao {
     @SuppressWarnings("unchecked")
     public List<Company> getCompanyHqlList() {
         return (List<Company>) sessionFactory.getCurrentSession().createQuery("FROM Company").list();
+    }
+
+    @Override
+    public Butterfly getButterflyByName(String butterfly) {
+        Criteria criteria = sessionFactory.
+                getCurrentSession().
+                createCriteria(Butterfly.class);
+        criteria.add(Restrictions.eq("name", butterfly));
+        return (Butterfly) criteria.uniqueResult();
     }
 }

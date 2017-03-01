@@ -12,7 +12,6 @@ import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -20,8 +19,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-
-import java.util.Date;
 
 @Configuration
 //@EnableCaching
@@ -42,7 +39,7 @@ public class AppConfig {
     }
 
     @Bean
-    public DriverManagerDataSource dataSource() {
+    public DriverManagerDataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.postgresql.driverClass"));
         dataSource.setUrl(environment.getProperty("jdbc.postgresql.url"));
@@ -52,33 +49,21 @@ public class AppConfig {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate() {
+    public JdbcTemplate jdbcTemplate(){
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(dataSource());
         return jdbcTemplate;
     }
 
     @Bean
-    public CreateTable createTable() {
-        return new CreateTable(jdbcTemplate()
-        );
+    public CreateTable createTable(){
+        return  new CreateTable(jdbcTemplate());
     }
 
     @Bean
-    public Date testDate() {
-        return new Date();
-    }
-
+    public MadvDataAcces madvDataAcces(){return new MadvDataAccesImpl(jdbcTemplate());}
     @Bean
-    public MadvDataAcces madvDataAcces() {
-        return new MadvDataAccesImpl(jdbcTemplate());
-    }
-
-    @Bean
-    public MadvDataAccesService madvDataAccesService() {
-        return new MadvDataAccesServiceImpl(madvDataAcces());
-    }
-
+    public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
@@ -89,8 +74,8 @@ public class AppConfig {
     }
 
     @Bean
-    public PskvorDataAccess pskvorDataAccess() {
-        return (new PskvorDataAccessJdbcImpl(jdbcTemplate()));
+    public PskvorDataAccess pskvorDataAccess(){
+         return new PskvorDataAccessJdbcImpl(jdbcTemplate());
     }
 
     @Bean
@@ -99,22 +84,5 @@ public class AppConfig {
     }
 
     @Bean
-    public CompanyService companyService() {
-        return new CompanyServiceImpl();
-    }
-
-/*
-    @Bean
-    public CacheManager cacheManager() {
-        return new EhCacheCacheManager(ehCacheCacheManager().getObject());
-    }
-
-    @Bean
-    public EhCacheManagerFactoryBean ehCacheCacheManager() {
-        EhCacheManagerFactoryBean cmfb = new EhCacheManagerFactoryBean();
-        cmfb.setConfigLocation(new ClassPathResource("ehcache.xml.off"));
-        cmfb.setShared(true);
-        return cmfb;
-    }
-*/
+    public CompanyService companyService() { return new CompanyServiceImpl();}
 }
