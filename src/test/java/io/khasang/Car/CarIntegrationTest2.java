@@ -30,7 +30,7 @@ public class CarIntegrationTest2 {
         Assert.assertNotNull(resultCar);
 
         HttpEntity<Car> httpEntity = new HttpEntity<>(resultCar, headers);
-        resultCar.setName("Красный таз");
+        resultCar.setCarType("Красный таз");
         Car resultUpdCar = restTemplate.exchange
                 ("http://localhost:8080/car/update",
                         HttpMethod.PUT,
@@ -39,7 +39,7 @@ public class CarIntegrationTest2 {
                 .getBody();
 
         Assert.assertNotNull(resultUpdCar);
-        Assert.assertEquals("Красный таз", resultUpdCar.getName());
+        Assert.assertEquals("Красный таз", resultUpdCar.getCarType());
         Assert.assertNotNull(resultUpdCar.getId());
     }
 
