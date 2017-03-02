@@ -12,6 +12,7 @@ import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -21,11 +22,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 
 @Configuration
+//@EnableCaching
 @PropertySource(value = {"classpath:util.properties"})
 @PropertySource(value = {"classpath:auth.properties"})
+@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service"})
 public class AppConfig {
+    final private Environment environment;
+
     @Autowired
-    private Environment environment;
+    public AppConfig(Environment environment) {
+        this.environment = environment;
+    }
+
+    @Bean
+    public Environment getEnvironment() {
+        return environment;
+    }
 
     @Bean
     public DriverManagerDataSource dataSource(){
@@ -53,6 +65,8 @@ public class AppConfig {
     public MadvDataAcces madvDataAcces(){return new MadvDataAccesImpl(jdbcTemplate());}
     @Bean
     public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
+
+/*  DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
@@ -61,6 +75,7 @@ public class AppConfig {
         jdbcImpl.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("rolesByQuery"));
         return jdbcImpl;
     }
+*/
 
     @Bean
     public PskvorDataAccess pskvorDataAccess(){

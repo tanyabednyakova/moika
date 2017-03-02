@@ -3,6 +3,7 @@ package io.khasang.moika.config.application;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -11,8 +12,10 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"io.khasang.moika.controller","io.khasang.moika.config","io.khasang.moika.dao","io.khasang.moika.model",
-        "io.khasang.moika.service"})
+@ComponentScan(
+        basePackages = {"io.khasang.moika"},
+        excludeFilters = @ComponentScan.Filter(type= FilterType.REGEX, pattern = {"io.khasang.moika.model.*"})
+        )
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public InternalResourceViewResolver viewResolver() {

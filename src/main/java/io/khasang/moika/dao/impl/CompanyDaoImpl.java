@@ -27,34 +27,37 @@ public class CompanyDaoImpl implements CompanyDao {
 
     @Override
     public void addCompany(Company company) {
-        sessionFactory.getCurrentSession().save(company);
+        getCurrentSession().save(company);
     }
 
     @Override
     public void updateCompany(Company company) {
-        sessionFactory.getCurrentSession().update(company);
+        getCurrentSession().update(company);
     }
 
     @Override
     public void deleteCompany(Company company) {
-        final Session session = sessionFactory.getCurrentSession();
+        final Session session = getCurrentSession();
         session.delete(company);
         session.flush();
     }
 
     @Override
     public Company getCompanyById(long id) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
+        Criteria criteria = getCurrentSession().
                 createCriteria(Company.class);
         criteria.add(Restrictions.eq("id", id));
         return (Company) criteria.uniqueResult();
     }
 
+    private Session getCurrentSession() {
+        return sessionFactory.
+                getCurrentSession();
+    }
+
     @Override
     public Company getCompanyByName(String name) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
+        Criteria criteria = getCurrentSession().
                 createCriteria(Company.class);
         criteria.add(Restrictions.eq("name", name));
         return (Company) criteria.uniqueResult();
@@ -77,15 +80,14 @@ public class CompanyDaoImpl implements CompanyDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<Company> getCompanyList() {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from Company;");
+        Query query = getCurrentSession().createNativeQuery("select * from Company;");
         query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
 
     @SuppressWarnings("unchecked")
     public List<Company> getCompanyHqlList() {
-        List<Company> companyList = sessionFactory.getCurrentSession().createQuery("FROM Company").list();
-        return companyList;
+        return (List<Company>) sessionFactory.getCurrentSession().createQuery("FROM Company").list();
     }
 
     @Override
