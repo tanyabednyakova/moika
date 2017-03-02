@@ -33,7 +33,7 @@ public class UserController {
     public String createTestUser(Model model){
         return createUser(model,
                 "TestUser-"+ DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm.ss").format(LocalDateTime.now()),
-                userDao.getEncodedPassword("123456Qw"),
+               "123456Qw",
                 "Тест",
                 "Тестович",
                 "Тестов",

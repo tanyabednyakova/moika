@@ -27,8 +27,6 @@ import java.util.stream.Collectors;
 public class UserDaoImpl implements UserDao {
     @Autowired
     SessionFactory sessionFactory;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private RoleDao roleDao;
@@ -49,8 +47,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void grantRole(@NotNull User user, @NotNull Role role) {
+    public void updateUser(User user) {
+        sessionFactory.getCurrentSession().update(user);
+    }
 
+    @Override
+    public void grantRole(@NotNull User user, @NotNull Role role) {
         user.getRoles().add(role);
         sessionFactory.getCurrentSession().update(user);
         sessionFactory.getCurrentSession().flush();
@@ -72,10 +74,6 @@ public class UserDaoImpl implements UserDao {
         return grantedAuthoritySet;
     }
 
-    @Override
-    public String getEncodedPassword(String rawPassword) {
-        return passwordEncoder.encode(rawPassword);
-    }
 
     @Override
     public boolean containUser(long id) {

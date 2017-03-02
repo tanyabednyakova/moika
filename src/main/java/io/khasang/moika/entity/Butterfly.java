@@ -6,6 +6,6 @@ import javax.persistence.InheritanceType;
 import java.io.Serializable;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Butterfly extends Company implements Serializable{
 }

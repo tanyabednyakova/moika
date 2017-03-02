@@ -1,4 +1,4 @@
-package io.khasang.moika.config.sequrity;
+package io.khasang.moika.config.security;
 
 import io.khasang.moika.dao.UserDao;
 import io.khasang.moika.entity.User;

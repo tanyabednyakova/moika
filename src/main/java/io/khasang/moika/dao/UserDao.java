@@ -33,9 +33,15 @@ public interface UserDao {
 
     /**
      * Создать пользователя
-     * @param user данные пользователя
+     * @param user данные пользователя (поле id игнорируется)
      */
     void createUser(User user);
+
+    /**
+     * Обновить поля пользователя
+     * @param user данные пользователя
+     */
+    void updateUser(User user);
 
     /**
      * Наделить пользователя ролью
@@ -58,13 +64,6 @@ public interface UserDao {
      *
      */
     Collection<? extends GrantedAuthority> getAuthorities(User user);
-
-    /**
-     * Вернуть закодированную версию исходного пароля.
-     * @param rawPassword
-     * @return закодированный пароль
-     */
-    String getEncodedPassword(String rawPassword);
 
     /**
      * Проверить наличие пользователя с таким id

@@ -5,6 +5,7 @@ import io.khasang.moika.entity.Company;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +19,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import org.springframework.security.core.userdetails.User;
 import java.util.List;
 
 @Controller
 public class AppController {
     @Autowired
     private CreateTable createTable;
-
     @Autowired
     CompanyService companyService;
     @Autowired
@@ -33,6 +34,14 @@ public class AppController {
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
         model.addAttribute("name", name);
+        Object pr = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(pr instanceof String){
+            System.out.println("name: " + pr);
+        }else{
+            User user = (User) pr;
+            System.out.println("name: " + user.getUsername());
+        }
+
         return "index";
     }
 

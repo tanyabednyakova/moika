@@ -19,7 +19,6 @@ public class User implements Serializable {
     @NaturalId
     @Column(nullable = false, unique = true)
     private String login;
-    @Column(unique = true)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
