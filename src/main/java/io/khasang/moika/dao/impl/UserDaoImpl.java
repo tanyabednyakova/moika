@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * Базовая реализация DAO пользователей
  *
  * @since 2017-03-01
- * @author Rostislav Dublin
+ * @author Rostislav Dublin, Kovalev Aleksandr
  */
 @Service("userDao")
 @Transactional
@@ -75,5 +75,29 @@ public class UserDaoImpl implements UserDao {
     @Override
     public String getEncodedPassword(String rawPassword) {
         return passwordEncoder.encode(rawPassword);
+    }
+
+    @Override
+    public boolean containUser(long id) {
+        long countUsers = sessionFactory.getCurrentSession()
+                .createQuery("select count(User.id) from User where User.id=:id",Long.class)
+                .setParameter("id",id).uniqueResult();
+        return countUsers>0?true:false;
+    }
+
+    @Override
+    public boolean containLoginUser(String login) {
+        long countUsers = sessionFactory.getCurrentSession()
+                .createQuery("select count(User.id) from User where User.login=:login",Long.class)
+                .setParameter("login",login).uniqueResult();
+        return countUsers>0?true:false;
+    }
+
+    @Override
+    public boolean containLoginEmail(String email) {
+        long countUsers = sessionFactory.getCurrentSession()
+                .createQuery("select count(User.id) from User where User.email=:email",Long.class)
+                .setParameter("email",email).uniqueResult();
+        return countUsers>0?true:false;
     }
 }

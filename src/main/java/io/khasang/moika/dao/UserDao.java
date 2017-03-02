@@ -11,7 +11,7 @@ import java.util.Collection;
  * Интерфейс DAO пользователей
  *
  * @since 2017-03-01
- * @author Rostislav Dublin
+ * @author Rostislav Dublin, Kovalev Aleksandr
  */
 
 public interface UserDao {
@@ -66,5 +66,25 @@ public interface UserDao {
      */
     String getEncodedPassword(String rawPassword);
 
+    /**
+     * Проверить наличие пользователя с таким id
+     * @param id
+     * @return true, если содержиться, false если нет
+     */
+    boolean containUser(long id);
+
+    /**
+     * Проверить наличие пользователя с таким логином
+     * @param login
+     * @return true, если содержиться, false если нет
+     */
+    boolean containLoginUser(String login);
+
+    /**
+     * Проверить наличие пользователя с таким email
+     * @param email
+     * @return true, если содержиться, false если нет
+     */
+    boolean containLoginEmail(String email);
 
 }

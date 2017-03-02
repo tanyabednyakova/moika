@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/create*").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
                 .antMatchers("/db/**").access("hasRole('ROLE_DB')")
-                .antMatchers("/**").fullyAuthenticated()
+                //.antMatchers("/**").fullyAuthenticated()
                 .and().csrf().disable().formLogin().defaultSuccessUrl("/", false)
                 //http://www.mkyong.com/spring-security/customize-http-403-access-denied-page-in-spring-security/
                 .and().exceptionHandling().accessDeniedPage("/accessDenied");

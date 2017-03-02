@@ -25,7 +25,6 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 //@EnableCaching
 @PropertySource(value = {"classpath:util.properties"})
 @PropertySource(value = {"classpath:auth.properties"})
-@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service"})
 public class AppConfig {
     final private Environment environment;
 

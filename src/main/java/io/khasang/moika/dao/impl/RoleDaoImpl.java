@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class RoleDaoImpl implements RoleDao {
 
     @Override
-    public Role findByName(String role) {
+    public Role findByName(String name) {
         return null;
     }
 

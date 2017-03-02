@@ -16,10 +16,10 @@ public interface RoleDao {
 
     /**
      * Найти роль по названию
-     * @param role
+     * @param name
      * @return
      */
-    Role findByName(String role);
+    Role findByName(String name);
 
 
     /**

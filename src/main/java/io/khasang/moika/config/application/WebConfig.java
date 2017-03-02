@@ -12,10 +12,8 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(
-        basePackages = {"io.khasang.moika"},
-        excludeFilters = @ComponentScan.Filter(type= FilterType.REGEX, pattern = {"io.khasang.moika.model.*"})
-        )
+@ComponentScan({"io.khasang.moika.controller", "io.khasang.moika.config",
+        "io.khasang.moika.dao", "io.khasang.moika.service","io.khasang.moika.model"})
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public InternalResourceViewResolver viewResolver() {
