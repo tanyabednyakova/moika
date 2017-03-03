@@ -14,7 +14,7 @@ import java.util.Collection;
  * @author Rostislav Dublin, Kovalev Aleksandr
  */
 
-public interface UserDao {
+public interface UserDAO {
 
     /**
      * Найти пользователя по ID

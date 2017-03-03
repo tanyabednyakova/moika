@@ -12,7 +12,7 @@ import java.util.Collection;
  * @since 2017-03-01
  * @author Rostislav Dublin
  */
-public interface RoleDao {
+public interface RoleDAO {
 
     /**
      * Найти роль по названию

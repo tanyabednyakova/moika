@@ -1,60 +1,40 @@
 package io.khasang.moika.service.impl;
 
-import io.khasang.moika.dao.RoleDao;
-import io.khasang.moika.dao.UserDao;
+import io.khasang.moika.dao.RoleDAO;
+import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private UserDao userDao;
+    private UserDAO userDAO;
     @Autowired
-    private RoleDao roleDao;
+    private RoleDAO roleDAO;
+
     @Override
-    public boolean createUser(User user, boolean isAdmin) {
-        //данная проверка возможно необязательна
-        if(user.getRoles()==null){
-            user.setRoles(new HashSet<>());
-        }
-        if(!isAdmin){
-            if(user.getRoles().size()==0){
-                Role role = roleDao.findByName("Client");
-                user.getRoles().add(role);
-            }
-            if(StringUtils.isEmpty(user.getPassword())){
-                return false;
-            }
-        }
-        //возможно стоит проверять так же содержимое через regex выражение
-        if(StringUtils.isEmpty(user.getLogin())){
-            return false;
-        }
-
-        if(StringUtils.isEmpty(user.getFirstName())||user.getFirstName().matches("^[A-Za-z]+|^[А-Яа-я]+")){
-            return false;
-        }
-
-
-
-        return true;
+    public void createUser(User user) {
 
     }
 
     @Override
-    public boolean removeUser(long id) {
+    public void removeUser(long id) {
         return false;
     }
 
     @Override
-    public boolean updateUser(User user) {
+    public void updateUser(User user) {
         return false;
     }
 
@@ -66,6 +46,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean hasFreeUserEmail(String email) {
         return false;
+    }
+
+    private void checkUser(User user,  BindingResult bindingResult){
+        bindingResult.getAllErrors().get(0).
+        if(StringUtils.isEmpty(user.getPassword())){
+            //return false;
+        }
+
+        //возможно стоит проверять так же содержимое через regex выражение
+        if(StringUtils.isEmpty(user.getLogin())||!user.getLogin().matches("\\w")){
+            //return false;
+        }
+
+        if(StringUtils.isEmpty(user.getFirstName())||!user.getFirstName().matches("^[A-Za-z]+|^[А-Яа-я]+")){
+            //return false;
+        }
+
     }
 
     @Override

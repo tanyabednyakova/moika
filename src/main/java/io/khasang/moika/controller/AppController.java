@@ -34,13 +34,13 @@ public class AppController {
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
         model.addAttribute("name", name);
-        Object pr = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(pr instanceof String){
-            System.out.println("name: " + pr);
-        }else{
-            User user = (User) pr;
-            System.out.println("name: " + user.getUsername());
-        }
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        boolean auth = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+        System.out.println(String.format("name: %s  isAuth: %b",username,auth));
+        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach((a)->{
+            System.out.println(a.getAuthority());
+        });
+
 
         return "index";
     }

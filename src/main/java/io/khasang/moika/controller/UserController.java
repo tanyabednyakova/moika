@@ -1,16 +1,21 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.dao.UserDao;
+import io.khasang.moika.dao.RoleDAO;
+import io.khasang.moika.dao.UserDAO;
+import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Контроллер интерфейсов пользователя
@@ -21,13 +26,25 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping(path = "/user")
 @Controller
 public class UserController {
-
-    private final UserDao userDao;
+    @Autowired
+    private UserDAO userDAO;
 
     @Autowired
-    public UserController(UserDao userDao) {
-        this.userDao = userDao;
+    private RoleDAO roleDAO;
+
+
+
+    private User getCurrentUser(){
+        String currentLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(!userDAO.containLoginUser(currentLogin)){
+            return null;
+        }else{
+            return userDAO.findByLogin(currentLogin);
+        }
     }
+
+
+
 
     @RequestMapping("/createTestUser")
     public String createTestUser(Model model){
@@ -74,7 +91,7 @@ public class UserController {
             user.setLastName(lastName);
             user.setEmail(email);
 
-            userDao.createUser(user);
+            userDAO.createUser(user);
 
             result = "Success: user "+user.getLogin()+" created with ID "+user.getId();
         }

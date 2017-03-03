@@ -1,14 +1,13 @@
 package io.khasang.moika.dao.impl;
 
 import com.sun.istack.internal.NotNull;
-import io.khasang.moika.dao.RoleDao;
-import io.khasang.moika.dao.UserDao;
+import io.khasang.moika.dao.RoleDAO;
+import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +23,12 @@ import java.util.stream.Collectors;
  */
 @Service("userDao")
 @Transactional
-public class UserDaoImpl implements UserDao {
+public class UserDAOImpl implements UserDAO {
     @Autowired
     SessionFactory sessionFactory;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleDAO roleDAO;
 
     @Override
     public User findById(Long id) {
@@ -68,7 +67,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(User user) {
         Set<GrantedAuthority> grantedAuthoritySet = user.getRoles().stream()
-                .map(r -> roleDao.getAuthority(r))
+                .map(r -> roleDAO.getAuthority(r))
                 .collect(Collectors.toSet());
 
         return grantedAuthoritySet;

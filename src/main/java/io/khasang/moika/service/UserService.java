@@ -15,24 +15,20 @@ public interface UserService {
     /**
      * Создать учетную запись пользователя
      *@param user - Данные в объекте user
-     *@param isAdmin - Флаг, который говорит методу кто создает учетную запись
-     *@return возвращает булевое значение, true - если объект создан, false - если нет
      */
-    boolean createUser(User user , boolean isAdmin);
+    void createUser(User user);
 
     /**
      * Удалить учетную запись пользователя
      *@param id пользователя в БД
-     *@return возвращает булевое значение, true - если объект удален, false - если нет
      */
-    boolean removeUser(long id);
+    void removeUser(long id);
 
     /**
      * Обновить поля учетной записи пользователя
      *@param user - Данные в объекте user
-     *@return возвращает булевое значение, true - если объект обновлен, false - если нет
      */
-    boolean updateUser(User user);
+    void updateUser(User user);
 
     /**
      * Проверить является ли данный логин пользователя свободным

@@ -1,20 +1,11 @@
 package io.khasang.moika.dao.impl;
 
-import com.sun.istack.internal.NotNull;
-import io.khasang.moika.dao.RoleDao;
-import io.khasang.moika.dao.UserDao;
+import io.khasang.moika.dao.RoleDAO;
 import io.khasang.moika.entity.Role;
-import io.khasang.moika.entity.User;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 /**
  * Базовая реализация DAO ролей пользователей
@@ -24,7 +15,7 @@ import java.util.stream.Collectors;
  */
 @Service("roleDao")
 @Transactional
-public class RoleDaoImpl implements RoleDao {
+public class RoleDAOImpl implements RoleDAO {
 
     @Override
     public Role findByName(String name) {
