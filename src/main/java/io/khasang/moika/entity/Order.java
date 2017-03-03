@@ -25,7 +25,7 @@ public class Order {
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", foreignKey = @ForeignKey(name = "CLOENT_ID_FK"))
+    @JoinColumn(name = "client_id", foreignKey = @ForeignKey(name = "CLIENT_ID_FK"))
     private Client client;
 // TODO: 03.03.2017   id_использование бокса
 
