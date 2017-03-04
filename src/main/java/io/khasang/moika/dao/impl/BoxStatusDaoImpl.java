@@ -4,6 +4,7 @@ package io.khasang.moika.dao.impl;
 import io.khasang.moika.dao.BoxStatusDao;
 import io.khasang.moika.entity.BoxStatus;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,9 @@ public class BoxStatusDaoImpl implements BoxStatusDao {
 
     @Override
     public void deleteBoxStatus(BoxStatus boxStatus) {
-        sessionFactory.getCurrentSession().delete(boxStatus);
+        final Session session = sessionFactory.getCurrentSession();
+        session.delete(boxStatus);
+        session.flush();
     }
 
     @Override

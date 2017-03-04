@@ -3,16 +3,9 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name= "Wash_Service")
-public class WashService implements MoikaServiceAdditinalInfo {
-
-    @Id
-    @Column(name = "id_service")
-    private int id;
-
-    @OneToOne (cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_service", foreignKey = @ForeignKey(name = "fk_id_service"))
-    private MoikaServiceBase moikaServiceBase;
+@Entity(name= "wash_service")
+@PrimaryKeyJoinColumn(name="id_service")
+public class WashService extends ABaseMoikaServiceAdditionalInfo {
 
     @Column(name = "id_car_type")
     private Short idCarType;
@@ -21,17 +14,9 @@ public class WashService implements MoikaServiceAdditinalInfo {
     private CarType carTypeEntity;
 
     @Column(name = "cost")
-    private BigDecimal cost = BigDecimal.valueOf(0.00D);
+    private BigDecimal cost ;
 
     public WashService(){}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Short getIdCarType() {
         return idCarType;
@@ -41,17 +26,28 @@ public class WashService implements MoikaServiceAdditinalInfo {
         this.idCarType = idCarType;
     }
 
-    public BigDecimal getCost() {
+    public String getCarTypeCode() {
+        return this.carTypeEntity.getTypeCode();
+    }
+
+    public void setCarTypeByCode(String code) {
+        CarType carType = new CarType();
+        carType.setTypeCode(code);
+        this.carTypeEntity = carType;
+    }
+
+    @Override
+    public BigDecimal getServiceCost() {
         return cost;
     }
 
-    public void setCost(BigDecimal cost) {
+    @Override
+    public void setServiceCost(BigDecimal cost) {
         this.cost = cost;
     }
 
     @Override
-    public WashService getMoikaServiceAdditinalInfo(int idService) {
+    public WashService getMoikaServiceAdditinalInfo() {
         return this;
     }
-
 }

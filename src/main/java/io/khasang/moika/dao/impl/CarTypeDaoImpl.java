@@ -4,6 +4,7 @@ package io.khasang.moika.dao.impl;
 import io.khasang.moika.dao.CarTypeDao;
 import io.khasang.moika.entity.CarType;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,9 @@ public class CarTypeDaoImpl implements CarTypeDao {
 
     @Override
     public void deleteCarType(CarType carType) {
-        sessionFactory.getCurrentSession().delete(carType);
+        final Session session = sessionFactory.getCurrentSession();
+        session.delete(carType);
+        session.flush();
     }
 
     @Override

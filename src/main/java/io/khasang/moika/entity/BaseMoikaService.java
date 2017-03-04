@@ -4,17 +4,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity(name = "service")
-public class MoikaServiceBase implements MoikaService {
-/*
-    id_fclt integer NOT NULL,
-    id_type integer NOT NULL,
-    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    is_pack boolean NOT NULL DEFAULT false,
-    id_status smallint NOT NULL DEFAULT 0,
-    description character varying(255) COLLATE pg_catalog."default",
-    time_create timestamp without time zone,
-    */
-
+@Inheritance(strategy=InheritanceType.JOINED)
+public  class BaseMoikaService extends ABaseMoikaEntity {
     @Id
     @Column(name = "id_service", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +13,7 @@ public class MoikaServiceBase implements MoikaService {
 
     @Column(name = "id_fclt")
     private int idFacility;
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_box_facility"), insertable=false, updatable=false )
     private WashFacility washFacility;
@@ -47,49 +39,70 @@ public class MoikaServiceBase implements MoikaService {
     private String description;
 
 
-    protected MoikaServiceBase(){}
+    protected BaseMoikaService(){}
 
-    @Override
-    public MoikaService createMoikaService() {
-       if (this == null) new MoikaServiceBase();
-       return this;
-    }
 
-    @Override
-    public int getMoikaServiceId() {
+    public int getId() {
         return this.id;
     }
 
-    @Override
-    public String getMoikaServiceType() {
-        return serviceStatusEntity.getCode();
+
+    public int getServiceType() {
+        return idType;
     }
 
-    @Override
-    public void setMoikaServiceType(int type) {
+
+    public void setServiceType(int type) {
         this.idType = type;
     }
 
-    @Override
-    public void setMoikaServiceType(String code) {
-        ServiceStatus sse = new ServiceStatus();
-        sse.setCode(code);
-        this.idType = serviceStatusEntity.getId();
+
+    public void setServiceType(String code) {
+        ServiceType sse = new ServiceType();
+        sse.getTypeCode();
+        this.serviceTypeEntity = sse;
     }
 
-    @Override
-    public BigDecimal getServiceCost(int idService) {
-        return null;
+
+
+    public int getServiceStatus() {
+        return idStatus;
     }
 
-    @Override
-    public MoikaService getMoikaService(int idService) {
-        return null;
+
+    public void setServiceStatus(short status) {
+        this.idStatus = status;
     }
 
-    @Override
-    public MoikaServiceAdditinalInfo getAdditionalMoikaServiceInfo(int idService) {
-        return null;
+
+    public void setServiceStatus(String code) {
+        ServiceStatus st = new ServiceStatus();
+        st.setCode(code);
+        this.serviceStatusEntity = st;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getIdFacility() {
+        return idFacility;
+    }
+
+    public void setIdFacility(int idFacility) {
+        this.idFacility = idFacility;
     }
 
 

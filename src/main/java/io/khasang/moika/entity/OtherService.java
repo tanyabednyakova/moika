@@ -3,9 +3,9 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name= "polish_service")
+@Entity(name= "other_service")
 @PrimaryKeyJoinColumn(name="id_service")
-public class PolishService extends ABaseMoikaServiceAdditionalInfo{
+public class OtherService extends ABaseMoikaServiceAdditionalInfo {
 
     @Id
     @Column(name = "id_service")
@@ -19,12 +19,12 @@ public class PolishService extends ABaseMoikaServiceAdditionalInfo{
     private String AddInfop;
 
     @Column(name = "cost")
-    private BigDecimal cost;
+    private BigDecimal cost ;
 
-    public PolishService(){}
+    public OtherService(){}
 
     @Override
-    public PolishService getMoikaServiceAdditinalInfo() {
+    public OtherService getMoikaServiceAdditinalInfo() {
         return this;
     }
 
@@ -35,6 +35,6 @@ public class PolishService extends ABaseMoikaServiceAdditionalInfo{
 
     @Override
     public void setServiceCost(BigDecimal cost) {
-            this.cost = cost;
+        this.cost = cost;
     }
 }

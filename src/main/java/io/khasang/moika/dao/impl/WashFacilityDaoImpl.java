@@ -5,6 +5,7 @@ import io.khasang.moika.dao.WashFacilityDao;
 import io.khasang.moika.entity.WashBox;
 import io.khasang.moika.entity.WashFacility;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
@@ -40,7 +41,9 @@ public class WashFacilityDaoImpl implements WashFacilityDao{
 
     @Override
     public void deleteWashFacility(WashFacility washFacility) {
-        sessionFactory.getCurrentSession().delete(washFacility);
+        final Session session = sessionFactory.getCurrentSession();
+        session.delete(washFacility);
+        session.flush();
     }
 
     @Override
