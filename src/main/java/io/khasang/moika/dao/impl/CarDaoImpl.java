@@ -51,11 +51,11 @@ public class CarDaoImpl implements CarDao {
     }
 
     @Override
-    public Car getCarByType(String name) {
+    public Car getCarByType(String type) {
         Criteria criteria = sessionFactory.
                 getCurrentSession().
                 createCriteria(Car.class);
-        criteria.add(Restrictions.eq("name", name));
+        criteria.add(Restrictions.eq("type", type));
         return (Car) criteria.uniqueResult();
     }
 
@@ -72,6 +72,15 @@ public class CarDaoImpl implements CarDao {
     public List<Car> getCarHqlList() {
         List<Car> CarList = sessionFactory.getCurrentSession().createQuery("FROM Car").list();
         return CarList;
+    }
+
+    @Override
+    public Car getCarByNumber(String number) {
+        Criteria criteria = sessionFactory.
+                getCurrentSession().
+                createCriteria(Car.class);
+        criteria.add(Restrictions.eq("number", number));
+        return (Car) criteria.uniqueResult();
     }
 
 }

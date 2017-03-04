@@ -19,4 +19,6 @@ public interface CarDao {
     List<Car> getCarList();
 
     List<Car> getCarHqlList();
+
+    Car getCarByNumber(String s);
 }

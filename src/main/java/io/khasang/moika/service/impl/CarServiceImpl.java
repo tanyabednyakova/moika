@@ -29,6 +29,16 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public Car getCarByType(String type) {
+        return carDao.getCarByType(type);
+    }
+
+    @Override
+    public Car getCarByNumber(String number) {
+        return carDao.getCarByNumber(number);
+    }
+
+    @Override
     public List<Car> getCarList() {
         return carDao.getCarList();
     }
