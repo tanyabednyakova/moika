@@ -1,4 +1,4 @@
-package io.khasang.moika.dao.impl;
+package io.khasang.service.impl;
 
 import io.khasang.moika.config.AppConfig;
 import io.khasang.moika.config.HibernateConfig;
@@ -9,9 +9,11 @@ import io.khasang.moika.service.WorkAccessService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -34,6 +36,8 @@ public class WorkAccessServiceImplTest {
 //    }
 //
     @Test
+    @Rollback
+    @Transactional
     public void commonWork() throws Exception {
         Work work = new Work("Мытье кузова", new BigDecimal("333.333"), 30);
         workAccessService.addWork(work);

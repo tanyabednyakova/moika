@@ -1,0 +1,62 @@
+package io.khasang.moika.dao.impl;
+
+import io.khasang.moika.dao.OrdersDetailDao;
+import io.khasang.moika.entity.OrdersDetail;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Transactional
+@Repository("OrdersDetailDao")
+public class OrdersDetailDaoImpl implements OrdersDetailDao {
+    private SessionFactory sessionFactory;
+
+    public OrdersDetailDaoImpl() { }
+    @Autowired
+    public OrdersDetailDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+    @Override
+    public void addOrdersDetail(OrdersDetail ordersDetail) {
+        sessionFactory.getCurrentSession().save(ordersDetail);
+    }
+
+    @Override
+    public void updatOrdersDetail(OrdersDetail ordersDetail) {
+        sessionFactory.getCurrentSession().update(ordersDetail);
+    }
+
+    @Override
+    public void deleteOrdersDetailk(OrdersDetail ordersDetail) {
+        final Session session = sessionFactory.getCurrentSession();
+        session.delete(ordersDetail);
+        session.flush();
+    }
+
+    @Override
+    public OrdersDetail getOrdersDetail(long id) {
+        Criteria criteria = sessionFactory.
+                getCurrentSession().createCriteria(OrdersDetail.class);
+        criteria.add(Restrictions.eq("id", id));
+        return (OrdersDetail) criteria.uniqueResult();
+    }
+
+    @Override
+    public List<OrdersDetail> getOrdersDetailForOrder(long idOrder) {
+        Query query  = sessionFactory.getCurrentSession().createQuery("from ordersdetail where order = ?");
+        query.setParameter(0, idOrder);
+        return query.list();
+    }
+
+    @Override
+    public List<OrdersDetail> getAllOrdersDetail() {
+        return  sessionFactory.getCurrentSession().createQuery("from ordersdetail").list();
+    }
+}

@@ -1,4 +1,4 @@
-package io.khasang.moika.dao.impl;
+package io.khasang.moika.service.impl;
 
 import io.khasang.moika.dao.WorkDao;
 import io.khasang.moika.entity.Work;
