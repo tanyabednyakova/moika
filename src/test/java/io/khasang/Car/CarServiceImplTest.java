@@ -28,7 +28,7 @@ public class CarServiceImplTest {
     @Test
     @Rollback
     @Transactional
-    public void testAddCar(){
+    public void testAddCar() {
         Car car = new Car();
         car.setCarType("Седан");
         car.setCarModel("Ford Mustang");
