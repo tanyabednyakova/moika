@@ -14,7 +14,7 @@ public class RestBindingResultT extends BeanPropertyBindingResult {
         super(target, objectName, autoGrowNestedPaths, autoGrowCollectionLimit);
     }
 
-    Map<String,String> getMapForJSONParser(){
+    public Map<String,String> getMapForJSONParser(){
         Map<String,String> result = new HashMap<>();
 
         return result;

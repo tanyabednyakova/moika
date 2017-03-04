@@ -23,8 +23,7 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 
 @Configuration
 //@EnableCaching
-@PropertySource(value = {"classpath:util.properties"})
-@PropertySource(value = {"classpath:auth.properties"})
+@PropertySource(value = {"classpath:util.properties", "classpath:auth.properties"})
 public class AppConfig {
     final private Environment environment;
 

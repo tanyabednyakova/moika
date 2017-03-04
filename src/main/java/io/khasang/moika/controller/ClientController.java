@@ -44,7 +44,8 @@ public class ClientController {
         clientValidator.validate(client,result);
         Map<String,String> msg = new HashMap<>();
         if(result.hasErrors()){
-            result.getFieldErrors().forEach((error)-> msg.put(error.getField(),error.getCode()));
+            return result.getFieldErrors();
+            //result.getFieldErrors().forEach((error)-> msg.put(error.getField(),error.getCode()));
         }else{
             //clientDAO.addClient(client);
             msg.put("success","success");
