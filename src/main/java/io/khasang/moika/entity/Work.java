@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity (name = "work")
 public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,12 @@ public class Work {
     private List<OrdersDetail> ordersDetails = new ArrayList<>();
 
     public Work() {
+    }
+
+    public Work(String name, BigDecimal price, int timeInBox) {
+        this.name = name;
+        this.price = price;
+        this.timeInBox = timeInBox;
     }
 
     public Long getId() {
@@ -61,4 +67,11 @@ public class Work {
     public void setOrdersDetails(List<OrdersDetail> ordersDetails) {
         this.ordersDetails = ordersDetails;
     }
+    @Override
+    public String toString(){
+        System.out.format("id = %d name= %s price = %f timeInBox =%d",
+                id,name,price,timeInBox);
+        return null;
+    }
+
 }

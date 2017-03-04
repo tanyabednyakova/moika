@@ -1,10 +1,10 @@
-package io.khasang.moika.dao;
+package io.khasang.moika.service;
 
 import io.khasang.moika.entity.Work;
 
 import java.util.List;
 
-public interface WorkDao {
+public interface WorkAccessService {
     void addWork(Work work);
     void updateWork(Work work);
     void deleteWork(Work work);
@@ -12,4 +12,3 @@ public interface WorkDao {
     Work getWork(String name);
     List<Work> getAllWork();
 }
-
