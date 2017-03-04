@@ -159,7 +159,7 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
         return jdbcTemplate.query(sql, (ResultSet rs, int rowNum) -> {
             Client client = new Client();
             client.setId(rs.getLong("client_id"));
-            client.setCarId(rs.getLong("car_id"));
+            //client.setCarId(rs.getLong("car_id"));
             client.setLastname(rs.getString("lastname"));
             client.setName(rs.getString("name"));
             client.setPhone(rs.getString("phone"));

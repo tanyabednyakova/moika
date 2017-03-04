@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserDAOImpl implements UserDAO {
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Autowired
     private RoleDAO roleDAO;
@@ -61,7 +61,7 @@ public class UserDAOImpl implements UserDAO {
     public void revokeRole(User user, Role role) {
         user.getRoles().remove(role);
         sessionFactory.getCurrentSession().update(user);
-        sessionFactory.getCurrentSession().flush();
+        //sessionFactory.getCurrentSession().flush();
     }
 
     @Override

@@ -23,6 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/client").permitAll()
+                //добавлен для тестирования validator'ов
+                //.antMatchers("/client/**").permitAll()
                 .antMatchers("/user/create*").permitAll()
 
                 .antMatchers("/create*").access("hasAnyRole('ADMIN')")

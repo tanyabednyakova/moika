@@ -30,12 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void removeUser(long id) {
-        return false;
+        //TODO
     }
 
     @Override
     public void updateUser(User user) {
-        return false;
+        //TODO
     }
 
     @Override
@@ -46,23 +46,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean hasFreeUserEmail(String email) {
         return false;
-    }
-
-    private void checkUser(User user,  BindingResult bindingResult){
-        bindingResult.getAllErrors().get(0).
-        if(StringUtils.isEmpty(user.getPassword())){
-            //return false;
-        }
-
-        //возможно стоит проверять так же содержимое через regex выражение
-        if(StringUtils.isEmpty(user.getLogin())||!user.getLogin().matches("\\w")){
-            //return false;
-        }
-
-        if(StringUtils.isEmpty(user.getFirstName())||!user.getFirstName().matches("^[A-Za-z]+|^[А-Яа-я]+")){
-            //return false;
-        }
-
     }
 
     @Override
