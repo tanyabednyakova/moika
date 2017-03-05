@@ -2,7 +2,6 @@ package io.khasang.moika.controller;
 
 import io.khasang.moika.dao.RoleDAO;
 import io.khasang.moika.dao.UserDAO;
-import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,14 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 
 /**
  * Контроллер интерфейсов пользователя
- * @since 2017-03-01
+ *
  * @author Rostislav Dublin
+ * @since 2017-03-01
  */
 
 @RequestMapping(path = "/user")
@@ -33,31 +30,27 @@ public class UserController {
     private RoleDAO roleDAO;
 
 
-
-    private User getCurrentUser(){
+    private User getCurrentUser() {
         String currentLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(!userDAO.containLoginUser(currentLogin)){
+        if (!userDAO.containLoginUser(currentLogin)) {
             return null;
-        }else{
+        } else {
             return userDAO.findByLogin(currentLogin);
         }
     }
 
 
-
-
     @RequestMapping("/createTestUser")
-    public String createTestUser(Model model){
+    public String createTestUser(Model model) {
         return createUser(model,
-                "TestUser-"+ DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm.ss").format(LocalDateTime.now()),
-               "123456Qw",
+                "TestUser-" + DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm.ss").format(LocalDateTime.now()),
+                "123456Qw",
                 "Тест",
                 "Тестович",
                 "Тестов",
                 "test@mail.ru"
         );
     }
-
 
 
     @RequestMapping("/createUser")
@@ -93,7 +86,7 @@ public class UserController {
 
             userDAO.createUser(user);
 
-            result = "Success: user "+user.getLogin()+" created with ID "+user.getId();
+            result = "Success: user " + user.getLogin() + " created with ID " + user.getId();
         }
         model.addAttribute("result", result);
         return "manageUser";
