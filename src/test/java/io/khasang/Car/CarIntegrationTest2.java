@@ -12,7 +12,7 @@ public class CarIntegrationTest2 {
 
     @Ignore
     
-    @Test
+   @Test
     public void updateCar() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -53,7 +53,7 @@ public class CarIntegrationTest2 {
                 38
         );
         String resultCar = responseEntity.getBody();
-        System.out.println(resultCar);
+       // System.out.println(resultCar);
         Assert.assertNotNull(resultCar);
     }
 
