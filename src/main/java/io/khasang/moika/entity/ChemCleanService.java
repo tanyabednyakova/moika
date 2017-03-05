@@ -3,29 +3,28 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name= "chem_clean_service")
+@Entity(name= "chem_clean_services")
 @PrimaryKeyJoinColumn(name="id_service")
 public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
 
-
     @Column(name = "id_dirt_type")
-    private Short idDirtType;
+    private int idDirtType;
     @ManyToOne
     @JoinColumn(name = "id_dirt_type", foreignKey = @ForeignKey(name = "fk_dirt_type"), insertable=false, updatable=false )
     private DirtType dirtTypeEntity;
 
     @Column(name = "id_material")
-    private Short idMaterial;
+    private int idMaterial;
     @ManyToOne
     @JoinColumn(name = "id_material", foreignKey = @ForeignKey(name = "fk_salon_materials"), insertable=false, updatable=false )
-    private SalonMaterials salonMaterial;
+    private SalonMaterial salonMaterial;
 
     @Column(name = "cost")
     private BigDecimal cost ;
 
     public ChemCleanService(){}
 
-    public Short getidDirtType() {
+    public int getidDirtType() {
         return idDirtType;
     }
 
@@ -43,7 +42,7 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
         this.dirtTypeEntity = dt;
     }
 
-    public Short getIdMaterial() {
+    public int getIdMaterial() {
         return idMaterial;
     }
 
@@ -51,11 +50,11 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
         this.idMaterial = idMaterial;
     }
 
-    public SalonMaterials getSalonMaterial() {
+    public SalonMaterial getSalonMaterial() {
         return salonMaterial;
     }
 
-    public void setSalonMaterial(SalonMaterials salonMaterial) {
+    public void setSalonMaterial(SalonMaterial salonMaterial) {
         this.salonMaterial = salonMaterial;
     }
 
@@ -73,6 +72,5 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
     public void setServiceCost(BigDecimal cost) {
         this.cost = cost;
     }
-
 
 }

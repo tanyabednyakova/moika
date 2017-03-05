@@ -3,14 +3,15 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name= "wash_service")
+@Entity(name= "wash_services")
 @PrimaryKeyJoinColumn(name="id_service")
 public class WashService extends ABaseMoikaServiceAdditionalInfo {
 
-    @Column(name = "id_car_type")
-    private Short idCarType;
+    @Column(name = "id_type_car")
+    private int idCarType;
+
     @ManyToOne
-    @JoinColumn(name = "id_car_type", foreignKey = @ForeignKey(name = "fk_car_type"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_type_car", foreignKey = @ForeignKey(name = "fk_car_type"), insertable=false, updatable=false )
     private CarType carTypeEntity;
 
     @Column(name = "cost")
@@ -18,22 +19,20 @@ public class WashService extends ABaseMoikaServiceAdditionalInfo {
 
     public WashService(){}
 
-    public Short getIdCarType() {
+    public int getIdCarType() {
         return idCarType;
     }
 
-    public void setIdCarType(Short idCarType) {
+    public void setIdCarType(int idCarType) {
         this.idCarType = idCarType;
     }
 
-    public String getCarTypeCode() {
-        return this.carTypeEntity.getTypeCode();
+    public CarType getCarTypeEntity() {
+        return carTypeEntity;
     }
 
-    public void setCarTypeByCode(String code) {
-        CarType carType = new CarType();
-        carType.setTypeCode(code);
-        this.carTypeEntity = carType;
+    public void setCarTypeEntity(CarType carTypeEntity) {
+        this.carTypeEntity = carTypeEntity;
     }
 
     @Override

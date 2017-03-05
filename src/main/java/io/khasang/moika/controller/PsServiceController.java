@@ -1,19 +1,14 @@
 package io.khasang.moika.controller;
 
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.ABaseMoikaServiceAdditionalInfo;
+import io.khasang.moika.dao.impl.AllServiceDaoImpl;
 import io.khasang.moika.entity.MoikaAllService;
-import io.khasang.moika.entity.WashBox;
-import io.khasang.moika.model.CreateTable;
-import io.khasang.moika.service.PskvorDataAccessService;
-import io.khasang.moika.service.PskvorWashBoxDaoService;
-import io.khasang.moika.service.ServiceDataAccessService;
+import io.khasang.moika.service.impl.ServiceDataAccessServiceImpl;
+import io.khasang.moika.service.impl.WashServiceDataAccessServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,10 +18,11 @@ import java.util.List;
 public class PsServiceController {
 
     @Autowired
-    ServiceDataAccessService serviceAll;
+    ServiceDataAccessServiceImpl serviceDataAccessServiceImpl;
+   //     AllServiceDaoImpl serviceAll;
 
     @Autowired
-    ServiceDataAccessService serviceWash;
+    WashServiceDataAccessServiceImpl washServiceDataAccessServiceImpl;
 
 
     @RequestMapping(value = "/serviceList", method = RequestMethod.GET)
@@ -34,10 +30,7 @@ public class PsServiceController {
         List<MoikaAllService> allServicesList = new ArrayList<>();
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         try {
-            List<ABaseMoikaServiceAdditionalInfo>  allList = serviceAll.getAllEntities();
-            for (ABaseMoikaServiceAdditionalInfo a : allList) {
-                allServicesList.add((MoikaAllService) a);
-            }
+            allServicesList = serviceDataAccessServiceImpl.getAllServices();
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }

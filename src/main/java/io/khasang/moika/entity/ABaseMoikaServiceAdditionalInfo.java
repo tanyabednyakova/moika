@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 public abstract class ABaseMoikaServiceAdditionalInfo extends BaseMoikaService implements MoikaService, MoikaServiceAdditinalInfo {
     ABaseMoikaServiceAdditionalInfo  moikaServiceAdditionalInfo;
     @Column(name = "cost")
-    BigDecimal serviceCost = new BigDecimal("0.00");
+    protected BigDecimal serviceCost = new BigDecimal("0.00");
 
 
     public abstract ABaseMoikaServiceAdditionalInfo getMoikaServiceAdditinalInfo();

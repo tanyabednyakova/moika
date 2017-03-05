@@ -2,6 +2,7 @@ package io.khasang.moika.controller;
 
 import io.khasang.moika.entity.Test;
 import io.khasang.moika.service.PskvorTestDaoService;
+import io.khasang.moika.service.impl.WashServiceDataAccessServiceImpl;
 import org.springframework.stereotype.Controller;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.PskvorDataAccessService;
@@ -23,6 +24,7 @@ public class PsAppController {
     PskvorDataAccessService pskvorDataAccessService;
     @Autowired
     PskvorTestDaoService pskvorTestDaoService;
+
 
     @RequestMapping(value = "/ps-queries", method = RequestMethod.GET)
     public String SelectAll(Model model) {

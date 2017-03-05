@@ -23,7 +23,7 @@ import java.util.Date;
 @Configuration
 @PropertySource(value = {"classpath:util.properties"})
 @PropertySource(value = {"classpath:auth.properties"})
-@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service.*"})
+@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service.*", "io.khasang.moika.controller.*",})
 public class AppConfig {
     @Autowired
     Environment environment;

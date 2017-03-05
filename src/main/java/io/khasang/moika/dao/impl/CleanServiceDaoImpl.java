@@ -11,7 +11,7 @@ public class CleanServiceDaoImpl extends AMoikaServiceDaoImpl<CleanService> impl
     public CleanServiceDaoImpl() {
     }
 
-    public CleanServiceDaoImpl(Class type) {
+    public CleanServiceDaoImpl(Class<CleanService> type) {
         super(type);
     }
 }

@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name= "complex_service")
+@Entity(name= "complex_services")
 @PrimaryKeyJoinColumn(name="id_service")
 public class ComplexService extends ABaseMoikaServiceAdditionalInfo {
     /*

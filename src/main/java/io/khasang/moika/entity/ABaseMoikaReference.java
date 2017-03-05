@@ -2,19 +2,19 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
-@Entity
+@MappedSuperclass
 public abstract class ABaseMoikaReference extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_type", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    protected int id;
     @Column(name = "type_code", unique = true, nullable = false)
-    public String typeCode;
+    protected String typeCode;
     @Column(name = "type_name")
-    public String typeName;
+    protected String typeName;
     @Column(name = "descr")
-    public String description;
+    protected String description;
 
     public int getId() {
         return id;
@@ -52,5 +52,23 @@ public abstract class ABaseMoikaReference extends ABaseMoikaEntity {
                 ", typeName='" + typeName + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ABaseMoikaReference)) return false;
+
+        ABaseMoikaReference that = (ABaseMoikaReference) o;
+
+        if (getId() != that.getId()) return false;
+        return getTypeCode().equals(that.getTypeCode());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getTypeCode().hashCode();
+        return result;
     }
 }

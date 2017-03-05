@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component("PskvorWashFacilityDaoServiceImpl")
+@Component("pskvorWashFacilityDaoServiceImpl")
 @Transactional
 public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoService {
     @Autowired

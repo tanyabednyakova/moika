@@ -3,8 +3,7 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.IMoikaDaoCrud;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.ABaseMoikaEntity;
-import io.khasang.moika.entity.ABaseMoikaServiceAdditionalInfo;
+import io.khasang.moika.entity.BaseMoikaService;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("moikaServiceDaoImpl")
-public abstract class AMoikaServiceDaoImpl<T extends ABaseMoikaServiceAdditionalInfo> implements IMoikaDaoCrud<T>{
+public abstract class AMoikaServiceDaoImpl<T extends BaseMoikaService> implements IMoikaDaoCrud<T>{
     private SessionFactory sessionFactory;
     private Class<T> type;
 
@@ -30,14 +29,16 @@ public abstract class AMoikaServiceDaoImpl<T extends ABaseMoikaServiceAdditional
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
+
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public void addEntity(T entity) throws MoikaDaoException {
+    public T addEntity(T entity) throws MoikaDaoException {
         sessionFactory.getCurrentSession().save(entity);
+        return entity;
     }
 
     @Override

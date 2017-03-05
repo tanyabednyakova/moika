@@ -1,9 +1,8 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
-@Entity(name = "service")
+@Entity(name = "services")
 @Inheritance(strategy=InheritanceType.JOINED)
 public  class BaseMoikaService extends ABaseMoikaEntity {
     @Id
@@ -63,21 +62,17 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
         this.serviceTypeEntity = sse;
     }
 
-
-
     public int getServiceStatus() {
         return idStatus;
     }
-
 
     public void setServiceStatus(short status) {
         this.idStatus = status;
     }
 
-
     public void setServiceStatus(String code) {
         ServiceStatus st = new ServiceStatus();
-        st.setCode(code);
+        st.setStatusCode(code);
         this.serviceStatusEntity = st;
     }
 
@@ -105,5 +100,27 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
         this.idFacility = idFacility;
     }
 
+    public WashFacility getWashFacility() {
+        return washFacility;
+    }
 
+    public void setWashFacility(WashFacility washFacility) {
+        this.washFacility = washFacility;
+    }
+
+    public ServiceType getServiceTypeEntity() {
+        return serviceTypeEntity;
+    }
+
+    public void setServiceTypeEntity(ServiceType serviceTypeEntity) {
+        this.serviceTypeEntity = serviceTypeEntity;
+    }
+
+    public ServiceStatus getServiceStatusEntity() {
+        return serviceStatusEntity;
+    }
+
+    public void setServiceStatusEntity(ServiceStatus serviceStatusEntity) {
+        this.serviceStatusEntity = serviceStatusEntity;
+    }
 }

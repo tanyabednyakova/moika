@@ -7,7 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 
-@Entity(name = "wash_box")
+@Entity(name = "wash_boxes")
 public class WashBox {
 
     @Id
@@ -23,6 +23,7 @@ public class WashBox {
 
     @Column(name = "id_type")
     private int idType;
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn( name = "id_type", foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
     private BoxType boxTypeEntity;
@@ -52,7 +53,6 @@ public class WashBox {
     public int getId() {
         return id;
     }
-
 
     public int getIdFacility() {
         return idFacility;
@@ -104,6 +104,14 @@ public class WashBox {
 
     public WashFacility getWashFacility() {
         return washFacility;
+    }
+
+    public void setBoxTypeEntity(BoxType boxTypeEntity) {
+        this.boxTypeEntity = boxTypeEntity;
+    }
+
+    public void setBoxStatusEntity(BoxStatus boxStatusEntity) {
+        this.boxStatusEntity = boxStatusEntity;
     }
 
     @Override
