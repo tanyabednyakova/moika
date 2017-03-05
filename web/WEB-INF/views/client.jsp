@@ -1,14 +1,14 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
-    <!-- Возможно стоит добавить Bootstrap в проект?! -->
-    <!-- Bootstrap latest compiled and minified CSS -->
+    <%-- Возможно стоит добавить Bootstrap в проект?! --%>
+    <%-- Bootstrap latest compiled and minified CSS --%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
+    <%-- jQuery library --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- Bootstrap latest compiled JavaScript -->
+    <%-- Bootstrap latest compiled JavaScript --%>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="<c:url value="css/main_style.css" />">
 </head>
@@ -18,7 +18,7 @@
         <div class="col-xs-12">
             <nav class="navbar navbar-default">
                 <div class="container-fluid main-menu">
-                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <%-- Brand and toggle get grouped for better mobile display --%>
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                                 data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -27,13 +27,14 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="${pageContext.request.contextPath}">
+                        <%--${pageContext.request.contextPath}--%>
+                        <a class="navbar-brand" href="<c:url value="/client" />">
                                 <span><img class="logo-car" alt="CarWash" height="40" width="32"
                                            src="<c:url value="images/logo1.svg" />">
                                  </span> CarWash</a>
                     </div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <%-- Collect the nav links, forms, and other content for toggling --%>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Новости<span class="sr-only">(current)</span></a></li>
@@ -48,14 +49,14 @@
                                 <button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#regModal">
                                     Зарегистрироваться <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                             </div></li>
-                            <!--li><button type="button" class="btn btn-default navbar-btn">Войти
+                            <%--li><button type="button" class="btn btn-default navbar-btn">Войти
                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span></button>
                             </li>
                             <li><button type="button" class="btn btn-default navbar-btn">Регистрация
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></li-->
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></li--%>
                         </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
+                    </div><%-- /.navbar-collapse --%>
+                </div><%-- /.container-fluid --%>
             </nav>
         </div>
     </div>
@@ -90,7 +91,7 @@
                 </p>
                 <footer>Английский перевод 1914 года, H. Rackham</footer>
             </blockquote>
-           <!-- <blockquote>
+           <%-- <blockquote>
                 <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was
                     born
                     and I will give you a complete account of the system, and expound the actual teachings of the great
@@ -121,7 +122,7 @@
                     rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut
                     perferendis doloribus asperiores repellat."</p>
                 <footer>Английский перевод 1914 года, H. Rackham</footer>
-            </blockquote>-->
+            </blockquote>--%>
             <blockquote>
                 "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and
                 demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the
@@ -143,6 +144,9 @@
         <div class="col-xs-12">О команде, контакты, ©</div>
     </div>
 </div>
+<%-- Модальные окна --%>
+
+<%-- Модальное окно  ауторизации--%>
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -154,23 +158,23 @@
             <form>
                 <div class="form-group">
                     <label for="loginInputLogin">Логин</label>
-                    <input type="email" class="form-control" id="loginInputLogin" placeholder="Login">
+                    <input type="text" class="form-control" name="login" id="loginInputLogin" placeholder="Login">
                 </div>
                 <div class="form-group">
                     <label for="loginInputPassword">Пароль</label>
-                    <input type="password" class="form-control" id="loginInputPassword" placeholder="Password">
+                    <input type="password" class="form-control" name="password" id="loginInputPassword" placeholder="Password">
                 </div>
-
             </form>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Войти</button>
-                <!--button type="button" class="btn btn-primary">Save changes</button-->
+                <%--button type="button" class="btn btn-primary">Save changes</button--%>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div><%-- /.modal-content --%>
+    </div><%-- /.modal-dialog --%>
+</div><%-- /.modal --%>
 
+<%-- Модальное окно регистрации--%>
 <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -180,31 +184,35 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
+                    <div class="form-group has-feedback">
                         <label for="regInputEmail">Email</label>
-                        <input type="email" class="form-control" id="regInputEmail" placeholder="Email">
+                        <input type="email" class="form-control" name="email" id="regInputEmail" placeholder="Email">
+                        <span class="glyphicon glyphicon-ok hide form-control-feedback" aria-hidden="true"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group has-feedback">
                         <label for="regInputLogin">Логин</label>
-                        <input type="email" class="form-control" id="regInputLogin" placeholder="Login">
+                        <input type="email" class="form-control" name="login" id="regInputLogin" placeholder="Login">
+                        <span class="glyphicon glyphicon-ok hide form-control-feedback" aria-hidden="true"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group has-feedback">
                         <label for="regInputPassword">Пароль</label>
-                        <input type="password" class="form-control" id="regInputPassword" placeholder="Password">
+                        <input type="password" class="form-control" name="password" id="regInputPassword" placeholder="Password">
+                        <span class="glyphicon glyphicon-ok hide form-control-feedback" aria-hidden="true"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group has-feedback">
                         <label for="regInputPassword1">Повторите пароль</label>
                         <input type="password" class="form-control" id="regInputPassword1" placeholder="Password">
+                        <span class="glyphicon glyphicon-ok hide form-control-feedback" aria-hidden="true"></span>
                     </div>
 
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">Регистрация</button>
-                <!--button type="button" class="btn btn-primary">Save changes</button-->
+                <%--button type="button" class="btn btn-primary">Save changes</button--%>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div><%-- /.modal-content --%>
+    </div><%-- /.modal-dialog --%>
+</div><%-- /.modal --%>
 </body>
 </html>
