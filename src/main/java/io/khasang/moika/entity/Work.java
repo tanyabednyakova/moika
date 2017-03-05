@@ -14,7 +14,10 @@ public class Work {
     private String name;
     @Column(length = 15, scale =2, unique = true,nullable = false)
     private BigDecimal price;
-    // время в минутах для проведения работ в боксе
+/*
+время в минутах для проведения работ в боксе
+* */
+
     private int timeInBox;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrdersDetail> ordersDetails = new ArrayList<>();

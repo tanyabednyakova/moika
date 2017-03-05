@@ -2,6 +2,7 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.OrdersDetailDao;
 import io.khasang.moika.entity.OrdersDetail;
+import io.khasang.moika.entity.Work;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Transactional
@@ -18,18 +20,21 @@ import java.util.List;
 public class OrdersDetailDaoImpl implements OrdersDetailDao {
     private SessionFactory sessionFactory;
 
-    public OrdersDetailDaoImpl() { }
+    public OrdersDetailDaoImpl() {
+    }
+
     @Autowired
     public OrdersDetailDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
     @Override
     public void addOrdersDetail(OrdersDetail ordersDetail) {
         sessionFactory.getCurrentSession().save(ordersDetail);
     }
 
     @Override
-    public void updatOrdersDetail(OrdersDetail ordersDetail) {
+    public void updateOrdersDetail(OrdersDetail ordersDetail) {
         sessionFactory.getCurrentSession().update(ordersDetail);
     }
 
@@ -46,6 +51,15 @@ public class OrdersDetailDaoImpl implements OrdersDetailDao {
                 getCurrentSession().createCriteria(OrdersDetail.class);
         criteria.add(Restrictions.eq("id", id));
         return (OrdersDetail) criteria.uniqueResult();
+    }
+
+    @Override
+    public OrdersDetail fillOrdersDetail(OrdersDetail ordersDetail, Work work, BigDecimal quantity) {
+        ordersDetail.setQuantity(quantity);
+        ordersDetail.setSumOfWork(work.getPrice().multiply(quantity));
+        ordersDetail.setWork(work);
+        work.getOrdersDetails().add(ordersDetail);
+        return ordersDetail;
     }
 
     @Override

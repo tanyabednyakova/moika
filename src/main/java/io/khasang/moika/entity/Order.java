@@ -11,7 +11,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 15, unique = true,nullable = false)
-    private String nunber;
+    private String number;
     @Temporal(TemporalType.DATE)
     private Date registrationDate;
     @Temporal(TemporalType.DATE)
@@ -29,7 +29,6 @@ public class Order {
     private Client client;
 // TODO: 03.03.2017   id_использование бокса
 
-
     public Order() {
     }
 
@@ -41,12 +40,12 @@ public class Order {
         this.id = id;
     }
 
-    public String getNunber() {
-        return nunber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setNunber(String nunber) {
-        this.nunber = nunber;
+    public void setNumber(String nunber) {
+        this.number = nunber;
     }
 
     public Date getRegistrationDate() {

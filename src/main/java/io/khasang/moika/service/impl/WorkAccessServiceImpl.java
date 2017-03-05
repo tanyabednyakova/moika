@@ -22,6 +22,7 @@ public class WorkAccessServiceImpl implements WorkAccessService {
     public void addWork(Work work) {
         workDao.addWork(work);
     }
+
     @Override
     public void updateWork(Work work) {
         workDao.updateWork(work);
