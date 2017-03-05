@@ -15,7 +15,7 @@
  */
 function setActiveFormInput(toURL, selector){
     var div = $(selector).closest('div.form-group');
-    var gliphicon = div.find("spam.glyphicon");
+    var glyphicon = div.find('span.glyphicon');
     $(selector).change(function(){
         var value = $(this).val();
         $.ajax({
