@@ -59,7 +59,6 @@ public class CarDaoImpl implements CarDao {
         return (Car) criteria.uniqueResult();
     }
 
-
     @Override
     @SuppressWarnings("unchecked")
     public List<Car> getCarList() {

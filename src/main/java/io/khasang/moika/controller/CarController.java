@@ -1,6 +1,5 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.dao.CarDao;
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class CarController {
     @Autowired
-    CarService carService;
+    private CarService carService;
 
-    @Autowired
-    CarDao carDao;
-
-    @RequestMapping(value = "car/add/{id}", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "car/add", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public Car addCar(@RequestBody Car car, @PathVariable("id") String id){
+    public Car addCar(@RequestBody Car car){
         carService.addCar(car);
         return car;
     }
@@ -42,7 +38,7 @@ public class CarController {
         return car;
     }
 
-    @RequestMapping(value = "/car/delete", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/car/delete/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String deleteCar(@PathVariable("id") String id){
         carService.deleteCar(Long.parseLong(id));

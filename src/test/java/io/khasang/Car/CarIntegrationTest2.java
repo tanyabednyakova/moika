@@ -12,7 +12,7 @@ public class CarIntegrationTest2 {
 
     @Ignore
     
-   @Test
+    @Test
     public void updateCar() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -46,14 +46,13 @@ public class CarIntegrationTest2 {
     public void deleteCar() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(
-                "http://localhost:8080/Car/{id}",
+                "http://localhost:8080/car/delete/{id}",
                 HttpMethod.DELETE,
                 null,
                 String.class,
                 38
         );
         String resultCar = responseEntity.getBody();
-       // System.out.println(resultCar);
         Assert.assertNotNull(resultCar);
     }
 
