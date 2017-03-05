@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 /**
  * Базовая реализация DAO пользователей
  *
- * @since 2017-03-01
  * @author Rostislav Dublin, Kovalev Aleksandr
+ * @since 2017-03-01
  */
 @Service("userDao")
 @Transactional
@@ -54,14 +54,12 @@ public class UserDAOImpl implements UserDAO {
     public void grantRole(@NotNull User user, @NotNull Role role) {
         user.getRoles().add(role);
         sessionFactory.getCurrentSession().update(user);
-        sessionFactory.getCurrentSession().flush();
     }
 
     @Override
     public void revokeRole(User user, Role role) {
         user.getRoles().remove(role);
         sessionFactory.getCurrentSession().update(user);
-        //sessionFactory.getCurrentSession().flush();
     }
 
     @Override
@@ -77,24 +75,24 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean containUser(long id) {
         long countUsers = sessionFactory.getCurrentSession()
-                .createQuery("select User.id from User where User.id=:id",Long.class)
-                .setParameter("id",id).uniqueResult();
-        return countUsers>0?true:false;
+                .createQuery("select User.id from User where User.id=:id", Long.class)
+                .setParameter("id", id).uniqueResult();
+        return countUsers > 0 ? true : false;
     }
 
     @Override
     public boolean containLoginUser(String login) {
         long countUsers = sessionFactory.getCurrentSession()
-                .createQuery("select User.id from User where User.login=:login",Long.class)
-                .setParameter("login",login).uniqueResult();
-        return countUsers>0?true:false;
+                .createQuery("select User.id from User where User.login=:login", Long.class)
+                .setParameter("login", login).uniqueResult();
+        return countUsers > 0 ? true : false;
     }
 
     @Override
     public boolean containLoginEmail(String email) {
         long countUsers = sessionFactory.getCurrentSession()
-                .createQuery("select User.id from User where User.email=:email",Long.class)
-                .setParameter("email",email).uniqueResult();
-        return countUsers>0?true:false;
+                .createQuery("select User.id from User where User.email=:email", Long.class)
+                .setParameter("email", email).uniqueResult();
+        return countUsers > 0 ? true : false;
     }
 }

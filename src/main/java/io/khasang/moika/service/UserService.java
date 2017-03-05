@@ -16,7 +16,7 @@ public interface UserService {
      * Создать учетную запись пользователя
      *@param user - Данные в объекте user
      */
-    void createUser(User user);
+    User createUser(User user);
 
     /**
      * Удалить учетную запись пользователя
@@ -28,7 +28,7 @@ public interface UserService {
      * Обновить поля учетной записи пользователя
      *@param user - Данные в объекте user
      */
-    void updateUser(User user);
+    User updateUser(User user);
 
     /**
      * Проверить является ли данный логин пользователя свободным
