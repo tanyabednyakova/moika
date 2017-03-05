@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
 
 @Component
 public class ClientValidator implements Validator {
@@ -28,5 +30,11 @@ public class ClientValidator implements Validator {
         if(!client.getLastname().matches("^[A-Za-z]*|^[А-Яа-я]*")){
             errors.rejectValue("lastname","lastname_invalid");
         }
+
+        if(client.getCar()!=null){
+            errors.pushNestedPath("car");
+            ValidationUtils.invokeValidator(carValidator,client.getCar(),errors);
+        }
+        errors.popNestedPath();
     }
 }
