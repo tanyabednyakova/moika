@@ -3,6 +3,7 @@ package io.khasang.moika.controller;
 import io.khasang.moika.dao.ClientDAO;
 import io.khasang.moika.entity.Client;
 import io.khasang.moika.parser.BindingResultToMapParser;
+import io.khasang.moika.validator.CarValidator;
 import io.khasang.moika.validator.ClientValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/client")
 public class ClientController {
@@ -20,6 +24,8 @@ public class ClientController {
     private ClientDAO clientDAO;
     @Autowired
     private ClientValidator clientValidator;
+    @Autowired
+    private CarValidator carValidator;
 
     @RequestMapping(method =  RequestMethod.GET)
     public String getClient(){
