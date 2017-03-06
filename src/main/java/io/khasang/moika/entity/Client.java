@@ -1,7 +1,5 @@
 package io.khasang.moika.entity;
 
-import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.io.Serializable;
@@ -10,7 +8,7 @@ import java.io.Serializable;
 @Table(name = "clients")
 public class Client implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String lastname;

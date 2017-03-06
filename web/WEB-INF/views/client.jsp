@@ -228,7 +228,13 @@
         var jsonData = parseFormToJSON("#loginForm");
         $.ajax({
             method:"POST",
-            
+            contentType:'application/json;charset=UTF-8',
+            url:<c:url value="/client"/>,//TODO добавить актуальные url
+            data: jsonData,
+            success:function (data) {
+                var obj = $.parseJSON(data);
+                //TODO обработка данных с бэка для формы регистрации
+            }
         });
     })
 </script>
