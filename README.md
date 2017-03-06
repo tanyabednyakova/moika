@@ -13,5 +13,19 @@
 
 ### new world
 
+* asd
+* asd
+* asd
+    * qewqwe
+    * qweqe
+        * qwee
+1. 123
+2. 231
+
 # jack
+
+| Day     | Meal    | Price |
+| --------|---------|-------|
+| Monday  | pasta   | $6    |
+| Tuesday | chicken | $8    |
 
