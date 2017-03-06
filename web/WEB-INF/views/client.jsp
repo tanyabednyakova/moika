@@ -224,7 +224,13 @@
     </div><%-- /.modal-dialog --%>
 </div><%-- /.modal --%>
 <script type="text/javascript">
-
+    $("#loginBtn").click(function () {
+        var jsonData = parseFormToJSON("#loginForm");
+        $.ajax({
+            method:"POST",
+            
+        });
+    })
 </script>
 </body>
 </html>
