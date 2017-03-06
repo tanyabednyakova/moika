@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <%-- Bootstrap latest compiled JavaScript --%>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="<c:url value="js/utils.js" />"></script>
     <link rel="stylesheet" href="<c:url value="css/main_style.css" />">
 </head>
 <body>
@@ -91,38 +92,38 @@
                 </p>
                 <footer>Английский перевод 1914 года, H. Rackham</footer>
             </blockquote>
-           <%-- <blockquote>
-                <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was
-                    born
-                    and I will give you a complete account of the system, and expound the actual teachings of the great
-                    explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids
-                    pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure
-                    rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or
-                    pursues or desires to obtain pain of itself, because it is pain, but because occasionally
-                    circumstances
-                    occur in which toil and pain can procure him some great pleasure. To take a trivial example, which
-                    of us
-                    ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has
-                    any
-                    right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or
-                    one
-                    who avoids a pain that produces no resultant pleasure?"</p>
-                <footer>Абзац 1.10.33 "de Finibus Bonorum et Malorum", написанный Цицероном в 45 году н.э.</footer>
-            </blockquote>
-            <blockquote>
-                <p>"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                    deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
-                    provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum
-                    fuga.
-                    Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est
-                    eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas
-                    assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum
-                    necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque
-                    earum
-                    rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut
-                    perferendis doloribus asperiores repellat."</p>
-                <footer>Английский перевод 1914 года, H. Rackham</footer>
-            </blockquote>--%>
+            <%-- <blockquote>
+                 <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was
+                     born
+                     and I will give you a complete account of the system, and expound the actual teachings of the great
+                     explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids
+                     pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure
+                     rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or
+                     pursues or desires to obtain pain of itself, because it is pain, but because occasionally
+                     circumstances
+                     occur in which toil and pain can procure him some great pleasure. To take a trivial example, which
+                     of us
+                     ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has
+                     any
+                     right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or
+                     one
+                     who avoids a pain that produces no resultant pleasure?"</p>
+                 <footer>Абзац 1.10.33 "de Finibus Bonorum et Malorum", написанный Цицероном в 45 году н.э.</footer>
+             </blockquote>
+             <blockquote>
+                 <p>"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
+                     deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
+                     provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum
+                     fuga.
+                     Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est
+                     eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas
+                     assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum
+                     necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque
+                     earum
+                     rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut
+                     perferendis doloribus asperiores repellat."</p>
+                 <footer>Английский перевод 1914 года, H. Rackham</footer>
+             </blockquote>--%>
             <blockquote>
                 "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and
                 demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the
@@ -151,28 +152,36 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title" id="loginModalLabel">Вход</h3>
             </div>
             <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <label for="loginInputLogin">Логин</label>
-                    <input type="text" class="form-control" name="login" id="loginInputLogin" placeholder="Login">
-                </div>
-                <div class="form-group">
-                    <label for="loginInputPassword">Пароль</label>
-                    <input type="password" class="form-control" name="password" id="loginInputPassword" placeholder="Password">
-                </div>
-            </form>
+                <form id="loginForm">
+                    <div class="alert alert-danger hide">
+                        <p>Invalid login or password </p>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginInputLogin">Логин</label>
+                        <input type="text" class="form-control" name="login" id="loginInputLogin" placeholder="Login">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginInputPassword">Пароль</label>
+                        <input type="password" class="form-control" name="password" id="loginInputPassword"
+                               placeholder="Password">
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Войти</button>
+                <button type="button" id="loginBtn" class="btn btn-primary">Войти</button>
                 <%--button type="button" class="btn btn-primary">Save changes</button--%>
             </div>
-        </div><%-- /.modal-content --%>
-    </div><%-- /.modal-dialog --%>
-</div><%-- /.modal --%>
+        </div>
+        <%-- /.modal-content --%>
+    </div>
+    <%-- /.modal-dialog --%>
+</div>
+<%-- /.modal --%>
 
 <%-- Модальное окно регистрации--%>
 <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalLabel">
@@ -183,7 +192,7 @@
                 <h3 class="modal-title" id="regModalLabel">Форма регистрации</h3>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="regForm">
                     <div class="form-group has-feedback">
                         <label for="regInputEmail">Email</label>
                         <input type="email" class="form-control" name="email" id="regInputEmail" placeholder="Email">
@@ -208,11 +217,14 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Регистрация</button>
+                <button type="button" id="regBtn" class="btn btn-primary">Регистрация</button>
                 <%--button type="button" class="btn btn-primary">Save changes</button--%>
             </div>
         </div><%-- /.modal-content --%>
     </div><%-- /.modal-dialog --%>
 </div><%-- /.modal --%>
+<script type="text/javascript">
+
+</script>
 </body>
 </html>
