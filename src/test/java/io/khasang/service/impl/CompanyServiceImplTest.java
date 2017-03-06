@@ -1,7 +1,5 @@
 package io.khasang.service.impl;
 
-import io.khasang.moika.config.AppConfig;
-import io.khasang.moika.config.HibernateConfig;
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
