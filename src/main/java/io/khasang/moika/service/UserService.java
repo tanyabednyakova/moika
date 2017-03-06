@@ -3,9 +3,10 @@ package io.khasang.moika.service;
 /**
  * Реализация Service пользователей
  *
- * @since 2017-03-02
  * @author Kovalev Aleksandr
+ * @since 2017-03-02
  */
+
 import io.khasang.moika.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -13,40 +14,72 @@ import org.springframework.stereotype.Service;
 public interface UserService {
 
     /**
+     * Найти пользователя по ID
+     *
+     * @param id ID искомого пользователя
+     * @return пользователь
+     */
+    User findById(Long id);
+
+    /**
+     * Найти пользователя по логину
+     *
+     * @param login ID искомого пользователя
+     * @return пользователь
+     */
+
+    User findByLogin(String login);
+
+    /**
+     * Найти прользователя по Email
+     *
+     * @param email адрес электронной почты
+     * @return пользователь
+     */
+    User findByEmail(String email);
+
+
+    /**
      * Создать учетную запись пользователя
-     *@param user - Данные в объекте user
+     *
+     * @param user - Данные в объекте user
      */
     User createUser(User user);
 
     /**
      * Удалить учетную запись пользователя
-     *@param id пользователя в БД
+     *
+     * @param user пользователь
      */
-    void removeUser(long id);
+    void deleteUser(User user);
 
     /**
      * Обновить поля учетной записи пользователя
-     *@param user - Данные в объекте user
+     *
+     * @param user - Данные в объекте user
      */
     User updateUser(User user);
 
     /**
      * Проверить является ли данный логин пользователя свободным
-     *@param login - Логин пользолвателя
-     *@return возвращает булевое значение, true - если данный логин свободен, false - если нет
+     *
+     * @param login - Логин пользолвателя
+     * @return возвращает булевое значение, true - если данный логин свободен, false - если нет
      */
-    boolean hasFreeUserLogin(String login);
+    boolean isLoginFree(String login);
 
     /**
      * Проверить является ли данный email пользователя свободным
-     *@param email - Логин пользолвателя
-     *@return возвращает булевое значение, true - если данный email свободен, false - если нет
+     *
+     * @param email - Логин пользолвателя
+     * @return возвращает булевое значение, true - если данный email свободен, false - если нет
      */
-    boolean hasFreeUserEmail(String email);
+    boolean isEmailFree(String email);
 
     /**
      * Вернуть закодированную версию исходного пароля.
-     * @param rawPassword
+     *
+     * @param rawPassword незакодированный пароль
      * @return закодированный пароль
      */
     String getEncodedPassword(String rawPassword);

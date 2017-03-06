@@ -3,6 +3,7 @@ package io.khasang.moika.controller;
 import io.khasang.moika.dao.RoleDAO;
 import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.User;
+import io.khasang.moika.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class UserController {
     @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Autowired
     private RoleDAO roleDAO;
@@ -32,11 +33,8 @@ public class UserController {
 
     private User getCurrentUser() {
         String currentLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!userDAO.containLoginUser(currentLogin)) {
-            return null;
-        } else {
-            return userDAO.findByLogin(currentLogin);
-        }
+            return userService.findByLogin(currentLogin);
+
     }
 
 
@@ -84,7 +82,7 @@ public class UserController {
             user.setLastName(lastName);
             user.setEmail(email);
 
-            userDAO.createUser(user);
+            userService.createUser(user);
 
             result = "Success: user " + user.getLogin() + " created with ID " + user.getId();
         }

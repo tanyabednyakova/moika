@@ -1,0 +1,57 @@
+package io.khasang.moika.util;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
+
+/**
+ * Утилиты для удобного доступа к данным через Hibernate
+ *
+ * @author Rostislav Dublin
+ * @since 2017-03-05
+ */
+@Service("dataAccessUtil")
+public class DataAccessUtil {
+
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public DataAccessUtil(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    /**
+     * Возвращает готовый к выполнению запрос сущностей указанного типа по единственному условию "поле=значение"
+     *
+     * @param entityClass класс запрашиваемых сущностей
+     * @param fieldName   имя поля для запроса
+     * @param value       значение поля для запроса
+     * @return готовый к выполнению запрос
+     */
+    public <E> TypedQuery<E> getQueryOfEntityWithSoleEqualCondition(Class<E> entityClass, String fieldName, Object value) {
+
+        CriteriaBuilder criteriaBuilder = sessionFactory.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<E> root = criteriaQuery.from(entityClass);
+        criteriaQuery.select(root);
+
+        ParameterExpression params;
+        if (value == null) {
+            params = criteriaBuilder.parameter(String.class);
+        } else {
+            params = criteriaBuilder.parameter(value.getClass());
+        }
+        criteriaQuery.where(criteriaBuilder.equal(root.get(fieldName), params));
+
+        TypedQuery<E> query = sessionFactory.getCurrentSession().createQuery(criteriaQuery);
+        query.setParameter(params, value);
+
+        return query;
+    }
+}
