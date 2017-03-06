@@ -13,7 +13,5 @@ public class AllServiceDaoImpl extends AMoikaServiceDaoImpl<MoikaAllService> imp
     public AllServiceDaoImpl() {
     }
 
-    public AllServiceDaoImpl(Class type) {
-        super(type);
-    }
+
 }

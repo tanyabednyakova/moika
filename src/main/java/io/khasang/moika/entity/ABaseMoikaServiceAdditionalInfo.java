@@ -1,15 +1,17 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.math.BigDecimal;
 
-public abstract class ABaseMoikaServiceAdditionalInfo extends BaseMoikaService implements MoikaService, MoikaServiceAdditinalInfo {
-    ABaseMoikaServiceAdditionalInfo  moikaServiceAdditionalInfo;
+@MappedSuperclass
+public abstract class ABaseMoikaServiceAdditionalInfo<T extends ABaseMoikaServiceAdditionalInfo> extends BaseMoikaService implements MoikaService, MoikaServiceAdditinalInfo {
+
     @Column(name = "cost")
     protected BigDecimal serviceCost = new BigDecimal("0.00");
 
 
-    public abstract ABaseMoikaServiceAdditionalInfo getMoikaServiceAdditinalInfo();
+    public abstract T getMoikaServiceAdditinalInfo();
 
     public BigDecimal getServiceCost() {
         return serviceCost;

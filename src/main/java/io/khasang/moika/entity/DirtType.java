@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.Entity;
 
 @Entity(name = "dirt_types")
-public class DirtType extends ABaseMoikaReference {
+public class DirtType extends ABaseMoikaTypeReference {
 
     public DirtType() {
     }

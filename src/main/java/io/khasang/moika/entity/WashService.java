@@ -3,21 +3,19 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name= "wash_services")
-@PrimaryKeyJoinColumn(name="id_service")
+@Entity(name = "wash_services")
+@PrimaryKeyJoinColumn(name = "id_service")
 public class WashService extends ABaseMoikaServiceAdditionalInfo {
 
     @Column(name = "id_type_car")
     private int idCarType;
 
     @ManyToOne
-    @JoinColumn(name = "id_type_car", foreignKey = @ForeignKey(name = "fk_car_type"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_type_car", foreignKey = @ForeignKey(name = "fk_car_type"), insertable = false, updatable = false)
     private CarType carTypeEntity;
 
-    @Column(name = "cost")
-    private BigDecimal cost ;
-
-    public WashService(){}
+    public WashService() {
+    }
 
     public int getIdCarType() {
         return idCarType;
@@ -33,16 +31,6 @@ public class WashService extends ABaseMoikaServiceAdditionalInfo {
 
     public void setCarTypeEntity(CarType carTypeEntity) {
         this.carTypeEntity = carTypeEntity;
-    }
-
-    @Override
-    public BigDecimal getServiceCost() {
-        return cost;
-    }
-
-    @Override
-    public void setServiceCost(BigDecimal cost) {
-        this.cost = cost;
     }
 
     @Override

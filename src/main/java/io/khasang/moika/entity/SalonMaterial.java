@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.Entity;
 
 @Entity(name = "salon_materials")
-public class SalonMaterial extends ABaseMoikaReference {
+public class SalonMaterial extends ABaseMoikaTypeReference {
 
     public SalonMaterial() {
     }

@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class ABaseMoikaReference extends ABaseMoikaEntity {
+public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_type", columnDefinition = "serial")
@@ -57,9 +57,9 @@ public abstract class ABaseMoikaReference extends ABaseMoikaEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ABaseMoikaReference)) return false;
+        if (!(o instanceof ABaseMoikaTypeReference)) return false;
 
-        ABaseMoikaReference that = (ABaseMoikaReference) o;
+        ABaseMoikaTypeReference that = (ABaseMoikaTypeReference) o;
 
         if (getId() != that.getId()) return false;
         return getTypeCode().equals(that.getTypeCode());

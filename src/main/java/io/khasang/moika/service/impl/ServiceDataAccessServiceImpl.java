@@ -7,15 +7,18 @@ import io.khasang.moika.entity.BaseMoikaService;
 import io.khasang.moika.entity.MoikaAllService;
 import io.khasang.moika.service.ServiceDataAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component("serviceDataAccessServiceImpl")
+@Service("serviceDataAccessServiceImpl")
 public class ServiceDataAccessServiceImpl implements ServiceDataAccessService {
 
     @Autowired
+    @Qualifier("allServiceDao")
     private AllServicesDao allServicesDao;
 
     public ServiceDataAccessServiceImpl() {

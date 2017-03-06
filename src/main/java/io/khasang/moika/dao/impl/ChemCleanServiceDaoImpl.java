@@ -11,7 +11,5 @@ public class ChemCleanServiceDaoImpl extends AMoikaServiceDaoImpl<ChemCleanServi
     public ChemCleanServiceDaoImpl() {
     }
 
-    public ChemCleanServiceDaoImpl(Class type) {
-        super(type);
-    }
+
 }

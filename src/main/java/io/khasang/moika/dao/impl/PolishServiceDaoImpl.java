@@ -10,9 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PolishServiceDaoImpl extends AMoikaServiceDaoImpl<PolishService>  implements PolishServiceDao{
 
     public PolishServiceDaoImpl() {
+        super();
     }
 
-    public PolishServiceDaoImpl(Class type) {
-        super(type);
-    }
 }

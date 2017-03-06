@@ -19,9 +19,6 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
     @JoinColumn(name = "id_material", foreignKey = @ForeignKey(name = "fk_salon_materials"), insertable=false, updatable=false )
     private SalonMaterial salonMaterial;
 
-    @Column(name = "cost")
-    private BigDecimal cost ;
-
     public ChemCleanService(){}
 
     public int getidDirtType() {
@@ -36,11 +33,6 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
         return this.dirtTypeEntity.getTypeCode();
     }
 
-    public void setDirtTypeByCode(String code) {
-        DirtType dt = new DirtType();
-        dt.setTypeCode(code);
-        this.dirtTypeEntity = dt;
-    }
 
     public int getIdMaterial() {
         return idMaterial;
@@ -63,14 +55,5 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
         return this;
     }
 
-    @Override
-    public BigDecimal getServiceCost() {
-        return cost;
-    }
-
-    @Override
-    public void setServiceCost(BigDecimal cost) {
-        this.cost = cost;
-    }
 
 }

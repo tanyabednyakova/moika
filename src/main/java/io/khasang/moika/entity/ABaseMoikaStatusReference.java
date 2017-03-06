@@ -3,6 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 @MappedSuperclass
+@PrimaryKeyJoinColumn(name = "id_type")
 public abstract class ABaseMoikaStatusReference extends ABaseMoikaEntity {
 
     @Id
@@ -59,6 +60,7 @@ public abstract class ABaseMoikaStatusReference extends ABaseMoikaEntity {
     public int hashCode() {
         int result = getId();
         result = 31 * result + getStatusCode().hashCode();
+        result = 31 * result + (getStatusName() != null ? getStatusName().hashCode() : 0);
         return result;
     }
 }

@@ -71,19 +71,19 @@ public class WashFacilityDaoImpl implements WashFacilityDao{
 
     @Override
     public List<WashFacility> getAllWashFacilities() {
-        return  sessionFactory.getCurrentSession().createQuery("from wash_facility").list();
+        return  sessionFactory.getCurrentSession().createQuery("from wash_facilities").list();
     }
 
     @Override
     public List<WashBox> getWashBoxesOnFacility(WashFacility washFacility) {
-        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_box where idFacility = ?");
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idFacility = ?");
         query.setParameter(0, washFacility.getId());
         return query.list();
     }
 
     @Override
     public List<WashBox> getWashBoxesOnFacility(int idFacility){
-        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_box where idFacility = ?");
+        Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idFacility = ?");
         query.setParameter(0, idFacility);
         return query.list();
     }

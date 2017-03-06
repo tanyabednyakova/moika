@@ -123,4 +123,42 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
     public void setServiceStatusEntity(ServiceStatus serviceStatusEntity) {
         this.serviceStatusEntity = serviceStatusEntity;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BaseMoikaService)) return false;
+
+        BaseMoikaService that = (BaseMoikaService) o;
+
+        if (getId() != that.getId()) return false;
+        if (getIdFacility() != that.getIdFacility()) return false;
+        if (idType != that.idType) return false;
+        if (!getWashFacility().equals(that.getWashFacility())) return false;
+        if (!getServiceTypeEntity().equals(that.getServiceTypeEntity())) return false;
+        if (idStatus != null ? !idStatus.equals(that.idStatus) : that.idStatus != null) return false;
+        if (getServiceStatusEntity() != null ? !getServiceStatusEntity().equals(that.getServiceStatusEntity()) : that.getServiceStatusEntity() != null)
+            return false;
+        return getServiceName() != null ? getServiceName().equals(that.getServiceName()) : that.getServiceName() == null;
+    }
+
+    @Override
+    public int hashCode() {
+      return getId();
+    }
+
+    @Override
+    public String toString() {
+        return "BaseMoikaService{" +
+                "id=" + id +
+                ", idFacility=" + idFacility +
+                ", washFacility=" + washFacility +
+                ", idType=" + idType +
+                ", serviceTypeEntity=" + serviceTypeEntity.getTypeCode() +
+                ", idStatus=" + idStatus +
+                ", serviceStatusEntity=" + serviceStatusEntity.statusCode +
+                ", serviceName='" + serviceName + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

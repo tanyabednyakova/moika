@@ -75,10 +75,10 @@ public class HibernateConfig {
     @Bean
     public PskvorTestDaoService pskvorTestDaoService() { return new PskvorTestDaoServiceImpl();}
 
- /*   @Bean
+    @Bean
     public WashServiceDataAccessService washServiceDataAccessService() { return new WashServiceDataAccessServiceImpl();}
 
     @Bean
     public ServiceDataAccessService serviceDataAccessService() { return new ServiceDataAccessServiceImpl();}
-*/
+
 }

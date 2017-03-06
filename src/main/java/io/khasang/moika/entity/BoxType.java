@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 @Entity(name = "box_types")
-public class BoxType extends ABaseMoikaReference {
+public class BoxType extends ABaseMoikaTypeReference {
 
     public BoxType() {
     }

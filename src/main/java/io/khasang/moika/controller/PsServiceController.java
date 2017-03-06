@@ -17,16 +17,16 @@ import java.util.List;
 @Controller
 public class PsServiceController {
 
-    @Autowired
-    ServiceDataAccessServiceImpl serviceDataAccessServiceImpl;
+   // @Autowired
+   // ServiceDataAccessServiceImpl serviceDataAccessServiceImpl;
    //     AllServiceDaoImpl serviceAll;
 
-    @Autowired
-    WashServiceDataAccessServiceImpl washServiceDataAccessServiceImpl;
+   // @Autowired
+   // WashServiceDataAccessServiceImpl washServiceDataAccessServiceImpl;
 
 
-    @RequestMapping(value = "/serviceList", method = RequestMethod.GET)
-    public List<MoikaAllService> getServiceList(Model model) {
+ /*   @RequestMapping(value = "/washServiceList", method = RequestMethod.GET)
+    public  String getServiceList(Model model) { //List<MoikaAllService>
         List<MoikaAllService> allServicesList = new ArrayList<>();
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         try {
@@ -36,8 +36,8 @@ public class PsServiceController {
         }
         model.addAttribute("servicelist", allServicesList);
         model.addAttribute("nrows", allServicesList.size() + " rows affected");
-        return allServicesList;
-    }
+        return "ps-dao-services";
+    } */
 /*
     @RequestMapping(value = "/washBox/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     //@ResponseBody
