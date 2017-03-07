@@ -5,6 +5,8 @@ import io.khasang.moika.dao.RoleDAO;
 import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
+import io.khasang.moika.util.DataAccessUtil;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,45 +27,61 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserDAOImpl implements UserDAO {
     @Autowired
+    private DataAccessUtil dataAccessUtil;
+    @Autowired
     private SessionFactory sessionFactory;
-
     @Autowired
     private RoleDAO roleDAO;
 
     @Override
     public User findById(Long id) {
-        return sessionFactory.getCurrentSession().byId(User.class).load(id);
+        return getCurrentSession().byId(User.class).load(id);
     }
 
     @Override
     public User findByLogin(String login) {
-        return sessionFactory.getCurrentSession().bySimpleNaturalId(User.class).load(login);
+        return getCurrentSession().bySimpleNaturalId(User.class).load(login);
     }
 
     @Override
-    public void createUser(User user) {
-        sessionFactory.getCurrentSession().save(user);
+    public User findByEmail(String email) {
+        return dataAccessUtil.getQueryOfEntityWithSoleEqualCondition(User.class, "email", email).getSingleResult();
     }
 
     @Override
-    public void updateUser(User user) {
-        sessionFactory.getCurrentSession().update(user);
+    public User createUser(@NotNull User user) {
+        getCurrentSession().save(user);
+        return user;
+    }
+
+    @Override
+    public User updateUser(@NotNull User user) {
+        getCurrentSession().update(user);
+        return user;
+    }
+    @Override
+    public void deleteUser(@NotNull User user) {
+        getCurrentSession().delete(user);
+    }
+
+    private Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     @Override
     public void grantRole(@NotNull User user, @NotNull Role role) {
         user.getRoles().add(role);
-        sessionFactory.getCurrentSession().update(user);
+        getCurrentSession().update(user);
     }
 
     @Override
-    public void revokeRole(User user, Role role) {
+    public void revokeRole(@NotNull User user, @NotNull Role role) {
         user.getRoles().remove(role);
-        sessionFactory.getCurrentSession().update(user);
+        getCurrentSession().update(user);
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(User user) {
+    public Collection<? extends GrantedAuthority> getAuthorities(@NotNull User user) {
         Set<GrantedAuthority> grantedAuthoritySet = user.getRoles().stream()
                 .map(r -> roleDAO.getAuthority(r))
                 .collect(Collectors.toSet());
@@ -71,28 +89,4 @@ public class UserDAOImpl implements UserDAO {
         return grantedAuthoritySet;
     }
 
-
-    @Override
-    public boolean containUser(long id) {
-        long countUsers = sessionFactory.getCurrentSession()
-                .createQuery("select User.id from User where User.id=:id", Long.class)
-                .setParameter("id", id).uniqueResult();
-        return countUsers > 0 ? true : false;
-    }
-
-    @Override
-    public boolean containLoginUser(String login) {
-        long countUsers = sessionFactory.getCurrentSession()
-                .createQuery("select User.id from User where User.login=:login", Long.class)
-                .setParameter("login", login).uniqueResult();
-        return countUsers > 0 ? true : false;
-    }
-
-    @Override
-    public boolean containLoginEmail(String email) {
-        long countUsers = sessionFactory.getCurrentSession()
-                .createQuery("select User.id from User where User.email=:email", Long.class)
-                .setParameter("email", email).uniqueResult();
-        return countUsers > 0 ? true : false;
-    }
 }

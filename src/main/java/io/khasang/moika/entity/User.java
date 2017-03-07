@@ -3,10 +3,16 @@ package io.khasang.moika.entity;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import static io.khasang.moika.util.DataValidationPatterns.EMAIL_PATTERN;
+import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
 
 @Entity
 @Table(name = "users")
@@ -16,9 +22,13 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NaturalId
+    @NotNull
+    @Size(min = 4, max = 16)
+    @NaturalId(mutable = true)
     @Column(nullable = false, unique = true)
     private String login;
+
+    @NotNull
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -30,12 +40,27 @@ public class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
     private boolean enabled;
+
+    @NotNull
+    @Size(min = 1, max = 32)
     @Column(nullable = false)
     private String firstName;
+
     private String middleName;
+
+    @NotNull
+    @Size(min = 1, max = 32)
     private String lastName;
+
     private Date birthday;
+
+    @NotNull
+    @Pattern(regexp = PHONE_NUMBER_PATTERN)
+    @Size(min = 1, max = 32)
     private String phone;
+
+    @NotNull
+    @Pattern(regexp = EMAIL_PATTERN)
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -49,6 +74,7 @@ public class User implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+
 
     public String getLogin() {
         return login;

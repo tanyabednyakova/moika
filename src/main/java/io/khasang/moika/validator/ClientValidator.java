@@ -11,8 +11,14 @@ import org.springframework.validation.Validator;
 
 @Component
 public class ClientValidator implements Validator {
+
+    private final CarValidator carValidator;
+
     @Autowired
-    CarValidator carValidator;
+    public ClientValidator(CarValidator carValidator) {
+        this.carValidator = carValidator;
+    }
+
     @Override
     public boolean supports(Class<?> clazz) {
         return Client.class.isAssignableFrom(clazz);
@@ -21,19 +27,19 @@ public class ClientValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Client client = (Client) target;
-        if(StringUtils.isEmpty(client.getName())){
-            errors.rejectValue("name","name_empty");
+        if (StringUtils.isEmpty(client.getName())) {
+            errors.rejectValue("name", "name_empty");
         }
-        if(!client.getPhone().matches("^\\d{9}+")){
-            errors.rejectValue("phone","phone_invalid");
+        if (!client.getPhone().matches("^\\d{9}+")) {
+            errors.rejectValue("phone", "phone_invalid");
         }
-        if(!client.getLastname().matches("^[A-Za-z]*|^[А-Яа-я]*")){
-            errors.rejectValue("lastname","lastname_invalid");
+        if (!client.getLastname().matches("^[A-Za-z]*|^[А-Яа-я]*")) {
+            errors.rejectValue("lastname", "lastname_invalid");
         }
 
-        if(client.getCar()!=null){
+        if (client.getCar() != null) {
             errors.pushNestedPath("car");
-            ValidationUtils.invokeValidator(carValidator,client.getCar(),errors);
+            ValidationUtils.invokeValidator(carValidator, client.getCar(), errors);
         }
         errors.popNestedPath();
     }
