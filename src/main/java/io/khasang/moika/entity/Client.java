@@ -1,37 +1,75 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.*;
 
-@Entity
-@Table(name = "clients")
-public class Client implements Serializable {
+@Entity(name = "clients")
+public class Client {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String name;
+    @Column(name = "id_client", columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "middle_name")
+    private String middleName;
+    @Column(name = "last_name")
     private String lastname;
-    private String phone;
-    @Column(name = "car_id")
-    private long carId;
+    @Column(name = "tel")
+    private String tel;
+    @Column(name = "status", nullable = false)
+    private Short status;
+    @Column(name = "date_reg")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar dateReg;
+    @Column(name = "date_Last_Wash")
+    @Temporal(TemporalType.DATE)
+    private Date dateLastWash;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "r_client_car", joinColumns = {
+            @JoinColumn(name = "id_client", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "id_car",
+                    nullable = false, updatable = false) })
+    private List<Car> cars = new ArrayList<>();
 
     public Client() {
     }
 
-    public long getId() {
+    public Client(String firstName, String middleName, String lastname, String tel) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastname = lastname;
+        this.tel = tel;
+    }
+
+    public Client(String firstName, String middleName, String lastname, String tel, List<Car> cars) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastname = lastname;
+        this.tel = tel;
+        this.cars = cars;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getName() {
-        return name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     public String getLastname() {
@@ -42,19 +80,61 @@ public class Client implements Serializable {
         this.lastname = lastname;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTel() {
+        return tel;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
-    public long getCarId() {
-        return carId;
+    public int getStatus() {
+        return status;
     }
 
-    public void setCarId(long carId) {
-        this.carId = carId;
+    public void setStatus(Short status) {
+        this.status = status;
+    }
+
+    public Calendar getDateReg() {
+        return dateReg;
+    }
+
+    public Date getDateLastWash() {
+        return dateLastWash;
+    }
+
+    public void setDateLastWash(Date dateLastWash) {
+        this.dateLastWash = dateLastWash;
+    }
+
+    public List<Car> getCars() {
+        return this.cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
+    public void addCar(Car car){
+        getCars().add(car);
+    }
+
+    public void removeCar(Car car){
+        getCars().remove(car);
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", tel='" + tel + '\'' +
+                ", dateReg=" + dateReg +
+                ", status=" + status +
+                ", dateLastWash=" + dateLastWash +
+                '}';
     }
 }
