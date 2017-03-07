@@ -224,8 +224,33 @@
     </div><%-- /.modal-dialog --%>
 </div><%-- /.modal --%>
 <script type="text/javascript">
+    <%-- Здесь описана логика работы модальных окон регистрации и аутентификации --%>
+    $("#regForm").attr('error',1);
+    var changeErr = function (res) {
+        var form = $("#regForm");
+        var err = parseInt(form.attr('error'));
+        if(res){
+            form.attr('error',err==0?err:err-1);
+        }else{
+            form.attr('error',err==2?err:err+1);
+        }
+    };
+
+    setChangeListener('#regInputPassword1', 1500, function (elem) {
+        if($('#regInputPassword').val()==elem.val()){
+            setStatusElement('#regInputPassword1','success');
+            changeErr(true);
+        }else{
+            setStatusElement('#regInputPassword1','error','Пароли должны совпадать!');
+            changeErr(false);
+        }
+    });
+    //TODO добавить актуальные url
+    setActiveFormInput(<c:url value="/client"/>, '#regInputEmail', changeErr);
+    setActiveFormInput(<c:url value="/client"/>, '#regInputLogin', changeErr);
+
     $("#loginBtn").click(function () {
-        var jsonData = parseFormToJSON("#loginForm");
+        var jsonData = parseFormToJSON('#loginForm');
         $.ajax({
             method:"POST",
             contentType:'application/json;charset=UTF-8',
@@ -233,10 +258,37 @@
             data: jsonData,
             success:function (data) {
                 var obj = $.parseJSON(data);
-                //TODO обработка данных с бэка для формы регистрации
+                if(obj.redirect){
+                    window.location.replace(obj.redirect);
+                }
+                if(obj.errorMsg){
+                    var div = $('#loginForm').find('div.alert');
+                    div.removeClass('hide'); //TODO Возможно стоит добавить отображение сообщения с бэка?!
+                }
             }
         });
-    })
+    });
+
+    $("#regBtn").click(function () {
+        if($("#regForm").attr('hasError')==0){
+            var jsonData =  parseFormToJSON("#regForm");
+            $.ajax({
+                method:"POST",
+                contentType:'application/json;charset=UTF-8',
+                url:<c:url value="/client"/>,//TODO добавить актуальные url
+                data: jsonData,
+                success:function (data) {
+                    var obj = $.parseJSON(data);
+                    if(obj.redirect){
+                        window.location.replace(obj.redirect);
+                    }
+                    if(obj.errors){
+                        processErrors(obj.errors);
+                    }
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>
