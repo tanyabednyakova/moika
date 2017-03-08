@@ -1,4 +1,4 @@
-package io.khasang.moika.model.Rimpl;
+package io.khasang.moika.model.impl;
 
 
 import io.khasang.moika.model.PskvorDataAccess;
