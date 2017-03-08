@@ -1,8 +1,8 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity(name = "clients")
 public class Client {
@@ -13,8 +13,8 @@ public class Client {
     private String phone;
     @Column(name = "car_id")
     private long carId;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Orderm> orders = new ArrayList<>();
 
     public Client() {
     }

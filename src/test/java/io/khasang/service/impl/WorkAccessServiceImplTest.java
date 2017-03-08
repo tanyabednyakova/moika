@@ -39,10 +39,10 @@ public class WorkAccessServiceImplTest {
     @Rollback
     @Transactional
     public void commonWork() throws Exception {
-        Work work = new Work("Мытье кузова", new BigDecimal("333.333"), 30);
-        workAccessService.addWork(work);
-        work=new Work("Чистка салона",new BigDecimal("222.225"),0);
-        workAccessService.addWork(work);
+//        Work work = new Work("Мытье кузова", new BigDecimal("333.333"), 30);
+//        workAccessService.addWork(work);
+//        work=new Work("Чистка салона",new BigDecimal("222.225"),0);
+//        workAccessService.addWork(work);
         Work work1= workAccessService.getWork("Мытье кузова");
         System.out.println(work1.toString());
         work1.setPrice(new BigDecimal("555.50"));

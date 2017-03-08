@@ -4,13 +4,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
-
 public class WorkTest {
-    Work work=new Work("Мытье кузова", new BigDecimal("333.333"), 30);
+//    Work work=new Work("Мытье кузова", new BigDecimal("333.333"), 30);
     @Before
     public void setUp() throws Exception {
-        System.out.println(work.toString());
+//        System.out.println(work.toString());
     }
 
     @After
@@ -20,6 +18,6 @@ public class WorkTest {
 
     @Test
     public void getName() throws Exception {
-        System.out.println(work.getName());
+//        System.out.println(work.getName());
     }
 }

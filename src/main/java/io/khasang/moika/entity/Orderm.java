@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 @Entity
-public class Order {
+public class Orderm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,10 +26,10 @@ public class Order {
 //    private Client client;
 // TODO: 03.03.2017   id_использование бокса
 
-    public Order() {
+    public Orderm() {
     }
 
-    public Order(String number) {
+    public Orderm(String number) {
         this.number = number;
     }
 
@@ -45,8 +45,8 @@ public class Order {
         return number;
     }
 
-    public void setNumber(String nunber) {
-        this.number = nunber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
 //    public Date getRegistrationDate() {
