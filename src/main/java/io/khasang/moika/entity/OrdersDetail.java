@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity(name = "ordersdetail")
+@Entity
 public class OrdersDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +14,7 @@ public class OrdersDetail {
     private BigDecimal sumOfWork;
 //    @ManyToOne
 //    @JoinColumn(name = "order_id", foreignKey = @ForeignKey(name = "ORDER_ID_FK"))
-//    private Order order;
+//   private Order order;
 //    @ManyToOne
 //    @JoinColumn(name = "work_id", foreignKey = @ForeignKey(name = "WORK_ID_FK"))
 //    private Work work;

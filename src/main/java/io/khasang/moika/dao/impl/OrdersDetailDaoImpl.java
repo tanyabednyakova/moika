@@ -7,16 +7,15 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Component
 @Transactional
-@Repository("OrdersDetailDao")
 public class OrdersDetailDaoImpl implements OrdersDetailDao {
     private SessionFactory sessionFactory;
 
@@ -64,13 +63,14 @@ public class OrdersDetailDaoImpl implements OrdersDetailDao {
 
     @Override
     public List<OrdersDetail> getOrdersDetailForOrder(long idOrder) {
-        Query query  = sessionFactory.getCurrentSession().createQuery("from ordersdetail where order = ?");
-        query.setParameter(0, idOrder);
-        return query.list();
+//        Query query  = sessionFactory.getCurrentSession().createQuery("from OrdersDetail where order = ?");
+//        query.setParameter(0, idOrder);
+//        return query.list();
+        return null;
     }
 
     @Override
     public List<OrdersDetail> getAllOrdersDetail() {
-        return  sessionFactory.getCurrentSession().createQuery("from ordersdetail").list();
+        return  sessionFactory.getCurrentSession().createQuery("from OrdersDetail ").list();
     }
 }

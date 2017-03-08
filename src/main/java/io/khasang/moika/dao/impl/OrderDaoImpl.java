@@ -5,13 +5,13 @@ import io.khasang.moika.entity.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Component
 @Transactional
-@Repository("OrderDao")
 public class OrderDaoImpl implements OrderDao {
     private SessionFactory sessionFactory;
 
@@ -49,6 +49,6 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getAllOrder() {
-        return  sessionFactory.getCurrentSession().createQuery("from order").list();
+        return  sessionFactory.getCurrentSession().createQuery("from Order rder").list();
     }
 }

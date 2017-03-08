@@ -2,7 +2,7 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
-@Entity     //(name = "order")
+@Entity
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

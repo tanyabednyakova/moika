@@ -7,13 +7,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Component
 @Transactional
-@Repository("WorkDao")
 public class WorkDaoImpl  implements WorkDao{
     private SessionFactory sessionFactory;
 
@@ -58,6 +58,6 @@ public class WorkDaoImpl  implements WorkDao{
 
     @Override
     public List<Work> getAllWork() {
-        return  sessionFactory.getCurrentSession().createQuery("from work").list();
+        return  sessionFactory.getCurrentSession().createQuery("from Work").list();
     }
 }

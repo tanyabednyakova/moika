@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity (name = "work")
+@Entity
 public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
