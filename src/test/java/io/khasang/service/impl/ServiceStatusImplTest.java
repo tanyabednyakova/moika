@@ -35,14 +35,14 @@ public class ServiceStatusImplTest {
         } catch (MoikaDaoException e) {
             Assert.fail( e.getMessage());
         }
-        Assert.assertNotNull("Service list is null",serviceStatusList);
-        Assert.assertFalse("Service list is empty", serviceStatusList.isEmpty());
+        Assert.assertNotNull("Service status list is null",serviceStatusList);
+        Assert.assertFalse("Service status list is empty", serviceStatusList.isEmpty());
         boolean isCode = false;
         for (ServiceStatus item : serviceStatusList) {
             if (item.getStatusCode().equals("ON")) {
                 isCode = true;
             }
         }
-        Assert.assertTrue("Service list not contain status code ON",isCode);
+        Assert.assertTrue("Service status list not contain status code ON",isCode);
     }
 }

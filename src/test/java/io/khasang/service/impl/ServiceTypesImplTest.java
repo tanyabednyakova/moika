@@ -3,13 +3,13 @@ package io.khasang.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.ServiceStatus;
-import io.khasang.moika.service.MoikaServiceStatusService;
+import io.khasang.moika.entity.ServiceType;
+import io.khasang.moika.service.MoikaServiceTypesService;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -20,29 +20,29 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class ServiceStatusImplTest {
+public class ServiceTypesImplTest {
 
     @Autowired
-    MoikaServiceStatusService serviceStatusService;
+    MoikaServiceTypesService serviceTypesService;
 
 
     @Test
     @Transactional
     public void testGetServiceStatusList(){
-        List<ServiceStatus> serviceStatusList = null;
+        List<ServiceType> serviceTypesList = null;
         try {
-            serviceStatusList = serviceStatusService.getAllServiceStatuses();
+            serviceTypesList = serviceTypesService.getAllServiceTypes();
         } catch (MoikaDaoException e) {
             Assert.fail( e.getMessage());
         }
-        Assert.assertNotNull("Service list is null",serviceStatusList);
-        Assert.assertFalse("Service list is empty", serviceStatusList.isEmpty());
+        Assert.assertNotNull("Service types list is null",serviceTypesList);
+        Assert.assertFalse("Service types list is empty", serviceTypesList.isEmpty());
         boolean isCode = false;
-        for (ServiceStatus item : serviceStatusList) {
-            if (item.getStatusCode().equals("ON")) {
+        for (ServiceType item : serviceTypesList) {
+            if (item.getTypeCode().equals("WASH")) {
                 isCode = true;
             }
         }
-        Assert.assertTrue("Service list not contain status code ON",isCode);
+        Assert.assertTrue("Service types list not contain type code WASH",isCode);
     }
 }

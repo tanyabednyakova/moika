@@ -3,9 +3,10 @@ package io.khasang.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
+import io.khasang.moika.entity.BaseMoikaService;
 import io.khasang.moika.entity.ServiceType;
+import io.khasang.moika.service.BaseMoikaServiceDataAccessService;
 import io.khasang.moika.service.MoikaServiceTypesService;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,29 +21,29 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class ServiceTypesImplTest {
+public class BaseMoikaServiceImplTest {
 
     @Autowired
-    MoikaServiceTypesService serviceTypesService;
+    BaseMoikaServiceDataAccessService moikaService;
 
 
     @Test
     @Transactional
-    public void testGetServiceStatusList(){
-        List<ServiceType> serviceTypesList = null;
+    public void testBaseMoikaServiceList(){
+        List<BaseMoikaService> serviceList = null;
         try {
-            serviceTypesList = serviceTypesService.getAllServiceTypes();
+            serviceList = moikaService.getAllServices();
         } catch (MoikaDaoException e) {
             Assert.fail( e.getMessage());
         }
-        Assert.assertNotNull("Service types list is null",serviceTypesList);
-        Assert.assertFalse("Service types list is empty", serviceTypesList.isEmpty());
+        Assert.assertNotNull("Service  list is null",serviceList);
+        Assert.assertFalse("Service  list is empty", serviceList.isEmpty());
         boolean isCode = false;
-        for (ServiceType item : serviceTypesList) {
-            if (item.getTypeCode().equals("WASH")) {
+        for (BaseMoikaService item : serviceList) {
+            if (item.getServiceName().equalsIgnoreCase("Ручная мойка машины")) {
                 isCode = true;
             }
         }
-        Assert.assertTrue("Service types list not contain type code WASH",isCode);
+        Assert.assertTrue("Service types list not contain name \"Ручная мойка машины\"",isCode);
     }
 }
