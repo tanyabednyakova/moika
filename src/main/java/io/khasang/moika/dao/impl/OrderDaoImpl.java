@@ -1,7 +1,7 @@
 package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.OrderDao;
-import io.khasang.moika.entity.Ordern;
+import io.khasang.moika.entity.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,32 +23,32 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Ordern addOrder(Ordern ordern) {
-        sessionFactory.getCurrentSession().save(ordern);
-        return ordern;
+    public Order addOrder(Order order) {
+        sessionFactory.getCurrentSession().save(order);
+        return order;
     }
 
     @Override
-    public Ordern updateOrder(Ordern ordern) {
-        sessionFactory.getCurrentSession().update(ordern);
-        return ordern;
+    public Order updateOrder(Order order) {
+        sessionFactory.getCurrentSession().update(order);
+        return order;
     }
 
     @Override
-    public void deleteOrder(Ordern ordern) {
+    public void deleteOrder(Order order) {
         final Session session = sessionFactory.getCurrentSession();
-        session.delete(ordern);
+        session.delete(order);
         session.flush();
     }
 
     @Override
-    public Ordern getOrder(long id) {
+    public Order getOrder(long id) {
         return null;
-        // return (Ordern) sessionFactory.getCurrentSession().createQuery("from order where id =id");
+        // return (Order) sessionFactory.getCurrentSession().createQuery("from order where id =id");
     }
 
     @Override
-    public List<Ordern> getAllOrder() {
-        return  sessionFactory.getCurrentSession().createQuery("from Ordern rder").list();
+    public List<Order> getAllOrder() {
+        return  sessionFactory.getCurrentSession().createQuery("from Order rder").list();
     }
 }

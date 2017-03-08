@@ -14,7 +14,7 @@ public class Client {
     @Column(name = "car_id")
     private long carId;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ordern> orderns = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     public Client() {
     }

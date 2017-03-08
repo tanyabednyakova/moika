@@ -16,7 +16,7 @@ public class Car {
     private String carModel;
     private String description;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Ordern> orderns = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
     public Car() {
     }
