@@ -16,7 +16,7 @@ public class Work {
     private BigDecimal price;
 /*
 время в минутах для проведения работ в боксе
-* */
+*/
 
     private int timeInBox;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

@@ -57,7 +57,7 @@ public class OrdersDetailDaoImpl implements OrdersDetailDao {
     public OrdersDetail fillOrdersDetail(OrdersDetail ordersDetail, Work work, BigDecimal quantity) {
         ordersDetail.setQuantity(quantity);
         ordersDetail.setSumOfWork(work.getPrice().multiply(quantity));
-        ordersDetail.setWork(work);
+//        ordersDetail.setWork(work);
         work.getOrdersDetails().add(ordersDetail);
         return ordersDetail;
     }
