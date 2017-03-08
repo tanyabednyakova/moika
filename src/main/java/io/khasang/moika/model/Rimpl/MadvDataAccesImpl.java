@@ -1,4 +1,4 @@
-package io.khasang.moika.model.impl;
+package io.khasang.moika.model.Rimpl;
 
 import io.khasang.moika.model.MadvDataAcces;
 import org.springframework.dao.DataAccessException;

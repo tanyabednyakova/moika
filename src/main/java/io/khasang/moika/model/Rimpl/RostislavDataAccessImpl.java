@@ -1,4 +1,4 @@
-package io.khasang.moika.model;
+package io.khasang.moika.model.Rimpl;
 
 import io.khasang.moika.model.RostislavDataAccess;
 import javafx.util.Pair;
