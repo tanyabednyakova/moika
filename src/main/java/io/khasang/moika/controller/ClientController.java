@@ -1,6 +1,6 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.dao.ClientDAO;
+import io.khasang.moika.dao.ClientDao;
 import io.khasang.moika.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/client")
 public class ClientController {
     @Autowired
-    private ClientDAO clientDAO;
+    private ClientDao clientDao;
 
     @RequestMapping("/list")
     public String getListClients(Model model){
-        model.addAttribute("clients",clientDAO.getAllClients());
-        model.addAttribute("contClientId",clientDAO.containClientById(2L));
+        model.addAttribute("clients",clientDao.getClientsList());
+        model.addAttribute("contClientId",clientDao.getClientById(2));
         return "client";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object addClient(@RequestBody Client client){
-        clientDAO.addClient(client);
+        clientDao.addClient(client);
         return client;
     }
 }

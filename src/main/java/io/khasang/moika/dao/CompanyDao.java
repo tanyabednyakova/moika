@@ -12,7 +12,7 @@ public interface CompanyDao {
 
     void deleteCompany(Company company);
 
-    Company getCompanyById(long id);
+    Company getCompanyById(int id);
 
     Company getCompanyByName(String name);
 

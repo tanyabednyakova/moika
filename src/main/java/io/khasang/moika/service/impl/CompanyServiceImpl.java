@@ -35,7 +35,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDao.addCompany(company);
     }
 
-    public Company getCompanyById(long id) {
+    public Company getCompanyById(int id) {
         return companyDao.getCompanyById(id);
     }
 
@@ -45,7 +45,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void deleteCompany(long id) {
+    public void deleteCompany(int id) {
         Company company = new Company();
         company.setId(id);
         companyDao.deleteCompany(company);
