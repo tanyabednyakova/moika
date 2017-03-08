@@ -21,10 +21,9 @@
         <tr>
             <td><c:out value="${servicelist.id}"/></td>
             <td><c:out value="${servicelist.washFacility.name}"/></td>
-            <td><c:out value="${servicelist.name}"/></td>
-            <td><c:out value="${servicelist.serviceTypeEntity.typeName}"/></td>
+            <td><c:out value="${servicelist.serviceName}"/></td>
+            <td><c:out value="${servicelist.serviceTypeEntity.name}"/></td>
             <td><c:out value="${servicelist.serviceStatusEntity.name}"/></td>
-            <td><c:out value="${servicelist.cost}"/></td>
             <td><c:out value="${servicelist.description}"/></td
         </tr>
     </c:forEach>

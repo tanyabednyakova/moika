@@ -2,7 +2,7 @@ package io.khasang.moika.config;
 
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.model.PskvorDataAccess;
-import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
+import io.khasang.moika.model.PskvorDataAccessJdbcImpl;
 import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.PskvorDataAccessService;
 import io.khasang.moika.service.impl.CompanyServiceImpl;

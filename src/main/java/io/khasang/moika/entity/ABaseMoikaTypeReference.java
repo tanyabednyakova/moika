@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 @MappedSuperclass
-@PrimaryKeyJoinColumn(name = "id_type")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class ABaseMoikaTypeReference {
 
     @Id
@@ -11,34 +11,46 @@ public abstract class ABaseMoikaTypeReference {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
     @Column(name = "type_code", unique = true, nullable = false)
-    protected String typeCode;
+    protected String code;
     @Column(name = "type_name")
-    protected String typeName;
+    protected String name;
     @Column(name = "descr")
     protected String description;
+
+    public ABaseMoikaTypeReference() {
+    }
+
+    public ABaseMoikaTypeReference(String typeCode) {
+        this.code = typeCode;
+    }
+
+    public ABaseMoikaTypeReference(String typeCode, String typeName) {
+        this.code = typeCode;
+        this.name = typeName;
+    }
 
     public int getId() {
         return id;
     }
 
     public String getTypeCode() {
-        return typeCode;
+        return this.code;
     }
 
     public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
+        this.code = typeCode;
     }
 
     public String getTypeName() {
-        return typeName;
+        return this.name;
     }
 
     public void setTypeName(String typeName) {
-        this.typeName = typeName;
+        this.name = typeName;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -49,9 +61,9 @@ public abstract class ABaseMoikaTypeReference {
     public String toString() {
         return  this.getClass().getName()+ "{" +
                 "id=" + id +
-                ", typeCode='" + typeCode + '\'' +
-                ", typeName='" + typeName + '\'' +
-                ", description='" + description + '\'' +
+                ", typeCode='" + code + '\'' +
+                ", typeName='" + name + '\'' +
+                ((description != null) ? ", description='" + description : "") + '\'' +
                 '}';
     }
 
