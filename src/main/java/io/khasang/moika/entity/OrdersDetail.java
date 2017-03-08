@@ -14,7 +14,7 @@ public class OrdersDetail {
     private BigDecimal sumOfWork;
 //    @ManyToOne
 //    @JoinColumn(name = "order_id", foreignKey = @ForeignKey(name = "ORDER_ID_FK"))
-//   private Order order;
+//   private Ordern order;
 //    @ManyToOne
 //    @JoinColumn(name = "work_id", foreignKey = @ForeignKey(name = "WORK_ID_FK"))
 //    private Work work;
@@ -22,10 +22,10 @@ public class OrdersDetail {
     public OrdersDetail() {
     }
 
-    public OrdersDetail(BigDecimal quantity, BigDecimal sumOfWork, Order order, Work work) {
+    public OrdersDetail(BigDecimal quantity, BigDecimal sumOfWork, Ordern ordern, Work work) {
         this.quantity = quantity;
         this.sumOfWork = sumOfWork;
-//        this.order = order;
+//        this.ordern = ordern;
 //        this.work = work;
     }
 
@@ -53,11 +53,11 @@ public class OrdersDetail {
         this.sumOfWork = sum;
     }
 
-//    public Order getOrder() {
+//    public Ordern getOrder() {
 //        return order;
 //    }
 //
-//    public void setOrder(Order order) {
+//    public void setOrder(Ordern order) {
 //        this.order = order;
 //    }
 //

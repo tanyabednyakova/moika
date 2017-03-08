@@ -5,7 +5,7 @@ import io.khasang.moika.config.HibernateConfig;
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.OrderDao;
 import io.khasang.moika.dao.OrdersDetailDao;
-import io.khasang.moika.entity.Order;
+import io.khasang.moika.entity.Ordern;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {AppConfig.class, WebConfig.class, HibernateConfig.class})
-public class OrderDaoImplTest {
+public class OrdernDaoImplTest {
     @Autowired
     OrderDao orderDao;
     @Autowired
@@ -36,8 +36,8 @@ public class OrderDaoImplTest {
 
     @Test
     public void commonOrder() throws Exception {
-        Order order =new Order("1");
-//        orderDao.addOrder(order);
+        Ordern ordern =new Ordern("1");
+//        orderDao.addOrder(ordern);
 
     }
 
