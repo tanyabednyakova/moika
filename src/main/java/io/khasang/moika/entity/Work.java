@@ -16,14 +16,18 @@ public class Work {
 время в минутах для проведения работ в боксе
 */
 
-//    private int timeInBox;
+    private int timeInBox;
 //    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<OrdersDetail> ordersDetails = new ArrayList<>();
+//    private List<OrdermDetail> ordersDetails = new ArrayList<>();
 
     public Work() {
     }
 
-
+    public Work(String name, BigDecimal price, int timeInBox) {
+        this.name = name;
+        this.price = price;
+        this.timeInBox = timeInBox;
+    }
 
     public Long getId() {
         return id;
@@ -49,26 +53,26 @@ public class Work {
         this.price = price;
     }
 
-//    public int getTimeInBox() {
-//        return timeInBox;
-//    }
-//
-//    public void setTimeInBox(int timeInBox) {
-//        this.timeInBox = timeInBox;
-//    }
-//
-//    public List<OrdersDetail> getOrdersDetails() {
+    public int getTimeInBox() {
+        return timeInBox;
+    }
+
+    public void setTimeInBox(int timeInBox) {
+        this.timeInBox = timeInBox;
+    }
+
+//    public List<OrdermDetail> getOrdersDetails() {
 //        return ordersDetails;
 //    }
 //
-//    public void setOrdersDetails(List<OrdersDetail> ordersDetails) {
+//    public void setOrdersDetails(List<OrdermDetail> ordersDetails) {
 //        this.ordersDetails = ordersDetails;
 //    }
-//    @Override
-//    public String toString(){
-//        System.out.format("id = %d name= %s price = %f timeInBox =%d",
-//                id,name,price,timeInBox);
-//        return null;
-//    }
+    @Override
+    public String toString(){
+        System.out.format("id = %d name= %s price = %f timeInBox =%d",
+                id,name,price,timeInBox);
+        return null;
+    }
 
 }

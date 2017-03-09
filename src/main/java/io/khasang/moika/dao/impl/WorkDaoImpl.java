@@ -2,10 +2,8 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.WorkDao;
 import io.khasang.moika.entity.Work;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +21,15 @@ public class WorkDaoImpl  implements WorkDao{
         this.sessionFactory = sessionFactory;
     }
     @Override
-    public void addWork(Work work) {
+    public Work addWork(Work work) {
         sessionFactory.getCurrentSession().save(work);
+        return work;
     }
 
     @Override
-    public void updateWork(Work work) {
+    public Work updateWork(Work work) {
         sessionFactory.getCurrentSession().update(work);
+        return work;
     }
 
     @Override
@@ -41,19 +41,12 @@ public class WorkDaoImpl  implements WorkDao{
 
     @Override
     public Work getWork(long id) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().createCriteria(Work.class);
-        criteria.add(Restrictions.eq("id", id));
-        return (Work) criteria.uniqueResult();
+        return sessionFactory.getCurrentSession().byId(Work.class).load(id);
     }
 
     @Override
     public Work getWork(String name) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(Work.class);
-        criteria.add(Restrictions.eq("name", name));
-        return (Work) criteria.uniqueResult();
+        return  sessionFactory.getCurrentSession().bySimpleNaturalId(Work.class).load(name);
     }
 
     @Override

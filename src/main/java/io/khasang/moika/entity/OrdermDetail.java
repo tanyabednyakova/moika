@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-public class OrdersDetail {
+public class OrdermDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,10 +19,13 @@ public class OrdersDetail {
 //    @JoinColumn(name = "work_id", foreignKey = @ForeignKey(name = "WORK_ID_FK"))
 //    private Work work;
 
-    public OrdersDetail() {
+    public OrdermDetail() {
     }
 
-
+    public OrdermDetail(BigDecimal quantity, BigDecimal sumOfWork) {
+        this.quantity = quantity;
+        this.sumOfWork = sumOfWork;
+    }
 
     public Long getId() {
         return id;

@@ -1,6 +1,9 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Orderm {
@@ -9,14 +12,14 @@ public class Orderm {
     private Long id;
     @Column(length = 15, unique = true,nullable = false)
     private String number;
-//    @Temporal(TemporalType.DATE)
-//    private Date registrationDate;
-//    @Temporal(TemporalType.DATE)
-//    private Date executiontionDate;
-//    private boolean is_prepaid;
-//    private boolean is_made;
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<OrdersDetail> ordersDetails = new ArrayList<>();
+    @Temporal(TemporalType.DATE)
+    private Date registrationDate;
+    @Temporal(TemporalType.DATE)
+    private Date executiontionDate;
+    private boolean is_prepaid;
+    private boolean is_made;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrdermDetail> ordermDetails = new ArrayList<>();
 //    @ManyToOne
 //    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "CAR_ID_FK"))
 //    private Car car;
@@ -49,45 +52,45 @@ public class Orderm {
         this.number = number;
     }
 
-//    public Date getRegistrationDate() {
-//        return registrationDate;
-//    }
-//
-//    public void setRegistrationDate(Date registrationDate) {
-//        this.registrationDate = registrationDate;
-//    }
-//
-//    public Date getExecutiontionDate() {
-//        return executiontionDate;
-//    }
-//
-//    public void setExecutiontionDate(Date executiontionDate) {
-//        this.executiontionDate = executiontionDate;
-//    }
-//
-//    public boolean is_prepaid() {
-//        return is_prepaid;
-//    }
-//
-//    public void setIs_prepaid(boolean is_prepaid) {
-//        this.is_prepaid = is_prepaid;
-//    }
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
 
-//    public boolean is_made() {
-//        return is_made;
-//    }
-//
-//    public void setIs_made(boolean is_made) {
-//        this.is_made = is_made;
-//    }
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 
-//    public List<OrdersDetail> getOrdersDetails() {
-//        return ordersDetails;
-//    }
-//
-//    public void setOrdersDetails(List<OrdersDetail> ordersDetails) {
-//        this.ordersDetails = ordersDetails;
-//    }
+    public Date getExecutiontionDate() {
+        return executiontionDate;
+    }
+
+    public void setExecutiontionDate(Date executiontionDate) {
+        this.executiontionDate = executiontionDate;
+    }
+
+    public boolean is_prepaid() {
+        return is_prepaid;
+    }
+
+    public void setIs_prepaid(boolean is_prepaid) {
+        this.is_prepaid = is_prepaid;
+    }
+
+    public boolean is_made() {
+        return is_made;
+    }
+
+    public void setIs_made(boolean is_made) {
+        this.is_made = is_made;
+    }
+
+    public List<OrdermDetail> getOrdermDetails() {
+        return ordermDetails;
+    }
+
+    public void setOrdermDetails(List<OrdermDetail> ordersDetails) {
+        this.ordermDetails = ordersDetails;
+    }
 
 //    public Car getCar() {
 //        return car;

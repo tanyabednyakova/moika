@@ -44,13 +44,11 @@ public class OrdermDaoImpl implements OrdermDao {
 
     @Override
     public Orderm getOrderm(long id) {
-        List l = sessionFactory.getCurrentSession().createQuery("from Orderm where id =id").list();
-        Object ob = l.get(0);
-        return (Orderm) ob;
+        return sessionFactory.getCurrentSession().byId(Orderm.class).load(id);
     }
 
     @Override
     public List<Orderm> getAllOrderm() {
-        return sessionFactory.getCurrentSession().createQuery("from Orderm rder").list();
+        return sessionFactory.getCurrentSession().createQuery("from Orderm").list();
     }
 }
