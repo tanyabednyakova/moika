@@ -1,6 +1,7 @@
 package io.khasang.moika.controller;
 
 import io.khasang.moika.dao.CompanyDao;
+import io.khasang.moika.entity.Car;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
@@ -89,4 +90,7 @@ public class AppController {
     public Company company(@PathVariable(value = "id") String id){
         return companyService.getCompanyById(Long.parseLong(id));
     }
+
+
+
 }
