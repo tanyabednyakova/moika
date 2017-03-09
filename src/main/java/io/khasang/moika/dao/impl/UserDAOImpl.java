@@ -5,9 +5,6 @@ import io.khasang.moika.dao.RoleDAO;
 import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
-import io.khasang.moika.util.DataAccessUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -25,17 +22,13 @@ import java.util.stream.Collectors;
  */
 @Service("userDao")
 @Transactional
-public class UserDAOImpl implements UserDAO {
-    @Autowired
-    private DataAccessUtil dataAccessUtil;
-    @Autowired
-    private SessionFactory sessionFactory;
-    @Autowired
-    private RoleDAO roleDAO;
+public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
+    private final RoleDAO roleDAO;
 
-    @Override
-    public User findById(Long id) {
-        return getCurrentSession().byId(User.class).load(id);
+    @Autowired
+    public UserDAOImpl(RoleDAO roleDAO) {
+        super(User.class);
+        this.roleDAO = roleDAO;
     }
 
     @Override
@@ -59,13 +52,10 @@ public class UserDAOImpl implements UserDAO {
         getCurrentSession().update(user);
         return user;
     }
+
     @Override
     public void deleteUser(@NotNull User user) {
         getCurrentSession().delete(user);
-    }
-
-    private Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
     }
 
     @Override

@@ -2,6 +2,7 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.CarDao;
 import io.khasang.moika.entity.Car;
+import io.khasang.moika.util.DataAccessUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -9,25 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Map;
 
 @Repository
 @Transactional
-public class CarDaoImpl implements CarDao {
+public class CarDaoImpl extends BasicDaoImpl<Car> implements CarDao {
 
     private final SessionFactory sessionFactory;
 
-    @Autowired
-    public CarDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    private final DataAccessUtil dataAccessUtil;
 
-    private Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
+    @Autowired
+    public CarDaoImpl(SessionFactory sessionFactory, DataAccessUtil dataAccessUtil) {
+        super(Car.class);
+        this.sessionFactory = sessionFactory;
+        this.dataAccessUtil = dataAccessUtil;
     }
 
     @Override
@@ -41,13 +39,22 @@ public class CarDaoImpl implements CarDao {
         return query.getResultList();
     }
 
+/*
     @Override
-    public void updateCar(Car car) {
+    public Car updateCar(Car car) {
         getCurrentSession().update(car);
+        return car;
+    }
+
+    @Override
+    public Car getCarById(long carId) {
+        //        System.out.println(car.getCarModel());
+        return getCurrentSession().get(Car.class, carId);
     }
 
     @Override
     public Car updateCar(long carId, Map<String, Object> fieldValueMap) {
+
         CriteriaBuilder criteriaBuilder = getCurrentSession().getCriteriaBuilder();
         //see: http://www.programcreek.com/java-api-examples/index.php?api=javax.persistence.criteria.CriteriaUpdate
         CriteriaUpdate<Car> carCriteriaUpdate = criteriaBuilder.createCriteriaUpdate(Car.class);
@@ -58,12 +65,10 @@ public class CarDaoImpl implements CarDao {
         carCriteriaUpdate.where(criteriaBuilder.equal(root.get("id"), carId));
         getCurrentSession().createQuery(carCriteriaUpdate).executeUpdate();
 
-        return getCarById(carId);
-    }
+        Car car = getCarById(carId);
+        dataAccessUtil.setNewValuesToBean(car, fieldValueMap);
 
-    @Override
-    public Car getCarById(long carId) {
-        //        System.out.println(car.getCarModel());
-        return getCurrentSession().get(Car.class, carId);
+        return updateCar(car);
     }
+*/
 }

@@ -3,9 +3,12 @@ package io.khasang.moika.controller;
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.service.CarService;
 import io.khasang.moika.service.RostislavDataAccessService;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -86,10 +89,9 @@ public class RostislavController {
 
     @RequestMapping(value = "/car/update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateCompany(@RequestBody Map<String, Object> carValuesMap) {
+    public Object updateCar(@RequestBody Map<String, Object> carValuesMap) {
 
         String carId = (String) carValuesMap.remove("id");
-
         return carService.updateCar(Long.parseLong(carId), carValuesMap);
     }
 
@@ -99,5 +101,13 @@ public class RostislavController {
         return carService.getCarById(Long.parseLong(carId));
     }
 
+
+    @RequestMapping(value = "/test", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public void beanWrapperTest(
+            @RequestBody Car car,
+            BindingResult result,
+            @PathVariable String userId){
+        BeanWrapper bw = new BeanWrapperImpl();
+    }
 
 }
