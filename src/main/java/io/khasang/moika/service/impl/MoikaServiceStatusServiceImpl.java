@@ -44,7 +44,6 @@ public class MoikaServiceStatusServiceImpl implements MoikaServiceStatusService 
         return serviceStatusDao.getEntityByCode(code);
     }
 
-
     @Override
     public List<ServiceStatus> getAllServiceStatuses() throws MoikaDaoException {
         return serviceStatusDao.getAllEntities();

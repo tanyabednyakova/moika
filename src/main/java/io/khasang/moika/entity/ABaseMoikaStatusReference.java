@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class ABaseMoikaStatusReference {
+public abstract class ABaseMoikaStatusReference extends ABaseMoikaEntity{
 
     @Id
     @Column(name = "id_status", columnDefinition = "serial")
