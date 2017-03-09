@@ -1,19 +1,22 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String lastname;
     private String phone;
-    @Column(name = "car_id")
-    private long carId;
+    @OneToOne
+    @JoinColumn(name="car_id")
+    @Valid
+    private Car car;
 
     public Client() {
     }
@@ -50,11 +53,11 @@ public class Client implements Serializable {
         this.phone = phone;
     }
 
-    public long getCarId() {
-        return carId;
+    public Car getCar() {
+        return car;
     }
 
-    public void setCarId(long carId) {
-        this.carId = carId;
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

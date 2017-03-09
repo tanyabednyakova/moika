@@ -6,6 +6,7 @@ import io.khasang.moika.model.AKovalevDataAccess;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.annotation.Async;
@@ -41,8 +42,12 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
     @Autowired
     public AKovalevDataAccessImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        Long maxId = this.jdbcTemplate.queryForObject("SELECT MAX(id) FROM cars", Long.class);
-        currentCarId = maxId == null ? 1 : ++maxId;
+        try{
+            Long maxId = this.jdbcTemplate.queryForObject("SELECT MAX(id) FROM cars", Long.class);
+            currentCarId = maxId == null ? 1 : ++maxId;
+        }catch(BadSqlGrammarException e){
+            currentCarId = 1;
+        }
     }
 
     public static long getCurrentCarId() {
@@ -159,7 +164,7 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
         return jdbcTemplate.query(sql, (ResultSet rs, int rowNum) -> {
             Client client = new Client();
             client.setId(rs.getLong("client_id"));
-            client.setCarId(rs.getLong("car_id"));
+            //client.setCarId(rs.getLong("car_id"));
             client.setLastname(rs.getString("lastname"));
             client.setName(rs.getString("name"));
             client.setPhone(rs.getString("phone"));

@@ -1,4 +1,4 @@
-package io.khasang.moika.config;
+package io.khasang.moika.config.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

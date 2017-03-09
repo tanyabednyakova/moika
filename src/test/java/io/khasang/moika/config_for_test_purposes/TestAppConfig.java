@@ -1,5 +1,6 @@
-package io.khasang.moika.config;
+package io.khasang.moika.config_for_test_purposes;
 
+import io.khasang.moika.config.AppConfig;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.model.MadvDataAcces;
 import io.khasang.moika.model.PskvorDataAccess;
@@ -8,26 +9,44 @@ import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
 import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.MadvDataAccesService;
 import io.khasang.moika.service.PskvorDataAccessService;
+import io.khasang.moika.service.impl.AKovalevDataAccessServiceImpl;
 import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
+import io.khasang.moika.service.impl.RostislavDataAccessServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+/**
+ * @author Rostislav Dublin
+ * @since Конфигурация для юнит-тестирования, не подключающая ничего лишнего.
+ */
 @Configuration
 //@EnableCaching
+@ComponentScan(
+        basePackages = {
+                "io.khasang.moika.config",
+                "io.khasang.moika.dao",
+                "io.khasang.moika.service",
+                "io.khasang.moika.validator",
+                "io.khasang.moika.util"
+        },
+        excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = "io.khasang.moika.config.application.*"),
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
+                        RostislavDataAccessServiceImpl.class,
+                        AKovalevDataAccessServiceImpl.class,
+                        AppConfig.class})
+        })
+//@EnableCaching
 @PropertySource(value = {"classpath:util.properties", "classpath:auth.properties"})
-public class AppConfig {
+public class TestAppConfig {
     final private Environment environment;
 
     @Autowired
-    public AppConfig(Environment environment) {
+    public TestAppConfig(Environment environment) {
         this.environment = environment;
     }
 
@@ -37,7 +56,7 @@ public class AppConfig {
     }
 
     @Bean
-    public DriverManagerDataSource dataSource(){
+    public DriverManagerDataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.postgresql.driverClass"));
         dataSource.setUrl(environment.getProperty("jdbc.postgresql.url"));
@@ -47,21 +66,26 @@ public class AppConfig {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(){
+    public JdbcTemplate jdbcTemplate() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(dataSource());
         return jdbcTemplate;
     }
 
     @Bean
-    public CreateTable createTable(){
-        return  new CreateTable(jdbcTemplate());
+    public CreateTable createTable() {
+        return new CreateTable(jdbcTemplate());
     }
 
     @Bean
-    public MadvDataAcces madvDataAcces(){return new MadvDataAccesImpl(jdbcTemplate());}
+    public MadvDataAcces madvDataAcces() {
+        return new MadvDataAccesImpl(jdbcTemplate());
+    }
+
     @Bean
-    public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
+    public MadvDataAccesService madvDataAccesService() {
+        return new MadvDataAccesServiceImpl(madvDataAcces());
+    }
 
 /*  DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
     @Bean
@@ -75,8 +99,8 @@ public class AppConfig {
 */
 
     @Bean
-    public PskvorDataAccess pskvorDataAccess(){
-         return new PskvorDataAccessJdbcImpl(jdbcTemplate());
+    public PskvorDataAccess pskvorDataAccess() {
+        return new PskvorDataAccessJdbcImpl(jdbcTemplate());
     }
 
     @Bean
@@ -85,14 +109,7 @@ public class AppConfig {
     }
 
     @Bean
-    public CompanyService companyService() { return new CompanyServiceImpl();}
-
-    /**
-     * Валидатор для работы с анотациями, согласно спецификации jsr 303, подробности по ссылке
-     * https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#chapter-bean-constraints
-
-    @Bean(name = "jsr303Validator")
-    public Validator validator(){
-        return new LocalValidatorFactoryBean();
-    }*/
+    public CompanyService companyService() {
+        return new CompanyServiceImpl();
+    }
 }
