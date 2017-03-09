@@ -1,10 +1,10 @@
-package io.khasang.moika.dao.impl;
+package io.khasang.moika.service.impl;
 
 import io.khasang.moika.config.AppConfig;
 import io.khasang.moika.config.HibernateConfig;
 import io.khasang.moika.config.application.WebConfig;
-import io.khasang.moika.dao.OrdermDao;
 import io.khasang.moika.entity.Orderm;
+import io.khasang.moika.service.OrdermAccessService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,22 +17,23 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {AppConfig.class, WebConfig.class, HibernateConfig.class})
-public class OrdermDaoImplTest {
+public class OrdermAccessServiceImplTest {
     @Autowired
-    OrdermDao ordermDao;
+    OrdermAccessService ordermAccessService;
 
     @Test
     public void commonOrderm() throws Exception {
-        Orderm orderm =new Orderm("1");
-        ordermDao.addOrderm(orderm);
-        orderm =new Orderm("2");
-        ordermDao.addOrderm(orderm);
-        orderm = ordermDao.getOrderm(1l);
+        Orderm orderm = new Orderm("1");
+        ordermAccessService.addOrderm(orderm);
+        orderm = new Orderm("2");
+        ordermAccessService.addOrderm(orderm);
+        orderm = ordermAccessService.getOrderm(1l);
         orderm.setNumber("11");
-        ordermDao.updateOrderm(orderm);
-        orderm =new Orderm("33");
-        orderm =ordermDao.addOrderm(orderm);
-        ordermDao.deleteOrderm(orderm);
-        List<Orderm> l =ordermDao.getAllOrderm();
+        ordermAccessService.updateOrderm(orderm);
+        orderm = new Orderm("33");
+        orderm = ordermAccessService.addOrderm(orderm);
+        ordermAccessService.deleteOrderm(orderm);
+        List<Orderm> l = ordermAccessService.getAllOrderm();
     }
+
 }

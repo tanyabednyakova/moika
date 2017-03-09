@@ -1,9 +1,7 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Orderm {
@@ -18,16 +16,6 @@ public class Orderm {
     private Date executiontionDate;
     private boolean is_prepaid;
     private boolean is_made;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrdermDetail> ordermDetails = new ArrayList<>();
-//    @ManyToOne
-//    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "CAR_ID_FK"))
-//    private Car car;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "client_id", foreignKey = @ForeignKey(name = "CLIENT_ID_FK"))
-//    private Client client;
-// TODO: 03.03.2017   id_использование бокса
 
     public Orderm() {
     }
@@ -84,27 +72,4 @@ public class Orderm {
         this.is_made = is_made;
     }
 
-    public List<OrdermDetail> getOrdermDetails() {
-        return ordermDetails;
-    }
-
-    public void setOrdermDetails(List<OrdermDetail> ordersDetails) {
-        this.ordermDetails = ordersDetails;
-    }
-
-//    public Car getCar() {
-//        return car;
-//    }
-//
-//    public void setCar(Car car) {
-//        this.car = car;
-//    }
-//
-//    public Client getClient() {
-//        return client;
-//    }
-//
-//    public void setClient(Client client) {
-//        this.client = client;
-//    }
 }
