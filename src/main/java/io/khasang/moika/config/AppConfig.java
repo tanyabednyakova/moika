@@ -12,14 +12,13 @@ import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 //@EnableCaching
@@ -87,4 +86,13 @@ public class AppConfig {
 
     @Bean
     public CompanyService companyService() { return new CompanyServiceImpl();}
+
+    /**
+     * Валидатор для работы с анотациями, согласно спецификации jsr 303, подробности по ссылке
+     * https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#chapter-bean-constraints
+
+    @Bean(name = "jsr303Validator")
+    public Validator validator(){
+        return new LocalValidatorFactoryBean();
+    }*/
 }

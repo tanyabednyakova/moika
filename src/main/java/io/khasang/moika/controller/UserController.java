@@ -4,20 +4,28 @@ import io.khasang.moika.dao.RoleDAO;
 import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
+import io.khasang.moika.util.BindingResultToMapParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
  * Контроллер интерфейсов пользователя
  *
- * @author Rostislav Dublin
+ * @author Rostislav Dublin, Kovalev Aleksandr
  * @since 2017-03-01
  */
 
@@ -27,8 +35,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoleDAO roleDAO;
+   @Autowired
+   private Validator mvcValidator;
 
 
     private User getCurrentUser() {
@@ -38,7 +46,7 @@ public class UserController {
     }
 
 
-    @RequestMapping("/createTestUser")
+/*    @RequestMapping("/createTestUser")
     public String createTestUser(Model model) {
         return createUser(model,
                 "TestUser-" + DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm.ss").format(LocalDateTime.now()),
@@ -49,45 +57,17 @@ public class UserController {
                 "test@mail.ru"
         );
     }
+*/
 
-
-    @RequestMapping("/createUser")
-    public String createUser(
-            Model model,
-            String login,
-            String password,
-            String firstName,
-            String middleName,
-            String lastName,
-            String email
-
-    ) {
-        String result = "";
-        if (StringUtils.isEmpty(login)) {
-            result = "Error: UserName must be set";
+    @RequestMapping(value = "/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object createUser(@RequestBody User user, BindingResult result) {
+        //что-то делаем до валидации
+        mvcValidator.validate(user,result);
+        if(result.hasErrors()){
+            return BindingResultToMapParser.getMap(result);
         }
-        if (StringUtils.isEmpty(password)) {
-            result = "Error: Password must be set";
-        }
-
-        if (!result.startsWith("Error")) {
-
-            User user = new User();
-
-            user.setLogin(login);
-            user.setPassword(password);
-
-            user.setFirstName(firstName);
-            user.setMiddleName(middleName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-
-            userService.createUser(user);
-
-            result = "Success: user " + user.getLogin() + " created with ID " + user.getId();
-        }
-        model.addAttribute("result", result);
-        return "manageUser";
+        return BindingResultToMapParser.getSuccess("All good!!! =)");
     }
 
 
