@@ -7,6 +7,11 @@ import io.khasang.moika.util.BindingResultToMapParser;
 import io.khasang.moika.util.DataAccessUtil;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,6 +31,8 @@ import java.util.Map;
 @RequestMapping(path = "/user")
 @Controller
 public class UserController {
+    @Autowired
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired
     private UserService userService;
 
@@ -59,7 +66,6 @@ public class UserController {
     @RequestMapping(value = "/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object createUser(@RequestBody @Valid User user, BindingResult result) {
-        //mvcValidator.validate(user,result);
         if(result.hasErrors()){
             return BindingResultToMapParser.getMap(result);
         }
@@ -74,8 +80,17 @@ public class UserController {
         if(getCurrentUser()!=null){
             return null;
         }
-        //TODO реализовать логику входа
-        return new Pair<>("redirect","/") ;//TODO добавить актуальную ссылку
+        //TODO проверить логику входа
+        try {
+            AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+            Authentication request = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
+            Authentication result = authenticationManager.authenticate(request);
+            SecurityContextHolder.getContext().setAuthentication(result);
+            return new Pair<>("redirect","/") ;//TODO добавить актуальную ссылку
+        } catch(Exception e) {
+            return new Pair<>("error","Authentication failed: " + e.getMessage());
+        }
+
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
