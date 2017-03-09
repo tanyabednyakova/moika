@@ -42,7 +42,7 @@ public class AppController {
     }
 
     @RequestMapping("/")
-    public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
+    public String hello(Model model) {
         User user = getCurrentUser();
         if(user==null){
             model.addAttribute("isAuth", false);
@@ -50,8 +50,6 @@ public class AppController {
             model.addAttribute("isAuth", true);
             model.addAttribute("userFirstName", user.getFirstName());
         }
-
-
         return "index";
     }
 

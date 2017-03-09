@@ -7,6 +7,7 @@ package io.khasang.moika.service;
  * @since 2017-03-02
  */
 
+import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -83,4 +84,9 @@ public interface UserService {
      * @return закодированный пароль
      */
     String getEncodedPassword(String rawPassword);
+
+    void grantRole(User user, Role role);
+
+    void revokeRole(User user, Role role);
+
 }
