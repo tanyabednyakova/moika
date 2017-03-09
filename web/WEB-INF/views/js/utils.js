@@ -15,58 +15,58 @@
  * true если ответс с сервера положительный
  * false если отрицательный
  */
-function setActiveFormInput(toURL, selector, result){
+function setActiveFormInput(toURL, selector, result) {
     var div = $(selector).closest('div.form-group');
     var glyphicon = div.find('span.glyphicon');
-    setChangeListener(selector, 1000, function(){
+    setChangeListener(selector, 1000, function () {
         var value = $(this).val();
-        if(value){
+        if (value) {
             var obj = new Object();
             obj[$(selector).attr('name')] = value;
             $.ajax({
-                method:"POST",
-                url:toURL,
-                data:JSON.stringify(obj),
-                success:function(data){
+                method: "POST",
+                url: toURL,
+                data: JSON.stringify(obj),
+                success: function (data) {
                     var obj = $.parseJSON(data);
-                    if(obj.success){
-                        if(result){
+                    if (obj.success) {
+                        if (result) {
                             result(true);
                         }
-                        if(!div.hasClass('has-success')){
+                        if (!div.hasClass('has-success')) {
                             div.removeClass('has-error').addClass('has-success');
                             gliphicon.removeClass("glyphicon-remove").addClass("glyphicon-ok");
-                            if($(selector).hasClass('popover-dismissible')){
+                            if ($(selector).hasClass('popover-dismissible')) {
                                 $(selector).removeClass('popover-dismissible')
                             }
                         }
-                    }else{
-                        if(result){
+                    } else {
+                        if (result) {
                             result(false);
                         }
-                        if(!div.hasClass('has-error')){
+                        if (!div.hasClass('has-error')) {
                             div.removeClass('has-success').addClass('has-error');
-                            if(!$(selector).hasClass('popover-dismissible')){
+                            if (!$(selector).hasClass('popover-dismissible')) {
                                 $(selector).addClass('popover-dismissible');
                                 gliphicon.removeClass("glyphicon-ok").addClass("glyphicon-remove");
                                 $(selector).popover({
                                     //TODO Возможно стоит вставлять сообение с сервера?!
-                                    content:'<span style="color:#a94442">Введенные Вами данные уже кем-то используюься, введите другое значение</span>',
-                                    html:true,
-                                    placement:'auto',
-                                    trigger:'hover'
+                                    content: '<span style="color:#a94442">Введенные Вами данные уже кем-то используюься, введите другое значение</span>',
+                                    html: true,
+                                    placement: 'auto',
+                                    trigger: 'hover'
                                 }).popover('show');
                             }
                         }
                     }
                 }
             });
-        }else{
+        } else {
             $(selector).popover({
-                content:'<span style="color:#a94442">Введите данные</span>',
-                html:true,
-                placement:'auto',
-                trigger:'hover'
+                content: '<span style="color:#a94442">Введите данные</span>',
+                html: true,
+                placement: 'auto',
+                trigger: 'hover'
             }).popover('show');
         }
     });
@@ -79,12 +79,12 @@ function setActiveFormInput(toURL, selector, result){
  * @param selector - Селектор формы
  * @param method - метод откправки данных ( POST|GET|PUT|DELETE... )
  */
-function formSubminAjax(toURL, selector, method){
+function formSubmitAjax(toURL, selector, method) {
     var obj = parseFormToJSON(selector);
     $.ajax({
-        method :(method==undefined?"POST":method),
-        url : toURL,
-        data : obj
+        method: (method == undefined ? "POST" : method),
+        url: toURL,
+        data: obj
     });
 }
 
@@ -93,24 +93,24 @@ function formSubminAjax(toURL, selector, method){
  *
  * @param selector - Селектор формы
  */
-function parseFormToJSON(selector){
+function parseFormToJSON(selector) {
     var obj = new Object();
-    $(selector).find('[name]').each(function(){
-        obj[$(this).attr('name')]=$(this).val();
+    $(selector).find('[name]').each(function () {
+        obj[$(this).attr('name')] = $(this).val();
     });
-    return  JSON.stringify(obj)
+    return JSON.stringify(obj)
 }
 
 /**
-* Обработать ошибки полученные с бэкэнда
-*
-* @param errors - Ошибки
-*/
-function processErrors(errors){
-    if(errors){
-        $.each(errors,function (name ,error) {
-            var selector = '[name="'+name+'"]';
-            setStatusElement(selector,'error',error);
+ * Обработать ошибки полученные с бэкэнда
+ *
+ * @param errors - Ошибки
+ */
+function processErrors(errors) {
+    if (errors) {
+        $.each(errors, function (name, error) {
+            var selector = '[name="' + name + '"]';
+            setStatusElement(selector, 'error', error);
         });
     }
 }
@@ -123,21 +123,21 @@ function processErrors(errors){
 function resetStatusElement(selector) {
     var elem = $(selector);
     var div = elem.closest('div.form-group');
-    var gliphicon =  div.find('span.glyphicon');
-    if(div.hasClass('has-error')){
+    var gliphicon = div.find('span.glyphicon');
+    if (div.hasClass('has-error')) {
         div.removeClass('has-error');
         gliphicon.removeClass("glyphicon-remove");
-    }else if(div.hasClass('has-success')){
+    } else if (div.hasClass('has-success')) {
         div.removeClass('has-success');
         gliphicon.removeClass("glyphicon-ok");
-    }else if(div.hasClass('has-warning')){
+    } else if (div.hasClass('has-warning')) {
         div.removeClass('has-warning');
         gliphicon.removeClass("glyphicon-warning-sign");
     }
-    if(!gliphicon.hasClass('hide')){
+    if (!gliphicon.hasClass('hide')) {
         gliphicon.addClass('hide');
     }
-    if(elem.hasClass('popover-dismissible')){
+    if (elem.hasClass('popover-dismissible')) {
         elem.removeClass('popover-dismissible')
     }
 }
@@ -151,18 +151,18 @@ function resetStatusElement(selector) {
  * @param msg - текст всплывающий подсказки
  *
  */
-function setStatusElement(selector,status,msg) {
+function setStatusElement(selector, status, msg) {
     var elem = $(selector);
-    if(elem&&status&&status.search(/^(error|warning|success)$/i)>-1){
+    if (elem && status && status.search(/^(error|warning|success)$/i) > -1) {
         resetStatusElement(selector);
         var div = elem.closest('div.form-group');
-        var gliphicon =  div.find('span.glyphicon');
+        var gliphicon = div.find('span.glyphicon');
         var color = 'black';
-        switch (status){
+        switch (status) {
             case 'error':
                 div.addClass('has-error');
                 gliphicon.addClass("glyphicon-remove");
-                color='#a94442';
+                color = '#a94442';
                 break;
             case 'warning':
                 div.addClass('has-warning');
@@ -175,16 +175,16 @@ function setStatusElement(selector,status,msg) {
                 color = '#3c763d';
                 break;
         }
-        if(gliphicon.hasClass('hide')){
+        if (gliphicon.hasClass('hide')) {
             gliphicon.removeClass('hide');
         }
-        if(msg){
+        if (msg) {
             elem.addClass('popover-dismissible');
             elem.popover({
-                content:'<span style="color:'+color+'">'+msg+'</span>',
-                html:true,
-                placement:'auto',
-                trigger:'hover'
+                content: '<span style="color:' + color + '">' + msg + '</span>',
+                html: true,
+                placement: 'auto',
+                trigger: 'hover'
             }).popover('show');
         }
     }
@@ -197,15 +197,15 @@ function setStatusElement(selector,status,msg) {
  * @param ms - задержка в миллисекундах
  * @param action - callback функция которая запускается при срабатывании события
  * */
-function setChangeListener(selector,ms,action) {
-    if($(selector)&&ms&&ms>0){
-        $(selector).on('input',function(){
-            if($(this).attr('timer')){
+function setChangeListener(selector, ms, action) {
+    if ($(selector) && ms && ms > 0) {
+        $(selector).on('input', function () {
+            if ($(this).attr('timer')) {
                 clearTimeout($(this).attr('timer'));
             }
-            $(this).attr('timer',setTimeout(function(){
+            $(this).attr('timer', setTimeout(function () {
                 action($(selector));
-            },ms));
+            }, ms));
         });
     }
 }

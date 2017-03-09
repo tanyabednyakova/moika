@@ -39,7 +39,6 @@ public interface UserService {
      */
     User findByEmail(String email);
 
-
     /**
      * Создать учетную запись пользователя
      *

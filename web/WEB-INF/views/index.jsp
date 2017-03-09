@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
+<%--TODO вынести в отдельную стр--%>
 <head>
     <title>Title</title>
     <%-- Возможно стоит добавить Bootstrap в проект?! --%>
@@ -13,10 +14,12 @@
     <script src="<c:url value="js/utils.js" />"></script>
     <link rel="stylesheet" href="<c:url value="css/main_style.css" />">
 </head>
+
 <body>
 <div class="container">
     <div class="row header">
         <div class="col-xs-12">
+            <%--TODO вынести в отдельную стр--%>
             <nav class="navbar navbar-default">
                 <div class="container-fluid main-menu">
                     <%-- Brand and toggle get grouped for better mobile display --%>
@@ -83,7 +86,7 @@
     </div>
     <div class="row main-content">
         <div class="col-xs-12">
-
+            <%--TODO Вставить другой текст--%>
             <h3>Классический текст Lorem Ipsum, используемый с XVI века</h3>
             <p>
                 <blockquote>
@@ -161,6 +164,7 @@
 
         </div>
     </div>
+    <%--TODO вынести в отдельную стр--%>
     <div class="row footer vertical-align">
         <div class="col-xs-12">О команде, контакты, ©</div>
     </div>
@@ -250,6 +254,7 @@
         </div>
             <%-- /.modal-dialog --%>
     </div><%-- /.modal --%>
+    <%--TODO вынести в отдельный js--%>
     <script type="text/javascript">
         <%-- Здесь описана логика работы модальных окон регистрации и аутентификации --%>
         $("#regForm").attr('error', 1);

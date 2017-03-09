@@ -22,7 +22,6 @@ public interface UserDAO extends BasicDao<User>{
      * @param login ID искомого пользователя
      * @return пользователь
      */
-
     User findByLogin(String login);
 
     /**

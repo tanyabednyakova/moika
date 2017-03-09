@@ -35,24 +35,21 @@ public class UserController {
     private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired
     private UserService userService;
-
-   @Autowired
-   private Validator mvcValidator;
-
-   @Autowired
-   private DataAccessUtil dataAccessUtil;
-
+    @Autowired
+    private Validator mvcValidator;
+    @Autowired
+    private DataAccessUtil dataAccessUtil;
 
     private User getCurrentUser() {
         String currentLogin = SecurityContextHolder.getContext().getAuthentication().getName();
-            return userService.findByLogin(currentLogin);
+        return userService.findByLogin(currentLogin);
 
     }
 
     @RequestMapping(value = "/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object createUser(@RequestBody @Valid User user, BindingResult result) {
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             return BindingResultToMapParser.getMap(result);
         }
         userService.createUser(user);
@@ -63,32 +60,30 @@ public class UserController {
     @ResponseBody
     public Object loginUser(@RequestBody User user) {
         //возвращаем null если пользователь уже залогирован
-        if(getCurrentUser()!=null){
+        if (getCurrentUser() != null) {
             return null;
         }
-        //TODO проверить логику входа
         try {
             AuthenticationManager authenticationManager = authenticationManagerBuilder.getOrBuild();
             Authentication request = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
             Authentication result = authenticationManager.authenticate(request);
             SecurityContextHolder.getContext().setAuthentication(result);
-            return new Pair<>("redirect","") ;//TODO добавить актуальную ссылку
-        } catch(AuthenticationException e) {
-            return new Pair<>("error","Authentication failed: " + e.getMessage());
+            return new Pair<>("redirect", "");//TODO добавить актуальную ссылку
+        } catch (AuthenticationException e) {
+            return new Pair<>("error", "Authentication failed: " + e.getMessage());
         }
-
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateUser(@RequestBody Map<String,Object> user, BindingResult result) {
+    public Object updateUser(@RequestBody Map<String, Object> user, BindingResult result) {
         User currentUser = getCurrentUser();
-        if(user.containsKey("password")&&currentUser.getPassword().equals(user.get("password"))){
+        if (user.containsKey("password") && currentUser.getPassword().equals(user.get("password"))) {
             user.replace("password", userService.getEncodedPassword(user.get("password").toString()));
         }
-        dataAccessUtil.setNewValuesToBean(currentUser,user);
-        mvcValidator.validate(currentUser,result);
-        if(result.hasErrors()){
+        dataAccessUtil.setNewValuesToBean(currentUser, user);
+        mvcValidator.validate(currentUser, result);
+        if (result.hasErrors()) {
             return BindingResultToMapParser.getMap(result);
         }
         userService.createUser(currentUser);
@@ -108,7 +103,7 @@ public class UserController {
     @ResponseBody
     public Object grantRole(@RequestBody Role role, @PathVariable("id") long id) {
         User user = userService.findById(id);
-        userService.grantRole(user,role);
+        userService.grantRole(user, role);
         return user;
     }
 
@@ -116,9 +111,8 @@ public class UserController {
     @ResponseBody
     public Object revokeRole(@RequestBody Role role, @PathVariable("id") long id) {
         User user = userService.findById(id);
-        userService.revokeRole(user,role);
+        userService.revokeRole(user, role);
         return user;
     }
-
 
 }

@@ -7,6 +7,7 @@ import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  * @author Rostislav Dublin, Kovalev Aleksandr
  * @since 2017-03-01
  */
-@Service("userDao")
+@Repository("userDao")
 @Transactional
 public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
     private final RoleDAO roleDAO;
