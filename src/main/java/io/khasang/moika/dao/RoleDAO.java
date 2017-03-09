@@ -16,8 +16,8 @@ public interface RoleDAO {
 
     /**
      * Найти роль по названию
-     * @param name
-     * @return
+     * @param name название роли
+     * @return Role
      */
     Role findByName(String name);
 
