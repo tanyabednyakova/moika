@@ -49,20 +49,6 @@ public class UserController {
 
     }
 
-
-/*    @RequestMapping("/createTestUser")
-    public String createTestUser(Model model) {
-        return createUser(model,
-                "TestUser-" + DateTimeFormatter.ofPattern("dd.MM.yyyy HH.mm.ss").format(LocalDateTime.now()),
-                "123456Qw",
-                "Тест",
-                "Тестович",
-                "Тестов",
-                "test@mail.ru"
-        );
-    }
-*/
-
     @RequestMapping(value = "/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object createUser(@RequestBody @Valid User user, BindingResult result) {
@@ -82,12 +68,12 @@ public class UserController {
         }
         //TODO проверить логику входа
         try {
-            AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+            AuthenticationManager authenticationManager = authenticationManagerBuilder.getOrBuild();
             Authentication request = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
             Authentication result = authenticationManager.authenticate(request);
             SecurityContextHolder.getContext().setAuthentication(result);
-            return new Pair<>("redirect","/") ;//TODO добавить актуальную ссылку
-        } catch(Exception e) {
+            return new Pair<>("redirect","") ;//TODO добавить актуальную ссылку
+        } catch(AuthenticationException e) {
             return new Pair<>("error","Authentication failed: " + e.getMessage());
         }
 
