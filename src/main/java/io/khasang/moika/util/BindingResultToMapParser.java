@@ -24,7 +24,7 @@ public class BindingResultToMapParser {
      */
     public static Map<String,String> getMap(BindingResult bindingResult){
         Map<String,String> err = new HashMap<>();
-        bindingResult.getFieldErrors().forEach((error)-> err.put(error.getField(),error.getCode()));
+        bindingResult.getFieldErrors().forEach((error)-> err.put(error.getField(),error.getDefaultMessage()));
         return err;
     }
 

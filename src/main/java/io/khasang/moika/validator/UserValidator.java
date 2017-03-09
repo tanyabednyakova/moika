@@ -18,8 +18,8 @@ public class UserValidator  implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        User user = (User) target;
-/*
+ /*       User user = (User) target;
+
         if(StringUtils.isEmpty(user.getName())){
             errors.rejectValue("name","name_empty");
         }

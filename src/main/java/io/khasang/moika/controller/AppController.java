@@ -5,6 +5,7 @@ import io.khasang.moika.entity.Company;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,9 @@ public class AppController {
     @Autowired
     private CreateTable createTable;
     @Autowired
-    CompanyService companyService;
+    private CompanyService companyService;
     @Autowired
-    CompanyDao companyDao;
+    private CompanyDao companyDao;
 
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
