@@ -1,6 +1,6 @@
 /**
  * Вспомогательный инстурументарий для большей
- * дружелюбности сайта (основан на framework Bootstrap)
+ * дружелюбности сайта (дополняет framework Bootstrap)
  *
  * @since 2017-03-05
  * @author Kovalev Aleksandr

@@ -2,8 +2,10 @@ package io.khasang.moika.controller;
 
 import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
+import io.khasang.moika.entity.User;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
+import io.khasang.moika.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import org.springframework.security.core.userdetails.User;
 import java.util.List;
 
 @Controller
@@ -31,16 +32,24 @@ public class AppController {
     private CompanyService companyService;
     @Autowired
     private CompanyDao companyDao;
+    @Autowired
+    private UserService userService;
+
+    private User getCurrentUser() {
+        String currentLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.findByLogin(currentLogin);
+
+    }
 
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
-        model.addAttribute("name", name);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        boolean auth = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
-        System.out.println(String.format("name: %s  isAuth: %b",username,auth));
-        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach((a)->{
-            System.out.println(a.getAuthority());
-        });
+        User user = getCurrentUser();
+        if(user==null){
+            model.addAttribute("isAuth", false);
+        }else{
+            model.addAttribute("isAuth", true);
+            model.addAttribute("userFirstName", user.getFirstName());
+        }
 
 
         return "index";

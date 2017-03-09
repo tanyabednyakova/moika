@@ -1,16 +1,11 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.dao.RoleDAO;
-import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
 import io.khasang.moika.util.BindingResultToMapParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 /**
  * Контроллер интерфейсов пользователя
@@ -61,14 +55,31 @@ public class UserController {
 
     @RequestMapping(value = "/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object createUser(@RequestBody User user, BindingResult result) {
-        //что-то делаем до валидации
+    public Object createUser(@RequestBody @Valid User user, BindingResult result) {
+        //mvcValidator.validate(user,result);
+        if(result.hasErrors()){
+            return BindingResultToMapParser.getMap(result);
+        }
+        userService.createUser(user);
+        return BindingResultToMapParser.getSuccess("All good!!! =)");
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object loginUser(@RequestBody Map<String, Object> user, BindingResult result) {
+        User currentUser = getCurrentUser();
+        if(currentUser!=null){
+            return null;
+        }
+        
         mvcValidator.validate(user,result);
         if(result.hasErrors()){
             return BindingResultToMapParser.getMap(result);
         }
+        userService.createUser(user);
         return BindingResultToMapParser.getSuccess("All good!!! =)");
     }
+
 
 
 }
