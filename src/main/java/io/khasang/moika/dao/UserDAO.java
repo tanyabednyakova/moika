@@ -34,27 +34,6 @@ public interface UserDAO extends BasicDao<User>{
     User findByEmail(String email);
 
     /**
-     * Создать пользователя
-     *
-     * @param user данные пользователя (поле id игнорируется)
-     */
-    User createUser(User user);
-
-    /**
-     * Удалить пользователя
-     *
-     * @param user пользователь
-     */
-    void deleteUser(User user);
-
-    /**
-     * Обновить поля пользователя
-     *
-     * @param user данные пользователя
-     */
-    User updateUser(User user);
-
-    /**
      * Наделить пользователя ролью
      *
      * @param user пользователь
