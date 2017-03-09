@@ -24,7 +24,22 @@ public class PsServicesController {
     MoikaServiceTypesService moikaServiceTypes;
     @Autowired
     MoikaServiceStatusService moikaServiceStatus;
+    @Autowired
+    BaseMoikaServiceDataAccessService baseService;
 
+    @RequestMapping(value = "baseServiceList", method = RequestMethod.GET)
+    public String getBaseServiceList(Model model) {
+        List<BaseMoikaService> baseServiceList = new ArrayList<>();
+        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
+        try {
+            baseServiceList = baseService.getAllServices();
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("servicelist", baseServiceList);
+        model.addAttribute("nrows", baseServiceList.size() + " rows affected");
+        return "ps-dao-services";
+    }
 
     @RequestMapping(value = "/allServiceList", method = RequestMethod.GET)
     public String getServiceList(Model model) {
@@ -37,7 +52,7 @@ public class PsServicesController {
         }
         model.addAttribute("servicelist", allServicesList);
         model.addAttribute("nrows", allServicesList.size() + " rows affected");
-        return "ps-dao-services";
+        return "ps-dao-wash-services";
     }
 
     @RequestMapping(value = "/washServiceList", method = RequestMethod.GET)
