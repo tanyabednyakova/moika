@@ -10,16 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Types;
-<<<<<<< HEAD:src/main/java/io/khasang/moika/model/Impl/AKovalevDataAccessImpl.java
-import java.util.*;
-
-
-@Service
-=======
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +21,6 @@ import java.util.Map;
 import java.util.Arrays;
 
 @Component
->>>>>>> development:src/main/java/io/khasang/moika/model/impl/AKovalevDataAccessImpl.java
 public class AKovalevDataAccessImpl implements AKovalevDataAccess {
     private JdbcTemplate jdbcTemplate;
     private static long currentCarId;

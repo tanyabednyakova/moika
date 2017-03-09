@@ -40,7 +40,7 @@ public class CarIntegrationTest2 {
         Assert.assertEquals("Красный таз", resultUpdCar.getCarType());
         Assert.assertNotNull(resultUpdCar.getId());
     }
-
+//TODO доделать delete, add, get
     @Ignore
     @Test
     public void deleteCar() {
