@@ -22,7 +22,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 //@EnableCaching
-@PropertySource(value = {"classpath:util.properties", "classpath:auth.properties"})
+@PropertySource(value = {"classpath:util.properties"})
 public class AppConfig {
     final private Environment environment;
 
@@ -63,17 +63,6 @@ public class AppConfig {
     @Bean
     public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
 
-/*  DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
-    @Bean
-    public UserDetailsService userDetailsService() {
-        JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
-        jdbcImpl.setDataSource(dataSource());
-        jdbcImpl.setUsersByUsernameQuery(environment.getRequiredProperty("usersByQuery"));
-        jdbcImpl.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("rolesByQuery"));
-        return jdbcImpl;
-    }
-*/
-
     @Bean
     public PskvorDataAccess pskvorDataAccess(){
          return new PskvorDataAccessJdbcImpl(jdbcTemplate());
@@ -86,13 +75,4 @@ public class AppConfig {
 
     @Bean
     public CompanyService companyService() { return new CompanyServiceImpl();}
-
-    /**
-     * Валидатор для работы с анотациями, согласно спецификации jsr 303, подробности по ссылке
-     * https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#chapter-bean-constraints
-
-    @Bean(name = "jsr303Validator")
-    public Validator validator(){
-        return new LocalValidatorFactoryBean();
-    }*/
 }

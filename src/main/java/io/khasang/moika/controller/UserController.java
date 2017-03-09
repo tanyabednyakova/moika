@@ -19,6 +19,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -96,6 +97,19 @@ public class UserController {
         User user = userService.findById(id);
         userService.deleteUser(user);
         return user;
+    }
+
+    @RequestMapping(value = "/util", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object utilUser(@RequestBody Map<String,String> param) {
+        boolean result = false;
+        if (param.containsKey("login")){
+            result = userService.isLoginFree(param.get("login"));
+        }else if(param.containsKey("email")){
+            result = userService.isEmailFree(param.get("email"));
+        }
+        //TODO поменять везде Pair на Collections.singletonMap
+        return Collections.singletonMap("success",result);
     }
 
     //Функции управления ролями

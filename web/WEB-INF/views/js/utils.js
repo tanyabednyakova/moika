@@ -29,7 +29,7 @@ function setActiveFormInput(toURL, selector, result) {
                 data: JSON.stringify(obj),
                 success: function (data) {
                     var obj = $.parseJSON(data);
-                    if (obj.success) {
+                    if (obj.success==true) {
                         if (result) {
                             result(true);
                         }
