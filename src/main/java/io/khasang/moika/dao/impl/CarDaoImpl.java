@@ -66,13 +66,7 @@ public class CarDaoImpl implements CarDao {
         query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
     }
-
-    @SuppressWarnings("unchecked")
-    public List<Car> getCarHqlList() {
-        List<Car> CarList = sessionFactory.getCurrentSession().createQuery("FROM Car").list();
-        return CarList;
-    }
-
+    
     @Override
     public Car getCarByNumber(String number) {
         Criteria criteria = sessionFactory.
