@@ -5,7 +5,6 @@ import io.khasang.moika.entity.Car;
 import java.util.List;
 
 public interface CarDao {
-
     void addCar(Car Car);
 
     void updateCar(Car Car);
@@ -16,7 +15,7 @@ public interface CarDao {
 
     Car getCarByType(String name);
 
-    List<Car> getCarList();
+    List getCarList();
 
     Car getCarByNumber(String s);
 }

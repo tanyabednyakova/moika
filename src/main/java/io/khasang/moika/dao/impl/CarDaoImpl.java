@@ -6,8 +6,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
-import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,37 +41,22 @@ public class CarDaoImpl implements CarDao {
 
     @Override
     public Car getCarById(long id) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(Car.class);
-        criteria.add(Restrictions.eq("id", id));
-        return (Car) criteria.uniqueResult();
+        return sessionFactory.getCurrentSession().get(Car.class, id);
     }
 
     @Override
     public Car getCarByType(String type) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(Car.class);
-        criteria.add(Restrictions.eq("type", type));
-        return (Car) criteria.uniqueResult();
+        return  sessionFactory.getCurrentSession().get(Car.class, type);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<Car> getCarList() {
-        Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from Car;");
-        query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-        return query.list();
+        return sessionFactory.getCurrentSession().createQuery("FROM Car").list();
     }
     
     @Override
     public Car getCarByNumber(String number) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(Car.class);
-        criteria.add(Restrictions.eq("number", number));
-        return (Car) criteria.uniqueResult();
+        return  sessionFactory.getCurrentSession().get(Car.class, number);
     }
 
 }
