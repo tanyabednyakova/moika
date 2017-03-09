@@ -3,7 +3,7 @@
 *.iml
 /target/
 /rr/
-<<<<<<< HEAD
 /classes/
+/DB/
 /lib/
 /DB/

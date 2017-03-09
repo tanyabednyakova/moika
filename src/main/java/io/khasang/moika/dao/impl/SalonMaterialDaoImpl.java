@@ -1,15 +1,17 @@
 package io.khasang.moika.dao.impl;
 
 
+import io.khasang.moika.dao.SalonMaterialDao;
+import io.khasang.moika.entity.SalonMaterial;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Transactional
-@Repository("serviceMaterialDaoImpl")
-public class SalonMaterialDaoImpl<ServiceType> extends AMoikaTypeReferenceDaoImpl {
+@Repository("salonMaterialDao")
+public class SalonMaterialDaoImpl extends AllTypeDaoImpl<SalonMaterial>  implements SalonMaterialDao {
 
     public SalonMaterialDaoImpl() {
-        super();
     }
+
 }

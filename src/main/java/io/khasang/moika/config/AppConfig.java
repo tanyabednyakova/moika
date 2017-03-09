@@ -9,7 +9,6 @@ import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.PskvorDataAccessServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -18,23 +17,15 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 
-import java.util.Date;
-
 @Configuration
 @PropertySource(value = {"classpath:util.properties"})
 @PropertySource(value = {"classpath:auth.properties"})
-@ComponentScan({"io.khasang.moika", "io.khasang.moika.model.*", "io.khasang.moika.service.*", "io.khasang.moika.controller.*",})
 public class AppConfig {
     @Autowired
-    Environment environment;
+    private Environment environment;
 
     @Bean
-    public Environment getEnvironment() {
-        return environment;
-    }
-
-    @Bean
-    public DriverManagerDataSource JdbcDataSource() {
+    public DriverManagerDataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getProperty("jdbc.postgresql.driverClass"));
         dataSource.setUrl(environment.getProperty("jdbc.postgresql.url"));
@@ -44,26 +35,22 @@ public class AppConfig {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate() {
+    public JdbcTemplate jdbcTemplate(){
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        jdbcTemplate.setDataSource(JdbcDataSource());
+        jdbcTemplate.setDataSource(dataSource());
         return jdbcTemplate;
     }
 
     @Bean
-    public CreateTable createTable() {
-        return new CreateTable(jdbcTemplate()
-        );
+    public CreateTable createTable(){
+        return  new CreateTable(jdbcTemplate());
     }
-    @Bean
-    public Date testDate() {
-        return new Date();
-    }
+
 
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
-        jdbcImpl.setDataSource(JdbcDataSource());
+        jdbcImpl.setDataSource(dataSource());
         jdbcImpl.setUsersByUsernameQuery(environment.getRequiredProperty("usersByQuery"));
         jdbcImpl.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("rolesByQuery"));
         return jdbcImpl;
@@ -74,7 +61,9 @@ public class AppConfig {
     }
 
     @Bean
-    public PskvorDataAccessService pskvorDataAccessService() { return new PskvorDataAccessServiceImpl(pskvorDataAccess());}
+    public PskvorDataAccessService pskvorDataAccessService() {
+        return new PskvorDataAccessServiceImpl();
+    }
 
     @Bean
     public CompanyService companyService() { return new CompanyServiceImpl();}

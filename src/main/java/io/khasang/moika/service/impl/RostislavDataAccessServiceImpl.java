@@ -32,12 +32,4 @@ public class RostislavDataAccessServiceImpl implements RostislavDataAccessServic
 
         return rostislavDataAccess.getSelectedDataFromDbEntity("Cars", filter);
     }
-
-    @Override
-    public List<Map<String, Object>> getCarToCarCrossData() {
-
-        return rostislavDataAccess.getSelectedDataFromJoinedDbEntities("Cars car1", "Cars car2", "CROSS", null, null);
-    }
-
-
 }

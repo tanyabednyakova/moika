@@ -1,7 +1,7 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.*;
-import java.util.*;
+        import javax.persistence.*;
+        import java.util.*;
 
 
 @Entity(name = "cars")

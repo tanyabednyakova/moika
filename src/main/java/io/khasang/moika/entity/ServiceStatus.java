@@ -10,8 +10,8 @@ public class ServiceStatus extends ABaseMoikaStatusReference{
     }
 
     public ServiceStatus(String code, String name) {
-        this.statusCode = code;
-        this.statusName = name;
+        this.code = code;
+        this.name = name;
     }
 
 }

@@ -1,10 +1,11 @@
 package io.khasang.moika.model;
 
+
 import io.khasang.moika.model.PskvorDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -15,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-@Component
+@Service
 public class PskvorDataAccessJdbcImpl implements PskvorDataAccess {
     @Autowired
     private Environment environment;

@@ -7,7 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository("chemCleanServiceDao")
-public class ChemCleanServiceDaoImpl extends AMoikaServiceDaoImpl<ChemCleanService> implements ChemCleanServiceDao{
+public class ChemCleanServiceDaoImpl extends AllServiceDaoImpl<ChemCleanService> implements ChemCleanServiceDao {
+
     public ChemCleanServiceDaoImpl() {
     }
 

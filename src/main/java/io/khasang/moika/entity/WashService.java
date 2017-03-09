@@ -33,8 +33,4 @@ public class WashService extends ABaseMoikaServiceAdditionalInfo {
         this.carTypeEntity = carTypeEntity;
     }
 
-    @Override
-    public WashService getMoikaServiceAdditinalInfo() {
-        return this;
-    }
 }

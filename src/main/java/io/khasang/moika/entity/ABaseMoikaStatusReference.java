@@ -3,17 +3,17 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 @MappedSuperclass
-@PrimaryKeyJoinColumn(name = "id_type")
-public abstract class ABaseMoikaStatusReference extends ABaseMoikaEntity {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class ABaseMoikaStatusReference extends ABaseMoikaEntity{
 
     @Id
     @Column(name = "id_status", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
     @Column(name = "code", unique = true, nullable = false)
-    protected String statusCode;
+    protected String code;
     @Column(name = "name")
-    protected String statusName;
+    protected String name;
 
 
     public int getId() {
@@ -21,27 +21,27 @@ public abstract class ABaseMoikaStatusReference extends ABaseMoikaEntity {
     }
 
     public String getStatusCode() {
-        return statusCode;
+        return code;
     }
 
     public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
+        this.code = statusCode;
     }
 
     public String getStatusName() {
-        return statusName;
+        return this.name;
     }
 
     public void setStatusName(String statusName) {
-        this.statusName = statusName;
+        this.name = statusName;
     }
 
     @Override
     public String toString() {
         return  this.getClass().getName()+ "{" +
                 "id=" + id +
-                ", typeCode='" + statusCode + '\'' +
-                ", typeName='" + statusName + '\'' +
+                ", typeCode='" + code + '\'' +
+                ", typeName='" + name + '\'' +
                 '}';
     }
 

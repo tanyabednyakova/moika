@@ -14,7 +14,7 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
     private int idFacility;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_box_facility"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_service_id_fclt"), insertable=false, updatable=false )
     private WashFacility washFacility;
 
     @Column(name = "id_type")
@@ -32,7 +32,7 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
     private ServiceStatus serviceStatusEntity;
 
     @Column(name = "name", unique = true)
-    private String serviceName;
+    private String name;
 
     @Column(name = "description")
     private String description;
@@ -77,11 +77,11 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
     }
 
     public String getServiceName() {
-        return serviceName;
+        return name;
     }
 
     public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+        this.name = name;
     }
 
     public String getDescription() {
@@ -156,9 +156,9 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
                 ", idType=" + idType +
                 ", serviceTypeEntity=" + serviceTypeEntity.getTypeCode() +
                 ", idStatus=" + idStatus +
-                ", serviceStatusEntity=" + serviceStatusEntity.statusCode +
-                ", serviceName='" + serviceName + '\'' +
-                ", description='" + description + '\'' +
+                ", serviceStatusEntity=" + serviceStatusEntity.code +
+                ", serviceName='" + name + '\'' +
+                ((description != null) ? ", description='" + description : "")+ '\'' +
                 '}';
     }
 }

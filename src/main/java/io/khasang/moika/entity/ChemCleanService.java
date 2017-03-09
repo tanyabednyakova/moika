@@ -1,7 +1,7 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+
 
 @Entity(name= "chem_clean_services")
 @PrimaryKeyJoinColumn(name="id_service")
@@ -33,7 +33,6 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
         return this.dirtTypeEntity.getTypeCode();
     }
 
-
     public int getIdMaterial() {
         return idMaterial;
     }
@@ -49,11 +48,5 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
     public void setSalonMaterial(SalonMaterial salonMaterial) {
         this.salonMaterial = salonMaterial;
     }
-
-    @Override
-    public ChemCleanService getMoikaServiceAdditinalInfo() {
-        return this;
-    }
-
 
 }

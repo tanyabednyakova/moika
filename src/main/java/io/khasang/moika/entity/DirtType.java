@@ -8,14 +8,8 @@ public class DirtType extends ABaseMoikaTypeReference {
     public DirtType() {
     }
 
-    public DirtType(String typeCode) {
-        this.typeCode = typeCode;
+    public DirtType(String code, String name) {
+        this.code = code;
+        this.name = name;
     }
-
-    public DirtType(String typeCode, String typeName) {
-        this.typeCode = typeCode;
-        this.typeName = typeName;
-    }
-
-
 }

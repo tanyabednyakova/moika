@@ -8,14 +8,13 @@ public class BoxType extends ABaseMoikaTypeReference {
     public BoxType() {
     }
 
-    public BoxType(String typeCode) {
-        this.typeCode = typeCode;
+    public BoxType(String code, String name) {
+        this.code = code;
+        this.name = name;
     }
 
-    public BoxType(String typeCode, String typeName) {
-        this.typeCode = typeCode;
-        this.typeName = typeName;
+    public BoxType(String code) {
+        this.code = code;
     }
-
 
 }

@@ -9,12 +9,12 @@ public class BoxStatus extends ABaseMoikaStatusReference{
     }
 
     public BoxStatus(String code, String name) {
-        this.statusCode = code;
-        this.statusName = name;
+        this.code = code;
+        this.name = name;
     }
 
     public BoxStatus(String code) {
-        this.statusCode = code;
+        this.code = code;
     }
 
 }

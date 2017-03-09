@@ -9,12 +9,12 @@ public class SalonMaterial extends ABaseMoikaTypeReference {
     }
 
     public SalonMaterial(String typeCode) {
-        this.typeCode = typeCode;
+        this.code = typeCode;
     }
 
     public SalonMaterial(String typeCode, String typeName) {
-        this.typeCode = typeCode;
-        this.typeName = typeName;
+        this.code = typeCode;
+        this.name = typeName;
     }
 
 

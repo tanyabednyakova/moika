@@ -3,6 +3,7 @@ package io.khasang.moika.dao;
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.entity.Client;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface ClientDao {
     List<Client> getClientsList();
     List<Client> getClientsListByLastDateWash(Date dateStart, Date dateEnd);
     List<Client> getClientListByStatus(int status);
+
 }

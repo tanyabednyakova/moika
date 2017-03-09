@@ -27,9 +27,4 @@ public class ComplexService extends ABaseMoikaServiceAdditionalInfo {
     }
 
 
-    @Override
-    public ComplexService getMoikaServiceAdditinalInfo() {
-        return this;
-    }
-
 }

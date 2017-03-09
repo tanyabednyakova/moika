@@ -1,15 +1,20 @@
 package io.khasang.moika.dao.impl;
 
-
+import io.khasang.moika.dao.ServiceStatusDao;
+import io.khasang.moika.entity.ServiceStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 @Transactional
-@Repository("serviceStatusDaoImpl")
-public class ServiceStatusDaoImpl<ServiceStatus> extends AMoikaStatusDaoImpl {
+@Repository("serviveStatusDao")
+public class ServiceStatusDaoImpl extends AllStatusDaoImpl<ServiceStatus> implements ServiceStatusDao {
 
     public ServiceStatusDaoImpl() {
-        super();
     }
+
+
+
+
 }

@@ -3,7 +3,6 @@ package io.khasang.moika.controller;
 import io.khasang.moika.entity.WashBox;
 import io.khasang.moika.entity.WashFacility;
 import io.khasang.moika.model.CreateTable;
-import io.khasang.moika.service.PskvorDataAccessService;
 import io.khasang.moika.service.PskvorWashFacilityDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +19,7 @@ import java.util.List;
 public class PsWashFacilityController {
     @Autowired
     CreateTable createTable;
-    @Autowired
-    PskvorDataAccessService pskvorDataAccessService;
+
     @Autowired
     PskvorWashFacilityDaoService pskvorWashFacilityDaoService;
 

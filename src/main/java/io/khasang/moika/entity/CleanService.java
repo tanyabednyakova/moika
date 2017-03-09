@@ -38,10 +38,5 @@ public class CleanService extends ABaseMoikaServiceAdditionalInfo {
         this.dirtTypeEntity = dirtTypeEntity;
     }
 
-    @Override
-    public CleanService getMoikaServiceAdditinalInfo() {
-        return this;
-    }
-
 
 }
