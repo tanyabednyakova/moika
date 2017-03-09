@@ -1,17 +1,18 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
-@Entity(name = "other_services")
+@Entity(name = "all_services")
 @PrimaryKeyJoinColumn(name = "id_service")
-public class OtherService extends ABaseMoikaServiceAdditionalInfo {
+public class AllService extends ABaseMoikaServiceAdditionalInfo {
 
     @Column(name = "add_info")
     private String AddInfop;
 
 
-    public OtherService() {
+    public AllService() {
     }
 
     public String getAddInfop() {

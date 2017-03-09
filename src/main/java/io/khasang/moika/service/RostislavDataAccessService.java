@@ -22,6 +22,5 @@ public interface RostislavDataAccessService {
      */
     List<Map<String, Object>> getCars(String carType);
 
-    public List<Map<String, Object>> getCars(String carType);
 
 }

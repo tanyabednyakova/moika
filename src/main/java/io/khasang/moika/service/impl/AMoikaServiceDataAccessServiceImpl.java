@@ -2,17 +2,13 @@ package io.khasang.moika.service.impl;
 
 import io.khasang.moika.dao.BaseMoikaServiceDao;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.dao.impl.AllServiceDaoImpl;
 import io.khasang.moika.entity.BaseMoikaService;
-import io.khasang.moika.service.BaseMoikaServiceDataAccessService;
 import io.khasang.moika.service.IMoikaServiceDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
 

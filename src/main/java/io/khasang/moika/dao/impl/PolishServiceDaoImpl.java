@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository("polishServiceDao")
-public class PolishServiceDaoImpl extends AllServiceDaoImpl<PolishService> implements PolishServiceDao {
+public class PolishServiceDaoImpl extends AllServiceFieldsDaoImpl<PolishService> implements PolishServiceDao {
 
 
     public PolishServiceDaoImpl() {

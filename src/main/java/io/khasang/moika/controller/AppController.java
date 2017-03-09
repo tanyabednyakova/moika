@@ -42,7 +42,7 @@ public class AppController {
         return "create";
     }
 
-    @RequestMapping(value = {"/hello/{name}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"hello/{name}"}, method = RequestMethod.GET)
     public ModelAndView hello(@PathVariable("name") String name) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("encode");
@@ -81,12 +81,12 @@ public class AppController {
     @RequestMapping("/restHql")
     public String testHql() {
         List<Company> companyList = companyDao.getCompanyHqlList();
+        return "redirect:yandex.ru";
     }
 
-    @RequestMapping(value = "/company/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Company getCompanybyId(@PathVariable(value = "id") String inputId, Model model){
-        Company company = companyService.getCompanyById(Integer.valueOf(inputId));
-        return company;
+    public Company company(@PathVariable(value = "id") String id){
+        return companyService.getCompanyById(Integer.parseInt(id));
     }
 }

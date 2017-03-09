@@ -4,7 +4,6 @@ import io.khasang.moika.service.PskvorTestDaoService;
 import io.khasang.moika.service.ServiceDataAccessService;
 import io.khasang.moika.service.WashServiceDataAccessService;
 import io.khasang.moika.service.impl.PskvorTestDaoServiceImpl;
-import io.khasang.moika.service.impl.ServiceDataAccessServiceImpl;
 import io.khasang.moika.service.impl.WashServiceDataAccessServiceImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -68,8 +66,5 @@ public class HibernateConfig {
 
     @Bean
     public WashServiceDataAccessService washServiceDataAccessService() { return new WashServiceDataAccessServiceImpl();}
-
-    @Bean
-    public ServiceDataAccessService serviceDataAccessService() { return new ServiceDataAccessServiceImpl();}
 
 }
