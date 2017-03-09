@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity(name = "clean_Services")
-@PrimaryKeyJoinColumn(name = "id_service")
 public class CleanService extends ABaseMoikaServiceAdditionalInfo {
 
     @Column(name = "id_dirt_type")

@@ -3,7 +3,7 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 /**
- * Базовый класс - entity для сервисов
+ * Базовый класс-entity для сервисов
  */
 
 @Entity(name = "services")
@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class BaseMoikaService extends ABaseMoikaEntity {
     @Id
     @Column(name = "id_service", columnDefinition = "serial")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO) //не IDENTITY, а тот что в таблицах
     private int id;
 
     @Column(name = "id_fclt")
@@ -21,7 +21,7 @@ public class BaseMoikaService extends ABaseMoikaEntity {
     @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_service_id_fclt"), insertable = false, updatable = false)
     private WashFacility washFacility;
 
-    @Column(name = "id_type")
+    @Column(name = "id_type", insertable = false, updatable = false)
     private int idType;
 
     @ManyToOne(cascade = CascadeType.REFRESH)

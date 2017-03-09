@@ -9,17 +9,17 @@ import javax.persistence.PrimaryKeyJoinColumn;
 public class AllService extends ABaseMoikaServiceAdditionalInfo {
 
     @Column(name = "add_info")
-    private String AddInfop;
+    private String AddInfo;
 
 
     public AllService() {
     }
 
-    public String getAddInfop() {
-        return AddInfop;
+    public String getAddInfo() {
+        return AddInfo;
     }
 
-    public void setAddInfop(String addInfop) {
-        AddInfop = addInfop;
+    public void setAddInfo(String addInfo) {
+        AddInfo = addInfo;
     }
 }

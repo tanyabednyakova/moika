@@ -3,7 +3,6 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 @Entity(name = "other_services")
-@PrimaryKeyJoinColumn(name = "id_service")
 public class OtherService extends ABaseMoikaServiceAdditionalInfo {
 
     @Column(name = "add_info")

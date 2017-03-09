@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 
 @Entity(name= "chem_clean_services")
-@PrimaryKeyJoinColumn(name="id_service")
 public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
 
     @Column(name = "id_dirt_type")
@@ -49,4 +48,11 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
         this.salonMaterial = salonMaterial;
     }
 
+    public DirtType getDirtTypeEntity() {
+        return dirtTypeEntity;
+    }
+
+    public void setDirtTypeEntity(DirtType dirtTypeEntity) {
+        this.dirtTypeEntity = dirtTypeEntity;
+    }
 }
