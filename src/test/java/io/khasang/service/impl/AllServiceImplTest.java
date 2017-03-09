@@ -3,9 +3,9 @@ package io.khasang.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.BaseMoikaService;
+import io.khasang.moika.entity.AllService;
 import io.khasang.moika.entity.WashService;
-import io.khasang.moika.service.BaseMoikaServiceDataAccessService;
+import io.khasang.moika.service.AllServiceDataAccessService;
 import io.khasang.moika.service.WashServiceDataAccessService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,16 +22,16 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class WashServiceImplTest {
+public class AllServiceImplTest {
 
     @Autowired
-    WashServiceDataAccessService moikaService;
+    AllServiceDataAccessService moikaService;
 
 
     @Test
     @Transactional
-    public void testWashServiceList(){
-        List<WashService> serviceList = null;
+    public void testAllServiceList(){
+        List<AllService> serviceList = null;
         try {
             serviceList = moikaService.getAllServices();
         } catch (MoikaDaoException e) {
@@ -39,15 +39,23 @@ public class WashServiceImplTest {
         }
         Assert.assertNotNull("Service  list is null",serviceList);
         Assert.assertFalse("Service  list is empty", serviceList.isEmpty());
-        boolean isCode = false;
+        boolean isWashCode = false;
         BigDecimal washCost = null;
-        for (WashService item : serviceList) {
+        boolean isCleanCode = false;
+        BigDecimal cleanCost = null;
+        for (AllService item : serviceList) {
             if (item.getServiceName().equalsIgnoreCase("Ручная мойка машины")) {
-                isCode = true;
+                isWashCode = true;
                 washCost = item.getServiceCost();
             }
+            if (item.getServiceName().equalsIgnoreCase("Чиска салона")) {
+                isCleanCode = true;
+                cleanCost = item.getServiceCost();
+            }
         }
-        Assert.assertTrue("Service types list not contain name \"Ручная мойка машины\"",isCode);
+        Assert.assertTrue("Service types list not contain name \"Ручная мойка машины\"",isWashCode);
         Assert.assertNotEquals("Service types list  name \"Ручная мойка машины\" not cost",BigDecimal.valueOf(350).setScale(0),washCost);
+        Assert.assertTrue("Service types list not contain name \"Чиска салона\"",isCleanCode);
+        Assert.assertNotEquals("Service types list  name \"Чиска салона\" not cost",BigDecimal.valueOf(500).setScale(0),cleanCost);
     }
 }
