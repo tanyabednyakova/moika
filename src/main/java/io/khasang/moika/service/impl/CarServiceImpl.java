@@ -31,17 +31,17 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void updateCar(Car car) {
-        carDao.updateCar(car);
+        carDao.update(car);
     }
 
     @Override
     public Car updateCar(long carId, Map<String, Object> fieldValueMap) {
-        return carDao.updateCar(carId, fieldValueMap);
+        return carDao.updateById(carId, fieldValueMap);
     }
 
     @Override
     public Car getCarById(long carId) {
-        return carDao.getCarById(carId);
+        return carDao.getById(carId);
     }
 
 }

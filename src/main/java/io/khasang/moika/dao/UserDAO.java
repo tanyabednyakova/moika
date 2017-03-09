@@ -14,15 +14,7 @@ import java.util.Collection;
  * @since 2017-03-01
  */
 
-public interface UserDAO {
-
-    /**
-     * Найти пользователя по ID
-     *
-     * @param id ID искомого пользователя
-     * @return пользователь
-     */
-    User findById(Long id);
+public interface UserDAO extends BasicDao<User>{
 
     /**
      * Найти пользователя по логину
