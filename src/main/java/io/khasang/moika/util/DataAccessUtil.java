@@ -54,4 +54,15 @@ public class DataAccessUtil {
 
         return query;
     }
+
+    /**
+     * Возвращает экземпляр сущности указанного типа по её Id
+     *
+     * @param clazz класс сущности
+     * @param id    id
+     * @return экземпляр сущности
+     */
+    public <T> T getEntityById(Class<T> clazz, long id) {
+        return sessionFactory.getCurrentSession().get(clazz, id);
+    }
 }
