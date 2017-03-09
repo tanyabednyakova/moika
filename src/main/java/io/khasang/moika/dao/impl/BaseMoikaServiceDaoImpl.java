@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository("baseMoikaServiceDao")
-public class BaseMoikaServiceDaoImpl extends AllServiceFieldsDaoImpl<BaseMoikaService>  {
+public class BaseMoikaServiceDaoImpl extends AllServiceFieldsDaoImpl<BaseMoikaService> {
 
     public BaseMoikaServiceDaoImpl() {
     }

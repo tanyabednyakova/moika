@@ -2,9 +2,13 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
+/**
+ * Базовый класс - entity для сервисов
+ */
+
 @Entity(name = "services")
-@Inheritance(strategy=InheritanceType.JOINED)
-public  class BaseMoikaService extends ABaseMoikaEntity {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class BaseMoikaService extends ABaseMoikaEntity {
     @Id
     @Column(name = "id_service", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,21 +18,21 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
     private int idFacility;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_service_id_fclt"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_service_id_fclt"), insertable = false, updatable = false)
     private WashFacility washFacility;
 
     @Column(name = "id_type")
     private int idType;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn( name = "id_type", foreignKey = @ForeignKey(name = "fk_service_type"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_type", foreignKey = @ForeignKey(name = "fk_service_type"), insertable = false, updatable = false)
     private ServiceType serviceTypeEntity;
 
     @Column(name = "id_status")
     private Short idStatus;
 
     @ManyToOne
-    @JoinColumn(name = "id_status", foreignKey = @ForeignKey(name = "fk_service_status"), insertable=false, updatable=false )
+    @JoinColumn(name = "id_status", foreignKey = @ForeignKey(name = "fk_service_status"), insertable = false, updatable = false)
     private ServiceStatus serviceStatusEntity;
 
     @Column(name = "name", unique = true)
@@ -38,7 +42,8 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
     private String description;
 
 
-    protected BaseMoikaService(){}
+    protected BaseMoikaService() {
+    }
 
 
     public int getId() {
@@ -144,7 +149,7 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
 
     @Override
     public int hashCode() {
-      return getId();
+        return getId();
     }
 
     @Override
@@ -158,7 +163,7 @@ public  class BaseMoikaService extends ABaseMoikaEntity {
                 ", idStatus=" + idStatus +
                 ", serviceStatusEntity=" + serviceStatusEntity.code +
                 ", serviceName='" + name + '\'' +
-                ((description != null) ? ", description='" + description : "")+ '\'' +
+                ((description != null) ? ", description='" + description : "") + '\'' +
                 '}';
     }
 }

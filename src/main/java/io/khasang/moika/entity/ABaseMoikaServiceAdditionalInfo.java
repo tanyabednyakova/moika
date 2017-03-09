@@ -3,6 +3,10 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+/**
+ * Абстрактный класс расширения для потомков моечных сервисов
+ *
+ */
 @MappedSuperclass
 public abstract class ABaseMoikaServiceAdditionalInfo extends BaseMoikaService  {
 

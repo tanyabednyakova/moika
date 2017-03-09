@@ -16,8 +16,13 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+/**
+ * Абстрактный класс для всех потомков моечный сервисов BaseMoikaService
+ * @param <T>
+ */
+
 @Repository
-public abstract class AllServiceFieldsDaoImpl<T extends BaseMoikaService>  implements BaseMoikaServiceDao<T> {
+public abstract class AllServiceFieldsDaoImpl<T extends BaseMoikaService> implements BaseMoikaServiceDao<T> {
 
     protected SessionFactory sessionFactory;
 
@@ -54,20 +59,20 @@ public abstract class AllServiceFieldsDaoImpl<T extends BaseMoikaService>  imple
     }
 
     @Override
-    public void updateEntity(T entity) throws MoikaDaoException{
+    public void updateEntity(T entity) throws MoikaDaoException {
         sessionFactory.getCurrentSession().update(entity);
     }
 
     @Override
-    public void deleteEntity(T entity) throws MoikaDaoException{
-        final Session session =  sessionFactory.getCurrentSession();
+    public void deleteEntity(T entity) throws MoikaDaoException {
+        final Session session = sessionFactory.getCurrentSession();
         session.delete(entity);
         session.flush();
     }
 
     @Override
-    public T getEntityById(int id) throws MoikaDaoException{
-        Criteria criteria =  sessionFactory.
+    public T getEntityById(int id) throws MoikaDaoException {
+        Criteria criteria = sessionFactory.
                 getCurrentSession().
                 createCriteria(daoType);
         criteria.add(Restrictions.eq("id", id));
@@ -76,11 +81,9 @@ public abstract class AllServiceFieldsDaoImpl<T extends BaseMoikaService>  imple
 
 
     @Override
-    public List<T> getAllEntities() throws MoikaDaoException{
-        //return sessionFactory.getCurrentSession().createQuery("from service ").list();
-        final Session session =  sessionFactory.getCurrentSession();
-        List<T> list =  session.createCriteria(daoType).list();
-        return list;
+    public List<T> getAllEntities() throws MoikaDaoException {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(daoType).list();
     }
 
 

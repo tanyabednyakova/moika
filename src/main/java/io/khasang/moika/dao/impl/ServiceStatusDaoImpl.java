@@ -5,7 +5,6 @@ import io.khasang.moika.entity.ServiceStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Transactional
 @Repository("serviveStatusDao")

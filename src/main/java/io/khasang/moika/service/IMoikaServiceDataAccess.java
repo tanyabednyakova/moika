@@ -5,6 +5,10 @@ import io.khasang.moika.entity.BaseMoikaService;
 
 import java.util.List;
 
+/**
+ * Базовый интерфейс для всех моечных сервисов
+ * @param <T>
+ */
 public interface IMoikaServiceDataAccess <T extends BaseMoikaService>{
     T addService(T entity) throws MoikaDaoException;    //Create
     T getServiceById(int id)  throws MoikaDaoException;     //Read

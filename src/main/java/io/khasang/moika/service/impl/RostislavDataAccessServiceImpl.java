@@ -3,7 +3,6 @@ package io.khasang.moika.service.impl;
 import io.khasang.moika.model.RostislavDataAccess;
 import io.khasang.moika.service.RostislavDataAccessService;
 import javafx.util.Pair;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

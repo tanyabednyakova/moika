@@ -29,7 +29,7 @@ public class PsServicesController {
 
 
     @RequestMapping(value = "/washBaseServiceList", method = RequestMethod.GET)
-    public  String getServiceList(Model model) { //List<MoikaAllService>
+    public String getServiceList(Model model) { //List<MoikaAllService>
         List<BaseMoikaService> allServicesList = new ArrayList<>();
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         try {
@@ -43,9 +43,8 @@ public class PsServicesController {
     }
 
 
-
     @RequestMapping(value = "/ServiceTypesList", method = RequestMethod.GET)
-    public  String getServiceTypeList(Model model) { //List<MoikaAllService>
+    public String getServiceTypeList(Model model) { //List<MoikaAllService>
         List<ServiceType> allServicesTypes = new ArrayList<>();
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         try {
@@ -60,7 +59,7 @@ public class PsServicesController {
 
 
     @RequestMapping(value = "/ServiceStatusList", method = RequestMethod.GET)
-    public  String getServiceStatusList(Model model) { //List<MoikaAllService>
+    public String getServiceStatusList(Model model) { //List<MoikaAllService>
         List<ServiceStatus> serviceStatus = new ArrayList<>();
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
         try {

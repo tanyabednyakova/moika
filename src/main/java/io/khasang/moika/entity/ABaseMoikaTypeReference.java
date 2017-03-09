@@ -2,9 +2,12 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
+/**
+ * Базовый абстрактный класс для всех таблиц типов xxx_type
+ */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity{
+public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_type", columnDefinition = "serial")
@@ -59,7 +62,7 @@ public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity{
 
     @Override
     public String toString() {
-        return  this.getClass().getName()+ "{" +
+        return this.getClass().getName() + "{" +
                 "id=" + id +
                 ", typeCode='" + code + '\'' +
                 ", typeName='" + name + '\'' +

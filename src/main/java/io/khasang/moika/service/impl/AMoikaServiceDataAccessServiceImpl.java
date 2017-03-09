@@ -14,13 +14,13 @@ import java.util.List;
 
 @Service
 @Transactional
-public abstract class AMoikaServiceDataAccessServiceImpl<T extends BaseMoikaService>  implements IMoikaServiceDataAccess<T> {
+public abstract class AMoikaServiceDataAccessServiceImpl<T extends BaseMoikaService> implements IMoikaServiceDataAccess<T> {
     @Autowired
     BaseMoikaServiceDao<T> baseMoikaServiceDao;
 
 
     public AMoikaServiceDataAccessServiceImpl(BaseMoikaServiceDao<T> baseMoikaServiceDao) {
-        this.baseMoikaServiceDao =  baseMoikaServiceDao;
+        this.baseMoikaServiceDao = baseMoikaServiceDao;
     }
 
     public AMoikaServiceDataAccessServiceImpl() {

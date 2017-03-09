@@ -1,7 +1,6 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity(name = "other_services")
 @PrimaryKeyJoinColumn(name = "id_service")

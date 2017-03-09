@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
-import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @Transactional
 @Repository("carDao")
-public class CarDaoImpl implements CarDao{
+public class CarDaoImpl implements CarDao {
     private SessionFactory sessionFactory;
 
     public CarDaoImpl() {
@@ -72,25 +71,25 @@ public class CarDaoImpl implements CarDao{
 
     @Override
     public List<Car> getCarList() {
-       // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from cars;");
-       // query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-       // return query.list();
+        // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from cars;");
+        // query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        // return query.list();
         return sessionFactory.getCurrentSession().createQuery("from cars").list();
     }
 
     @Override
     public List<Client> getClientsByCar(Car car) {
-        Query query  = sessionFactory.getCurrentSession().createQuery("from cars where clients = ?");
+        Query query = sessionFactory.getCurrentSession().createQuery("from cars where clients = ?");
         query.setParameter(0, car.getId());
         return query.list();
     }
 
     @Override
     public List<Car> getCarListByStatus(int status) {
-       // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from cars where status = ?;");
-       // query.setParameter(1, status);
-       // query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-        Query query  = sessionFactory.getCurrentSession().createQuery("from cars where status = ?");
+        // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from cars where status = ?;");
+        // query.setParameter(1, status);
+        // query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        Query query = sessionFactory.getCurrentSession().createQuery("from cars where status = ?");
         query.setParameter(0, status);
         return query.list();
     }

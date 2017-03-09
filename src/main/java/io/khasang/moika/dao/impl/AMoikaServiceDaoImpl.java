@@ -15,23 +15,17 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 @Repository("moikaServiceDaoImpl")
-public abstract class AMoikaServiceDaoImpl<T extends BaseMoikaService>  extends MoikaSessionFactory implements IMoikaDaoCrud<T>{
+public abstract class AMoikaServiceDaoImpl<T extends BaseMoikaService> extends MoikaSessionFactory implements IMoikaDaoCrud<T> {
 
     protected Class<? extends T> type;
 
     public AMoikaServiceDaoImpl() {
-       // this.type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AMoikaServiceDaoImpl.class);
+        // this.type = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), AMoikaServiceDaoImpl.class);
         Type t = getClass().getGenericSuperclass();
         ParameterizedType pt = (ParameterizedType) t;
         type = (Class) pt.getActualTypeArguments()[0];
     }
 
-   // public AMoikaServiceDaoImpl(Class<T> type) {
-   //     this.type = type;
-   // }
-
-      //  this.RECORD_COUNT_HQL = "select count(*) from " + this.genericType.getName();
-      //  this.FIND_ALL_HQL = "from " + this.genericType.getName() + " t ";
 
     @Override
     public T addEntity(T entity) throws MoikaDaoException {
@@ -40,19 +34,19 @@ public abstract class AMoikaServiceDaoImpl<T extends BaseMoikaService>  extends 
     }
 
     @Override
-    public void updateEntity(T entity) throws MoikaDaoException{
+    public void updateEntity(T entity) throws MoikaDaoException {
         sessionFactory.getCurrentSession().update(entity);
     }
 
     @Override
-    public void deleteEntity(T entity) throws MoikaDaoException{
+    public void deleteEntity(T entity) throws MoikaDaoException {
         final Session session = sessionFactory.getCurrentSession();
         session.delete(entity);
         session.flush();
     }
 
     @Override
-    public T getEntityById(int id) throws MoikaDaoException{
+    public T getEntityById(int id) throws MoikaDaoException {
         Criteria criteria = sessionFactory.
                 getCurrentSession().
                 createCriteria(type);
@@ -62,14 +56,14 @@ public abstract class AMoikaServiceDaoImpl<T extends BaseMoikaService>  extends 
 
 
     @Override
-    public List<T> getAllEntities() throws MoikaDaoException{
+    public List<T> getAllEntities() throws MoikaDaoException {
         //return sessionFactory.getCurrentSession().createQuery("from service ").list();
         final Session session = sessionFactory.getCurrentSession();
         return session.createCriteria(type).list();
     }
 
 
-    public List<T> getAllActualServices() throws MoikaDaoException{
+    public List<T> getAllActualServices() throws MoikaDaoException {
         //return sessionFactory.getCurrentSession().createQuery("from service ").list();
         final Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(type);
