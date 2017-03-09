@@ -2,10 +2,8 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.CarDao;
 import io.khasang.moika.entity.Car;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
