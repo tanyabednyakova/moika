@@ -42,23 +42,6 @@ public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
     }
 
     @Override
-    public User createUser(@NotNull User user) {
-        getCurrentSession().save(user);
-        return user;
-    }
-
-    @Override
-    public User updateUser(@NotNull User user) {
-        getCurrentSession().update(user);
-        return user;
-    }
-
-    @Override
-    public void deleteUser(@NotNull User user) {
-        getCurrentSession().delete(user);
-    }
-
-    @Override
     public void grantRole(@NotNull User user, @NotNull Role role) {
         user.getRoles().add(role);
         getCurrentSession().update(user);

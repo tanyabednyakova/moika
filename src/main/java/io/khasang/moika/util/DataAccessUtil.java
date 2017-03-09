@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +30,18 @@ public class DataAccessUtil {
     }
 
     /**
+     * Возвращает готовый к выполнению запрос всех сущностей указанного типа
+     *
+     * @param entityClass класс запрашиваемых сущностей
+     * @return готовый к выполнению запрос
+     */
+    public <E> TypedQuery<E> getQueryOfEntity(Class<E> entityClass) {
+
+        return getQueryOfEntityWithComplexEqualCondition(entityClass, null);
+    }
+
+
+    /**
      * Возвращает готовый к выполнению запрос сущностей указанного типа по единственному условию "поле=значение"
      *
      * @param entityClass класс запрашиваемых сущностей
@@ -39,21 +51,53 @@ public class DataAccessUtil {
      */
     public <E> TypedQuery<E> getQueryOfEntityWithSoleEqualCondition(Class<E> entityClass, String fieldName, Object value) {
 
-        CriteriaBuilder criteriaBuilder = sessionFactory.getCriteriaBuilder();
-        CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        return getQueryOfEntityWithComplexEqualCondition(entityClass, Collections.singletonMap(fieldName, value));
+    }
+
+    /**
+     * Возвращает готовый к выполнению запрос сущностей указанного типа по сборному условию "поле=значение И поле=значение..."
+     *
+     * @param entityClass   класс запрашиваемых сущностей
+     * @param fieldValueMap имя поля для запроса
+     * @return готовый к выполнению запрос
+     */
+    public <E> TypedQuery<E> getQueryOfEntityWithComplexEqualCondition(Class<E> entityClass, Map<String, Object> fieldValueMap) {
+
+        CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
+        CriteriaQuery<E> criteriaQuery = builder.createQuery(entityClass);
         Root<E> root = criteriaQuery.from(entityClass);
         criteriaQuery.select(root);
 
-        ParameterExpression params;
-        if (value == null) {
-            params = criteriaBuilder.parameter(String.class);
-        } else {
-            params = criteriaBuilder.parameter(value.getClass());
-        }
-        criteriaQuery.where(criteriaBuilder.equal(root.get(fieldName), params));
+        TypedQuery<E> query;
+        if (fieldValueMap != null && !fieldValueMap.isEmpty()) {
+            Predicate where = builder.conjunction();
+            List<Object> values;
+            values = new ArrayList<>();
 
-        TypedQuery<E> query = sessionFactory.getCurrentSession().createQuery(criteriaQuery);
-        query.setParameter(params, value);
+            for (Map.Entry<String, Object> attr : fieldValueMap.entrySet()) {
+                String fieldName = attr.getKey();
+                Object value = attr.getValue();
+
+                ParameterExpression params;
+                if (value == null) {
+                    params = builder.parameter(String.class);
+                } else {
+                    params = builder.parameter(value.getClass());
+                }
+                criteriaQuery.where(builder.equal(root.get(fieldName), params));
+
+                where = builder.and(where, builder.equal(root.get(attr.getKey()), params));
+                values.add(attr.getValue());
+            }
+            criteriaQuery.where(where);
+            query = sessionFactory.getCurrentSession().createQuery(criteriaQuery);
+            for (int i = 0; i < values.size(); i++) {
+                query.setParameter(i + 1, values.get(i));
+            }
+
+        } else {
+            query = sessionFactory.getCurrentSession().createQuery(criteriaQuery);
+        }
 
         return query;
     }
@@ -72,7 +116,8 @@ public class DataAccessUtil {
 
     /**
      * Обновляет экземпляр объекта новыми значениями указанных полей. Валидирует объект при обновлении.
-     * @param bean - обновляемый объект
+     *
+     * @param bean          - обновляемый объект
      * @param fieldValueMap - карта поле->новое значение
      * @return обновлённый объект
      */

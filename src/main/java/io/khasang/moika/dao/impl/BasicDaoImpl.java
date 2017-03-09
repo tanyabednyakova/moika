@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 @Transactional
@@ -23,8 +24,10 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
         this.entityClass = entityClass;
     }
 
-    public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
+    @Override
+    public T create(T entity) {
+        getCurrentSession().save(entity);
+        return entity;
     }
 
     @Override
@@ -39,9 +42,25 @@ public abstract class BasicDaoImpl<T> implements BasicDao<T> {
     }
 
     @Override
+    public List<T> getList() {
+        return dataAccessUtil.getQueryOfEntity(entityClass).getResultList();
+    }
+
+    @Override
     public T updateById(long id, Map<String, Object> fieldValueMap) {
         T entity = getById(id);
         dataAccessUtil.setNewValuesToBean(entity, fieldValueMap);
         return update(entity);
     }
+
+    @Override
+    public T delete(T entity) {
+        getCurrentSession().delete(entity);
+        return entity;
+    }
+
+    public Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
 }
