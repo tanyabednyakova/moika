@@ -2,7 +2,7 @@ package io.khasang.moika.dao;
 
 /**
  * Базовый класс исключений DAO мойки
- *
+ * @author Skvortsov Pavel
  */
 public class MoikaDaoException extends Exception{
 

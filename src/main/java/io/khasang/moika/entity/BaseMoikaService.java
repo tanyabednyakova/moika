@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 
 @Entity(name = "services")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class BaseMoikaService extends ABaseMoikaEntity {
     @Id
     @Column(name = "id_service", columnDefinition = "serial")
@@ -127,6 +127,30 @@ public class BaseMoikaService extends ABaseMoikaEntity {
 
     public void setServiceStatusEntity(ServiceStatus serviceStatusEntity) {
         this.serviceStatusEntity = serviceStatusEntity;
+    }
+
+    public int getIdType() {
+        return idType;
+    }
+
+    public void setIdType(int idType) {
+        this.idType = idType;
+    }
+
+    public Short getIdStatus() {
+        return idStatus;
+    }
+
+    public void setIdStatus(Short idStatus) {
+        this.idStatus = idStatus;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

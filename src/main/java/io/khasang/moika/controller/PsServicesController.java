@@ -27,7 +27,7 @@ public class PsServicesController {
     @Autowired
     BaseMoikaServiceDataAccessService baseService;
 
-    @RequestMapping(value = "baseServiceList", method = RequestMethod.GET)
+    @RequestMapping(value = "/baseServiceList", method = RequestMethod.GET)
     public String getBaseServiceList(Model model) {
         List<BaseMoikaService> baseServiceList = new ArrayList<>();
         model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));

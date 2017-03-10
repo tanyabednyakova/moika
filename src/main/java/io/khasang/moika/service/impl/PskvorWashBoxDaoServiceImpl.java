@@ -1,6 +1,7 @@
 package io.khasang.moika.service.impl;
 
 
+import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.dao.WashBoxDao;
 import io.khasang.moika.entity.WashBox;
 import io.khasang.moika.service.PskvorWashBoxDaoService;
@@ -21,46 +22,89 @@ public class PskvorWashBoxDaoServiceImpl implements PskvorWashBoxDaoService {
 
     @Override
     public void addWashBox(WashBox washBox) {
-        washBoxDao.addWashBox(washBox);
+        try {
+            washBoxDao.addEntity(washBox);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void updateWashBox(WashBox washBox) {
-        washBoxDao.updateWashBox(washBox);
+        try {
+            washBoxDao.updateEntity(washBox);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteWashBox(WashBox washBox) {
-        washBoxDao.deleteWashBox(washBox);
+        try {
+            washBoxDao.deleteEntity(washBox);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public WashBox getWashBoxByID(int id) {
-        return washBoxDao.getWashBoxById(id);
+        try {
+            return washBoxDao.getEntityById(id);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public WashBox getWashBox(int idFclt, String name) {
-      return washBoxDao.getWashBox(idFclt, name);    }
+        try {
+            return washBoxDao.getWashBox(idFclt, name);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public List<WashBox> getWashBoxesByType(int boxType) {
-        return washBoxDao.getWashBoxesByType(boxType);
+        try {
+            return washBoxDao.getWashBoxesByType(boxType);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public List<WashBox> getWashBoxesByStatus(int boxStatus) {
-        return washBoxDao.getWashBoxesByStatus(boxStatus);
+        try {
+            return washBoxDao.getWashBoxesByStatus(boxStatus);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public List<WashBox> getAllWashBoxes() {
-        return washBoxDao.getAllWashBoxes();
+        try {
+            return washBoxDao.getAllEntities();
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public List<WashBox> getWashBoxesOnFacility(int idFclt) {
-        return washBoxDao.getWashBoxesOnFacility(idFclt);
+        try {
+            return washBoxDao.getWashBoxesOnFacility(idFclt);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

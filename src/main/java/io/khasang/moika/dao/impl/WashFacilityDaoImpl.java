@@ -1,6 +1,7 @@
 package io.khasang.moika.dao.impl;
 
 
+import io.khasang.moika.dao.IMoikaDaoCrud;
 import io.khasang.moika.dao.WashFacilityDao;
 import io.khasang.moika.entity.WashBox;
 import io.khasang.moika.entity.WashFacility;
@@ -17,61 +18,11 @@ import java.util.List;
 
 @Transactional
 @Repository("washFacilityDao")
-public class WashFacilityDaoImpl implements WashFacilityDao{
-
-    private  SessionFactory sessionFactory;
-
-    public WashFacilityDaoImpl() {
-    }
-
-    @Autowired
-    public WashFacilityDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    public void addWashFacility(WashFacility washFacility) {
-        sessionFactory.getCurrentSession().save(washFacility);
-    }
-
-    @Override
-    public void updateWashFacility(WashFacility washFacility) {
-        sessionFactory.getCurrentSession().update(washFacility);
-    }
-
-    @Override
-    public void deleteWashFacility(WashFacility washFacility) {
-        final Session session = sessionFactory.getCurrentSession();
-        session.delete(washFacility);
-        session.flush();
-    }
-
-    @Override
-    public WashFacility getWashFacility(int id) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(WashFacility.class);
-        criteria.add(Restrictions.eq("id", id));
-        return (WashFacility) criteria.uniqueResult();
-    }
-
-    @Override
-    public WashFacility getWashFacility(String name) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(WashFacility.class);
-        criteria.add(Restrictions.eq("name", name));
-        return (WashFacility) criteria.uniqueResult();
-    }
+public class WashFacilityDaoImpl extends MoikaDaoCrudImpl<WashFacility> implements WashFacilityDao {
 
     @Override
     public List<WashFacility> getWashFacilitiesOnNet(int idNet) {
         return null;
-    }
-
-    @Override
-    public List<WashFacility> getAllWashFacilities() {
-        return  sessionFactory.getCurrentSession().createQuery("from wash_facilities").list();
     }
 
     @Override

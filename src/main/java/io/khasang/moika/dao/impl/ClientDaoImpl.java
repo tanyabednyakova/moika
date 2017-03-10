@@ -19,43 +19,8 @@ import java.util.List;
 
 @Transactional
 @Repository("clientDao")
-public class ClientDaoImpl implements ClientDao{
-    private SessionFactory sessionFactory;
+public class ClientDaoImpl extends MoikaDaoCrudImpl<Client> implements ClientDao{
 
-    public ClientDaoImpl() {
-    }
-
-    @Autowired
-    public ClientDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    public void addClient(Client client) {
-        sessionFactory.getCurrentSession().save(client);
-    }
-
-    @Override
-    public void updateClient(Client client) {
-        sessionFactory.getCurrentSession().update(client);
-    }
-
-    @Override
-    public void deleteClient(Client client) {
-        //TODO связка с r_client_client
-        final Session session = sessionFactory.getCurrentSession();
-        session.delete(client);
-        session.flush();
-    }
-
-    @Override
-    public Client getClientById(int id) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(Client.class);
-        criteria.add(Restrictions.eq("id_client", id));
-        return (Client) criteria.uniqueResult();
-    }
 
     @Override
     public List<Client> getClientByName(String firstName, String middelName, String lastName) {
@@ -82,10 +47,6 @@ public class ClientDaoImpl implements ClientDao{
         return null;
     }
 
-    @Override
-    public List<Client> getClientsList() {
-        return  sessionFactory.getCurrentSession().createQuery("from clients ct").list();
-    }
 
     @Override
     public List<Client> getClientsListByLastDateWash(Date dateStart, Date dateEnd) {
@@ -98,7 +59,6 @@ public class ClientDaoImpl implements ClientDao{
         query.setParameter(1, dateEnd);
         return query.list();
     }
-
 
     @Override
     public List<Client> getClientListByStatus(int status) {

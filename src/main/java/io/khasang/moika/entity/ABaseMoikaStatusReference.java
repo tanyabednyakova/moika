@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 /**
  * Базовый абстрактный класс для всех таблиц статусов xxx_status
- *
+ * обязательные поля: id_status, code, name
  */
 
 @MappedSuperclass

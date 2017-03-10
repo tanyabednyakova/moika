@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 
 @Entity(name = "wash_boxes")
-public class WashBox {
+public class WashBox  extends ABaseMoikaEntity {
 
     @Id
     @Column(name = "id_box", columnDefinition = "serial")

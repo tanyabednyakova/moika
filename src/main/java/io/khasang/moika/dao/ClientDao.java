@@ -7,17 +7,15 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-
-public interface ClientDao {
-    void addClient(Client client);
-    void updateClient(Client client);
-    void deleteClient(Client client);
-    Client getClientById(int id);
+/**
+ * Интерфейс DAO для услуг клиентов
+ * @author Skvortsov Pavel
+ *
+ */
+public interface ClientDao extends IMoikaDaoCrud <Client>{
     List<Client> getClientByName(String firstName, String middelName, String lastName);
     Client getClientByTel(String tel);
     List<Car> getCarsByClient(Client client);
-    List<Client> getClientsList();
     List<Client> getClientsListByLastDateWash(Date dateStart, Date dateEnd);
     List<Client> getClientListByStatus(int status);
-
 }

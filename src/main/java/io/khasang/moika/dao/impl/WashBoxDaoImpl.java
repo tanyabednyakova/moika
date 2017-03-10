@@ -16,42 +16,8 @@ import java.util.List;
 
 @Transactional
 @Repository("washBoxDao")
-public class WashBoxDaoImpl implements WashBoxDao{
-    private  SessionFactory sessionFactory;
+public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBoxDao{
 
-    public WashBoxDaoImpl() {
-    }
-
-    @Autowired
-    public WashBoxDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    public void addWashBox(WashBox washBox) {
-        sessionFactory.getCurrentSession().save(washBox);        
-    }
-
-    @Override
-    public void updateWashBox(WashBox washBox) {
-        sessionFactory.getCurrentSession().update(washBox);
-    }
-
-    @Override
-    public void deleteWashBox(WashBox washBox) {
-        final Session session = sessionFactory.getCurrentSession();
-        session.delete(washBox);
-        session.flush();
-    }
-
-    @Override
-    public WashBox getWashBoxById(int id) {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(WashBox.class);
-        criteria.add(Restrictions.eq("id", id)); //propertyName это имя поля в Entity, а не в БД!!!
-        return (WashBox) criteria.uniqueResult();
-    }
 
     @Override
     public WashBox getWashBox(int idFacility, String name) {
@@ -71,11 +37,6 @@ public class WashBoxDaoImpl implements WashBoxDao{
         query.setParameter(0, idFacility);
      //   query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
         return query.list();
-    }
-
-    @Override
-    public List<WashBox> getAllWashBoxes() {
-        return  sessionFactory.getCurrentSession().createQuery("from wash_boxes ").list();
     }
 
     @Override

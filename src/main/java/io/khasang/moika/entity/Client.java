@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity(name = "clients")
-public class Client {
+public class Client extends ABaseMoikaEntity  {
 
     @Id
     @Column(name = "id_client", columnDefinition = "serial")
@@ -17,7 +17,7 @@ public class Client {
     @Column(name = "last_name")
     private String lastname;
     @Column(name = "tel")
-    private String tel;
+    private String phone;
     @Column(name = "status", nullable = false)
     private Short status;
     @Column(name = "date_reg")
@@ -37,18 +37,18 @@ public class Client {
     public Client() {
     }
 
-    public Client(String firstName, String middleName, String lastname, String tel) {
+    public Client(String firstName, String middleName, String lastname, String phone) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastname = lastname;
-        this.tel = tel;
+        this.phone = phone;
     }
 
-    public Client(String firstName, String middleName, String lastname, String tel, List<Car> cars) {
+    public Client(String firstName, String middleName, String lastname, String phone, List<Car> cars) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastname = lastname;
-        this.tel = tel;
+        this.phone = phone;
         this.cars = cars;
     }
 
@@ -80,12 +80,12 @@ public class Client {
         this.lastname = lastname;
     }
 
-    public String getTel() {
-        return tel;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setPhone(String tel) {
+        this.phone = phone;
     }
 
     public int getStatus() {
@@ -124,6 +124,7 @@ public class Client {
         getCars().remove(car);
     }
 
+
     @Override
     public String toString() {
         return "Client{" +
@@ -131,10 +132,25 @@ public class Client {
                 ", firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", tel='" + tel + '\'' +
+                ", tel='" + phone + '\'' +
                 ", dateReg=" + dateReg +
                 ", status=" + status +
                 ", dateLastWash=" + dateLastWash +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+
+        Client client = (Client) o;
+
+        return (getId() == client.getId() && dateReg.equals(((Client) o).getDateReg()));
+    }
+
+    @Override
+    public int hashCode() {
+        return getId();
     }
 }

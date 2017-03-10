@@ -2,7 +2,7 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "wash_services")
+@Entity(name = "v_wash_services")
 public class WashService extends ABaseMoikaServiceAdditionalInfo {
 
     @Column(name = "id_type_car")

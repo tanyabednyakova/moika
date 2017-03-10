@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "wash_facilities")
-public class WashFacility {
+public class WashFacility  extends ABaseMoikaEntity  {
 
     @Id
     @Column(name = "id_fclt", columnDefinition = "serial")

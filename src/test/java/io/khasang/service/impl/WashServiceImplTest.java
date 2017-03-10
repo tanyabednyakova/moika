@@ -45,9 +45,10 @@ public class WashServiceImplTest {
             if (item.getServiceName().equalsIgnoreCase("Ручная мойка машины")) {
                 isCode = true;
                 washCost = item.getServiceCost();
+                System.out.println(item.toString());
             }
         }
         Assert.assertTrue("Service types list not contain name \"Ручная мойка машины\"",isCode);
-        Assert.assertNotEquals("Service types list  name \"Ручная мойка машины\" not cost",BigDecimal.valueOf(350).setScale(0),washCost);
+        Assert.assertNotEquals("Service types list  name \"Ручная мойка машины\" not cost",BigDecimal.valueOf(450).setScale(0),washCost);
     }
 }

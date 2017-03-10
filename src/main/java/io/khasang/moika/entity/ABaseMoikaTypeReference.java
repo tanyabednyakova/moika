@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 /**
  * Базовый абстрактный класс для всех таблиц типов xxx_type
+ * обязательные поля: id_type, code, name, descr
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

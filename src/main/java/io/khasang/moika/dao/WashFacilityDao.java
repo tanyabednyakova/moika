@@ -5,14 +5,14 @@ import io.khasang.moika.entity.WashFacility;
 
 import java.util.List;
 
-public interface WashFacilityDao {
-    void addWashFacility(WashFacility washFacility);
-    void updateWashFacility(WashFacility washFacility);
-    void deleteWashFacility(WashFacility washFacility);
-    WashFacility getWashFacility(int id);
-    WashFacility getWashFacility(String name );
-    List<WashFacility> getWashFacilitiesOnNet(int idNet);
-    List<WashFacility> getAllWashFacilities();
-    List<WashBox> getWashBoxesOnFacility(WashFacility washFacility);
-    List<WashBox> getWashBoxesOnFacility(int idFacility);
+/**
+ * Интерфейс DAO для автомоек (состоящих из боксов)
+ * @author Skvortsov Pavel
+ *
+ */
+public interface WashFacilityDao extends  IMoikaDaoCrud<WashFacility>{
+
+    List<WashFacility> getWashFacilitiesOnNet(int idNet) throws MoikaDaoException;
+    List<WashBox> getWashBoxesOnFacility(WashFacility washFacility) throws MoikaDaoException;
+    List<WashBox> getWashBoxesOnFacility(int idFacility) throws MoikaDaoException;
 }

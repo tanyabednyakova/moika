@@ -21,61 +21,7 @@ import java.util.List;
  */
 
 @Transactional
-public abstract class AllStatusDaoImpl<T extends ABaseMoikaStatusReference> implements BaseMoikaStatusDao<T> {
-    protected SessionFactory sessionFactory;
-
-    @Autowired
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    protected Class<? extends T> daoType;
-
-    /**
-     * By defining this class as abstract, we prevent Spring from creating
-     * instance of this class If not defined as abstract,
-     * getClass().getGenericSuperClass() would return Object. There would be
-     * exception because Object class does not hava constructor with parameters.
-     */
-
-    public AllStatusDaoImpl() {
-        Type t = getClass().getGenericSuperclass();
-        ParameterizedType pt = (ParameterizedType) t;
-        daoType = (Class) pt.getActualTypeArguments()[0];
-    }
-
-
-    @Override
-    public T addEntity(T entity) throws MoikaDaoException {
-        sessionFactory.getCurrentSession().save(entity);
-        return entity;
-    }
-
-    @Override
-    public void updateEntity(T entity) throws MoikaDaoException {
-        sessionFactory.getCurrentSession().update(entity);
-    }
-
-    @Override
-    public void deleteEntity(T entity) throws MoikaDaoException {
-        final Session session = sessionFactory.getCurrentSession();
-        session.delete(entity);
-        session.flush();
-    }
-
-    @Override
-    public T getEntityById(int id) throws MoikaDaoException {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(daoType);
-        criteria.add(Restrictions.eq("id", id));
-        return (T) criteria.uniqueResult();
-    }
+public abstract class AllStatusDaoImpl<T extends ABaseMoikaStatusReference> extends MoikaDaoCrudImpl<T> implements BaseMoikaStatusDao<T> {
 
     @Override
     public T getEntityByCode(String code) throws MoikaDaoException {
@@ -86,11 +32,4 @@ public abstract class AllStatusDaoImpl<T extends ABaseMoikaStatusReference> impl
         return (T) criteria.uniqueResult();
     }
 
-    @Override
-    public List<T> getAllEntities() throws MoikaDaoException {
-        //return sessionFactory.getCurrentSession().createQuery("from service ").list();
-        final Session session = sessionFactory.getCurrentSession();
-        List<T> list = session.createCriteria(daoType).list();
-        return list;
-    }
 }

@@ -4,15 +4,14 @@ package io.khasang.moika.dao;
 import io.khasang.moika.entity.WashBox;
 
 import java.util.List;
-
-public interface WashBoxDao {
-    void addWashBox(WashBox washBox);
-    void updateWashBox(WashBox washBox);
-    void deleteWashBox(WashBox washBox);
-    WashBox getWashBoxById(int id);
-    WashBox getWashBox(int idFacility, String name );
-    List<WashBox> getWashBoxesOnFacility(int idFacility);
-    List<WashBox> getAllWashBoxes();
-    List<WashBox> getWashBoxesByType(int boxType);
-    List<WashBox> getWashBoxesByStatus(int boxStatus);
+/**
+ * Интерфейс DAO для боксов автомоек
+ * @author Skvortsov Pavel
+ *
+ */
+public interface WashBoxDao extends IMoikaDaoCrud<WashBox>{
+    WashBox getWashBox(int idFacility, String name ) throws MoikaDaoException;
+    List<WashBox> getWashBoxesOnFacility(int idFacility) throws MoikaDaoException;
+    List<WashBox> getWashBoxesByType(int boxType) throws MoikaDaoException;
+    List<WashBox> getWashBoxesByStatus(int boxStatus) throws MoikaDaoException;
 }

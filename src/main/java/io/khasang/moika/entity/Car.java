@@ -3,11 +3,14 @@ package io.khasang.moika.entity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import javax.persistence.*;
+import java.util.*;
+
 
 @Entity(name = "cars")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Car {
+public class Car extends ABaseMoikaEntity{
 
     @Id
     @Column(name = "id_car", columnDefinition = "serial")
@@ -125,15 +128,45 @@ public class Car {
     }
 
     @Override
-    public String toString() {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Car)) return false;
+
         Car car = (Car) o;
+
         return getId() == car.getId();
     }
 
+    public CarType getCarTypeEntity() {
+        return CarTypeEntity;
+    }
+
+    public void setCarTypeEntity(CarType carTypeEntity) {
+        CarTypeEntity = carTypeEntity;
+    }
+
+    public void setDateReg(Calendar dateReg) {
+        this.dateReg = dateReg;
+    }
     @Override
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", CarTypeEntity=" + CarTypeEntity +
+                ", carNumber='" + carNumber + '\'' +
+                ", carModel='" + carModel + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", note='" + note + '\'' +
+                ", dateReg=" + dateReg +
+                ", dateLastWash=" + dateLastWash +
+                '}';
+    }
+
+
 }

@@ -55,12 +55,12 @@ public class AppConfig {
         return  new CreateTable(jdbcTemplate());
     }
 
-    @Bean
+  /*  @Bean
     public MadvDataAcces madvDataAcces(){return new MadvDataAccesImpl(jdbcTemplate());}
     @Bean
     public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
 
-/*  DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
+  DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();

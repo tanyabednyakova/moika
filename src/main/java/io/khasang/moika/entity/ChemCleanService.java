@@ -1,9 +1,18 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
-@Entity(name= "chem_clean_services")
+@Entity(name= "v_chem_clean_services")
+@AttributeOverrides({
+        @AttributeOverride(name = "id", column = @Column(name = "id_service")),
+        @AttributeOverride(name = "name", column = @Column(name = "name")),
+        @AttributeOverride(name = "idFacility", column = @Column(name = "id_fclt")),
+        @AttributeOverride(name = "idType", column = @Column(name = "id_type")),
+        @AttributeOverride(name = "idStatus", column = @Column(name = "id_status")),
+        @AttributeOverride(name = "description", column = @Column(name = "description"))
+})
 public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
 
     @Column(name = "id_dirt_type")
@@ -17,6 +26,7 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
     @ManyToOne
     @JoinColumn(name = "id_material", foreignKey = @ForeignKey(name = "fk_salon_materials"), insertable=false, updatable=false )
     private SalonMaterial salonMaterial;
+
 
     public ChemCleanService(){}
 
