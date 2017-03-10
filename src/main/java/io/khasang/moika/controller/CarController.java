@@ -17,14 +17,16 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @RequestMapping(value = "car/add", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "car/add",
+            method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Car addCar(@RequestBody Car car){
         carService.addCar(car);
         return car;
     }
 
-    @RequestMapping(value = "/car/{id}", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/car/{id}",
+            method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Car getCarById(@PathVariable("id") String id){
         return carService.getCarById(Long.parseLong(id));
@@ -36,14 +38,16 @@ public class CarController {
         return "cars";
     }
 
-    @RequestMapping(value = "/car/update", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/car/update",
+            method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Car updateCar(@RequestBody Car car){
         carService.updateCar(car);
         return car;
     }
 
-    @RequestMapping(value = "/car/delete/{id}", method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/car/delete/{id}",
+            method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String deleteCar(@PathVariable("id") String id){
         carService.deleteCar(Long.parseLong(id));

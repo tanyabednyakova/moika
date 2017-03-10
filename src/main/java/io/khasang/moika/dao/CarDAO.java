@@ -2,6 +2,7 @@ package io.khasang.moika.dao;
 
 import io.khasang.moika.entity.Car;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,11 +12,21 @@ import java.util.List;
  * @since 2017-03-01
  */
 
-public interface CarDao {
-    void addCar(Car Car);
+public interface CarDAO {
 
-    void updateCar(Car Car);
+    /**
+     * Добавление автомобиля
+     */
+    Serializable addCar(Car Car);
 
+    /**
+     * Обновление информации по автомобилю
+     */
+    Car updateCar(Car Car);
+
+    /**
+     * Удаление автомобиля
+     */
     void deleteCar(Car Car);
 
     /**
@@ -34,8 +45,10 @@ public interface CarDao {
      */
 
     Car getCarByType(String name);
-
-
+    /**
+     * Вывод списка автомобилей
+     *
+     */
 
     List getCarList();
     /**

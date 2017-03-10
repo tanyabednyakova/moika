@@ -85,11 +85,7 @@ public class AKovalevDataAccessImpl implements AKovalevDataAccess {
     public boolean containsCarQuery(long id) {
         String sql = "SELECT COUNT(id) FROM cars WHERE id=?";
         Long countCars = this.jdbcTemplate.queryForObject(sql, new Object[]{id}, Long.class);
-        if (countCars == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return countCars != 0;
     }
 
     @Override

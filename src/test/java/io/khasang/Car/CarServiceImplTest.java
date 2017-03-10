@@ -1,7 +1,7 @@
 package io.khasang.Car;
 
 import io.khasang.moika.config.application.WebConfig;
-import io.khasang.moika.dao.CarDao;
+import io.khasang.moika.dao.CarDAO;
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.service.CarService;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class CarServiceImplTest {
     CarService carService;
 
     @Autowired
-    CarDao carDao;
+    CarDAO carDAO;
 
     @Test
     @Rollback
@@ -35,7 +35,7 @@ public class CarServiceImplTest {
         car.setCarNumber("555");
         carService.addCar(car);
 
-        Car resultCar = carDao.getCarByNumber("555");
+        Car resultCar = carDAO.getCarByNumber("555");
         assertEquals("Седан", resultCar.getCarType());
 
         Car car1 = new Car();
@@ -44,7 +44,7 @@ public class CarServiceImplTest {
         car1.setCarNumber("777");
         carService.addCar(car1);
 
-        Car resultCar1 = carDao.getCarByNumber("777");
+        Car resultCar1 = carDAO.getCarByNumber("777");
         assertEquals("Хэчбек", resultCar1.getCarType());
 
     }
