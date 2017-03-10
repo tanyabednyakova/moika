@@ -38,26 +38,25 @@ public class CarController {
     //TODO: реализовать
     @RequestMapping(value = "/car/number/{number}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public String getCarByNumber(Model model, @PathVariable("number") String number){
-        model.addAttribute("cars", carService.getCarByNumber(number));
+    public String getCarByNumber(Model model, @PathVariable("number") String carNumber){
+        model.addAttribute("cars", carService.getCarByNumber(carNumber));
         return "cars";
     }
 
     //TODO: реализовать
     @RequestMapping(value = "/car/model/{model}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public List getCarByModel(@PathVariable("model") String model){
-        return carService.getCarByModel(model);
+    public String getCarByModel(Model model, @PathVariable("model") String carModel){
+        model.addAttribute("cars", carService.getCarByNumber(carModel));
+        return "cars";
     }
 
     //TODO: реализовать
     @RequestMapping(value = "/car/type/{type}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public List getCarByType(@PathVariable("type") String type){
-        return carService.getCarByType(type);
+    public String getCarByType(Model model, @PathVariable("type") String carType) {
+        model.addAttribute("cars", carService.getCarByNumber(carType));
+        return "cars";
     }
 
     @RequestMapping(value = "/car", method = RequestMethod.GET)
@@ -79,7 +78,7 @@ public class CarController {
     @ResponseBody
     public String deleteCar(@PathVariable("id") String id){
         carService.deleteCar(Long.parseLong(id));
-        return "redirect:/cars";
+        return "redirect:/car";
     }
 
 

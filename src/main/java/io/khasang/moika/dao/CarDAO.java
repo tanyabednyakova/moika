@@ -40,11 +40,11 @@ public interface CarDAO {
     /**
      * Найти автомобиль по названию
      *
-     * @param name искомого автомобиля
+     * @param carType искомого автомобиля
      * @return автомобиль
      */
 
-    List getCarByType(String name);
+    List getCarByType(String carType);
     /**
      * Вывод списка автомобилей
      *
@@ -54,16 +54,16 @@ public interface CarDAO {
     /**
      * Найти автомобиль по номеру
      *
-     * @param number искомого автомобиля
+     * @param carNumber искомого автомобиля
      * @return список автомобилей
      */
-    List getCarByNumber(String number);
+    List getCarByNumber(String carNumber);
 
     /**
      * Найти автомобиль по модели
      *
-     * @param model искомого автомобиля
+     * @param carModel искомого автомобиля
      * @return список автомобилей
      */
-    List getCarByModel(String model);
+    List getCarByModel(String carModel);
 }

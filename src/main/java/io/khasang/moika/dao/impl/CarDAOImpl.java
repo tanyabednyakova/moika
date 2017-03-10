@@ -50,23 +50,23 @@ public class CarDAOImpl implements CarDAO {
 
     //TODO: реализовать
     @Override
-    public List getCarByType(String type) {
+    public List getCarByType(String carType) {
         return  sessionFactory.getCurrentSession().createQuery("from cars where carType = ?").
-                setParameter(0, type).list();
+                setParameter(0, carType).list();
     }
 
     //TODO: реализовать
     @Override
-    public List getCarByNumber(String number) {
+    public List getCarByNumber(String carNumber) {
         return  sessionFactory.getCurrentSession().createQuery("from cars as c where c.carNumber = ?").
-                setParameter(0, number).list();
+                setParameter(0, carNumber).list();
     }
 
     //TODO: реализовать
     @Override
-    public List getCarByModel(String model) {
+    public List getCarByModel(String carModel) {
         return  sessionFactory.getCurrentSession().createQuery("from cars as c where c.carModel = ?").
-                setParameter(0, model).list();
+                setParameter(0, carModel).list();
     }
 
     @Override
