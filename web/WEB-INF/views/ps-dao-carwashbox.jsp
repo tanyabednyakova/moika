@@ -21,8 +21,8 @@
             <td><c:out value="${boxlist.id}"/></td>
             <td><c:out value="${boxlist.washFacility.name}"/></td>
             <td><c:out value="${boxlist.boxName}"/></td>
-            <td><c:out value="${boxlist.boxTypeEntity.name}"/></td>
-            <td><c:out value="${boxlist.boxStatusEntity.name}"/></td>
+            <td><c:out value="${boxlist.boxTypeEntity.typeName}"/></td>
+            <td><c:out value="${boxlist.boxStatusEntity.statusName}"/></td>
             <td><c:out value="${boxlist.description}"/></td>
         </tr>
     </c:forEach>

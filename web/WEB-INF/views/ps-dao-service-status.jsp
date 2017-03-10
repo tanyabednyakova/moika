@@ -16,8 +16,8 @@
     <c:forEach items="${retList}" var="retList">
         <tr>
             <td><c:out value="${retList.id}"/></td>
-            <td><c:out value="${retList.code}"/></td>
-            <td><c:out value="${retList.name}"/></td>
+            <td><c:out value="${retList.statusCode}"/></td>
+            <td><c:out value="${retList.statusName}"/></td>
 
         </tr>
     </c:forEach>
