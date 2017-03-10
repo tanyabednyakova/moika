@@ -1,15 +1,12 @@
 package io.khasang.moika.config;
 
 import io.khasang.moika.model.CreateTable;
-import io.khasang.moika.model.MadvDataAcces;
 import io.khasang.moika.model.PskvorDataAccess;
-import io.khasang.moika.model.impl.MadvDataAccesImpl;
-import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
+import io.khasang.moika.model.PskvorDataAccessJdbcImpl;
 import io.khasang.moika.service.CompanyService;
-import io.khasang.moika.service.MadvDataAccesService;
 import io.khasang.moika.service.PskvorDataAccessService;
 import io.khasang.moika.service.impl.CompanyServiceImpl;
-import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
+import io.khasang.moika.service.impl.PskvorDataAccessServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,12 +55,12 @@ public class AppConfig {
         return  new CreateTable(jdbcTemplate());
     }
 
-    @Bean
+  /*  @Bean
     public MadvDataAcces madvDataAcces(){return new MadvDataAccesImpl(jdbcTemplate());}
     @Bean
     public MadvDataAccesService madvDataAccesService(){return new MadvDataAccesServiceImpl(madvDataAcces());}
 
-/*  DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
+  DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
@@ -81,7 +78,7 @@ public class AppConfig {
 
     @Bean
     public PskvorDataAccessService pskvorDataAccessService() {
-        return new PskvorDataAccessService(pskvorDataAccess());
+        return new PskvorDataAccessServiceImpl();
     }
 
     @Bean

@@ -1,5 +1,6 @@
 package io.khasang.moika.validator;
 
+import io.khasang.moika.entity.Car;
 import io.khasang.moika.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class ClientValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Client client = (Client) target;
-        if (StringUtils.isEmpty(client.getName())) {
+        if (StringUtils.isEmpty(client.getFirstName())) {
             errors.rejectValue("name", "name_empty");
         }
         if (!client.getPhone().matches("^\\d{9}+")) {
@@ -37,9 +38,11 @@ public class ClientValidator implements Validator {
             errors.rejectValue("lastname", "lastname_invalid");
         }
 
-        if (client.getCar() != null) {
+        if (client.getCars() != null) {
             errors.pushNestedPath("car");
-            ValidationUtils.invokeValidator(carValidator, client.getCar(), errors);
+            for (Car car :  client.getCars()) {
+                ValidationUtils.invokeValidator(carValidator, car, errors);
+            }
         }
         errors.popNestedPath();
     }
