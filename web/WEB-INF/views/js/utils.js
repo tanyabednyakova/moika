@@ -16,48 +16,52 @@
  * false если отрицательный
  */
 function setActiveFormInput(toURL, selector, result) {
-    var div = $(selector).closest('div.form-group');
-    var glyphicon = div.find('span.glyphicon');
+    /*var div = $(selector).closest('div.form-group');
+    var glyphicon = div.find('span.glyphicon');*/
     setChangeListener(selector, 1000, function () {
-        var value = $(this).val();
+        var value = $(selector).val();
         if (value) {
-            var obj = new Object();
-            obj[$(selector).attr('name')] = value;
+            var sendObj = new Object();
+            sendObj[$(selector).attr('name')] = value;
             $.ajax({
                 method: "POST",
                 url: toURL,
-                data: JSON.stringify(obj),
+                contentType:"application/json;charset=UTF-8",
+                data: JSON.stringify(sendObj),
                 success: function (data) {
-                    var obj = $.parseJSON(data);
-                    if (obj.success==true) {
+                    if (data.success==true) {
                         if (result) {
                             result(true);
                         }
-                        if (!div.hasClass('has-success')) {
+                        //TODO заменить имеющимися методами
+                        setStatusElement(selector, 'success');
+                        /*if (!div.hasClass('has-success')) {
                             div.removeClass('has-error').addClass('has-success');
-                            gliphicon.removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                            glyphicon.removeClass("glyphicon-remove").addClass("glyphicon-ok").removeClass("hide");
                             if ($(selector).hasClass('popover-dismissible')) {
                                 $(selector).removeClass('popover-dismissible')
                             }
-                        }
+                        }*/
                     } else {
                         if (result) {
                             result(false);
                         }
-                        if (!div.hasClass('has-error')) {
+                        setStatusElement(selector, 'error',
+                            //TODO Возможно стоит вставлять сообение с сервера?!
+                            'Введенные Вами данные уже кем-то используюься, введите другое значение');
+                        /*if (!div.hasClass('has-error')) {
                             div.removeClass('has-success').addClass('has-error');
                             if (!$(selector).hasClass('popover-dismissible')) {
                                 $(selector).addClass('popover-dismissible');
-                                gliphicon.removeClass("glyphicon-ok").addClass("glyphicon-remove");
+                                glyphicon.removeClass("glyphicon-ok").addClass("glyphicon-remove").removeClass("hide");
                                 $(selector).popover({
-                                    //TODO Возможно стоит вставлять сообение с сервера?!
                                     content: '<span style="color:#a94442">Введенные Вами данные уже кем-то используюься, введите другое значение</span>',
                                     html: true,
                                     placement: 'auto',
                                     trigger: 'hover'
                                 }).popover('show');
                             }
-                        }
+                        }*/
                     }
                 }
             });
@@ -123,19 +127,19 @@ function processErrors(errors) {
 function resetStatusElement(selector) {
     var elem = $(selector);
     var div = elem.closest('div.form-group');
-    var gliphicon = div.find('span.glyphicon');
+    var glyphicon = div.find('span.glyphicon');
     if (div.hasClass('has-error')) {
         div.removeClass('has-error');
-        gliphicon.removeClass("glyphicon-remove");
+        glyphicon.removeClass("glyphicon-remove");
     } else if (div.hasClass('has-success')) {
         div.removeClass('has-success');
-        gliphicon.removeClass("glyphicon-ok");
+        glyphicon.removeClass("glyphicon-ok");
     } else if (div.hasClass('has-warning')) {
         div.removeClass('has-warning');
-        gliphicon.removeClass("glyphicon-warning-sign");
+        glyphicon.removeClass("glyphicon-warning-sign");
     }
-    if (!gliphicon.hasClass('hide')) {
-        gliphicon.addClass('hide');
+    if (!glyphicon.hasClass('hide')) {
+        glyphicon.addClass('hide');
     }
     if (elem.hasClass('popover-dismissible')) {
         elem.removeClass('popover-dismissible')
@@ -156,27 +160,27 @@ function setStatusElement(selector, status, msg) {
     if (elem && status && status.search(/^(error|warning|success)$/i) > -1) {
         resetStatusElement(selector);
         var div = elem.closest('div.form-group');
-        var gliphicon = div.find('span.glyphicon');
+        var glyphicon = div.find('span.glyphicon');
         var color = 'black';
         switch (status) {
             case 'error':
                 div.addClass('has-error');
-                gliphicon.addClass("glyphicon-remove");
+                glyphicon.addClass("glyphicon-remove");
                 color = '#a94442';
                 break;
             case 'warning':
                 div.addClass('has-warning');
-                gliphicon.addClass("glyphicon-warning-sign");
+                glyphicon.addClass("glyphicon-warning-sign");
                 color = '#8a6d3b';
                 break;
             case 'success':
                 div.addClass('has-success');
-                gliphicon.addClass("glyphicon-ok");
+                glyphicon.addClass("glyphicon-ok");
                 color = '#3c763d';
                 break;
         }
-        if (gliphicon.hasClass('hide')) {
-            gliphicon.removeClass('hide');
+        if (glyphicon.hasClass('hide')) {
+            glyphicon.removeClass('hide');
         }
         if (msg) {
             elem.addClass('popover-dismissible');

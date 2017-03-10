@@ -32,7 +32,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <%--${pageContext.request.contextPath}--%>
-                        <a class="navbar-brand" href="<c:url value="/client" />">
+                        <a class="navbar-brand" href="<c:url value="/" />">
                                 <span><img class="logo-car" alt="CarWash" height="40" width="32"
                                            src="<c:url value="images/logo1.svg" />">
                                  </span> CarWash</a>
@@ -47,7 +47,6 @@
                             <li><a href="#">О Нас</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right" id="client-reg">
-                            <%--TODO Дописать логику проверки на ауторизацию--%>
                             <c:choose>
                                 <c:when test="${isAuth==false}">
                                     <li>
@@ -64,6 +63,7 @@
                                     </li>
                                 </c:when>
                                 <c:otherwise>
+                                    <%--TODO Вставить ссылку на личный кабинет пользователя--%>
                                     <li><a href="<c:url value="/user"/>"><span class="glyphicon glyphicon-user"
                                                                                aria-hidden="true"></span>${userFirstName}
                                     </a></li>
@@ -278,15 +278,15 @@
             }
         });
         //TODO добавить актуальные url
-        setActiveFormInput(<c:url value="/user/"/>, '#regInputEmail', changeErr);
-        setActiveFormInput(<c:url value="/user/"/>, '#regInputLogin', changeErr);
+        setActiveFormInput('<c:url value="/user/util"/>', '#regInputEmail', changeErr);
+        setActiveFormInput('<c:url value="/user/util"/>', '#regInputLogin', changeErr);
 
         $("#loginBtn").click(function () {
             var jsonData = parseFormToJSON('#loginForm');
             $.ajax({
                 method: "POST",
                 contentType: 'application/json;charset=UTF-8',
-                url:<c:url value="/user/"/>,//TODO добавить актуальные url
+                url:"<c:url value="/user/login"/>",//TODO добавить актуальные url
                 data: jsonData,
                 success: function (data) {
                     var obj = $.parseJSON(data);
@@ -307,7 +307,7 @@
                 $.ajax({
                     method: "POST",
                     contentType: 'application/json;charset=UTF-8',
-                    url:<c:url value="/user/"/>,//TODO добавить актуальные url
+                    url:"<c:url value="/user/reg"/>",//TODO добавить актуальные url
                     data: jsonData,
                     success: function (data) {
                         var obj = $.parseJSON(data);

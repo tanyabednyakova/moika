@@ -46,7 +46,7 @@ public class UserController {
         return userService.findByLogin(currentLogin);
 
     }
-
+    //TODO Возможно стоит добавить функционал подтверждения регистрации через email (?!phone?!)
     @RequestMapping(value = "/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object createUser(@RequestBody @Valid User user, BindingResult result) {
@@ -69,9 +69,9 @@ public class UserController {
             Authentication request = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
             Authentication result = authenticationManager.authenticate(request);
             SecurityContextHolder.getContext().setAuthentication(result);
-            return new Pair<>("redirect", "");//TODO добавить актуальную ссылку
+            return Collections.singletonMap("redirect", "");//TODO добавить актуальную ссылку
         } catch (AuthenticationException e) {
-            return new Pair<>("error", "Authentication failed: " + e.getMessage());
+            return Collections.singletonMap("errorMsg", "Authentication failed: " + e.getMessage());
         }
     }
 
