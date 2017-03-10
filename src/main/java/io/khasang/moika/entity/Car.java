@@ -1,10 +1,12 @@
 package io.khasang.moika.entity;
 
-        import javax.persistence.*;
-        import java.util.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 
 @Entity(name = "cars")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Car {
 
     @Id
@@ -124,16 +126,14 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", CarTypeEntity=" + CarTypeEntity +
-                ", carNumber='" + carNumber + '\'' +
-                ", carModel='" + carModel + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", note='" + note + '\'' +
-                ", dateReg=" + dateReg +
-                ", dateLastWash=" + dateLastWash +
-                '}';
+        if (this == o) return true;
+        if (!(o instanceof Car)) return false;
+        Car car = (Car) o;
+        return getId() == car.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
