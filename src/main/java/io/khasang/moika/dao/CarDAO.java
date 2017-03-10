@@ -44,7 +44,7 @@ public interface CarDAO {
      * @return автомобиль
      */
 
-    Car getCarByType(String name);
+    List getCarByType(String name);
     /**
      * Вывод списка автомобилей
      *
@@ -57,5 +57,13 @@ public interface CarDAO {
      * @param number искомого автомобиля
      * @return список автомобилей
      */
-    Car getCarByNumber(String number);
+    List getCarByNumber(String number);
+
+    /**
+     * Найти автомобиль по модели
+     *
+     * @param model искомого автомобиля
+     * @return список автомобилей
+     */
+    List getCarByModel(String model);
 }

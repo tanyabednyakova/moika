@@ -9,9 +9,11 @@ public interface CarService {
 
     Car getCarById(long id);
 
-    Car getCarByType(String type);
+    List getCarByType(String type);
 
-    Car getCarByNumber(String number);
+    List getCarByNumber(String number);
+
+    List getCarByModel(String model);
 
     List<Car> getCarList();
 

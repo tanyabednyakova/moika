@@ -13,7 +13,7 @@ import java.util.List;
 @Transactional
 public class CarServiceImpl implements CarService {
     @Autowired
-    CarDAO carDAO;
+    private CarDAO carDAO;
 
     public CarServiceImpl() {
     }
@@ -29,17 +29,22 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car getCarByType(String type) {
+    public List getCarByType(String type) {
         return carDAO.getCarByType(type);
     }
 
     @Override
-    public Car getCarByNumber(String number) {
+    public List getCarByNumber(String number) {
         return carDAO.getCarByNumber(number);
     }
 
     @Override
-    public List<Car> getCarList() {
+    public List getCarByModel(String model) {
+        return carDAO.getCarByModel(model);
+    }
+
+    @Override
+    public List getCarList() {
         return carDAO.getCarList();
     }
 
