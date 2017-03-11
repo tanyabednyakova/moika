@@ -53,6 +53,17 @@ public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
     }
 
     @Override
+    public User findByFieldValue(String field, Object value) {
+        try{
+            return dataAccessUtil.getQueryOfEntityWithSoleEqualCondition(User.class, field, value)
+                    .getSingleResult();
+        }catch(NoResultException e){
+            LOGGER.debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public void grantRole(@NotNull User user, @NotNull Role role) {
         user.getRoles().add(role);
         getCurrentSession().update(user);

@@ -1,11 +1,14 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.dao.impl.UserDAOImpl;
 import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
 import io.khasang.moika.util.BindingResultToMapParser;
 import io.khasang.moika.util.DataAccessUtil;
 import io.khasang.moika.validator.UserUtilValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,10 +21,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Контроллер интерфейсов пользователя
@@ -33,6 +38,7 @@ import java.util.Map;
 @RequestMapping(path = "/user")
 @Controller
 public class UserController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDAOImpl.class);
     @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired
@@ -49,6 +55,7 @@ public class UserController {
         return userService.findByLogin(currentLogin);
 
     }
+
     //TODO Возможно стоит добавить функционал подтверждения регистрации через email (?!phone?!)
     @RequestMapping(value = "/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -104,25 +111,58 @@ public class UserController {
 
     @RequestMapping(value = "/util", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object utilUser(@RequestBody Map<String,String> param, BindingResult bindingResult) {
+    public Object utilUser(@RequestBody Map<String, String> param) {
+        //TODO переделать на работу с javax.validation.Validator и создать две доп. аннотации
+        javax.validation.Validator validator = (javax.validation.Validator) mvcValidator;
+        Map<String, Object> resultMap = new HashMap();
+        Map<String, String> errorMessageMap = new HashMap<>();
+        errorMessageMap.put("valid.email", "Неверный формат email адреса");
+        errorMessageMap.put("valid.login", "Неверный формат логина");
+        errorMessageMap.put("login", "Такой логин уже занят");
+        errorMessageMap.put("email", "Такой email уже занят");
         boolean result = false;
-        userUtilValidator.validate(param,bindingResult);
+        /*try {
+            param.forEach((key, val) -> {
+                Set<ConstraintViolation<User>> constraintViolations = validator.validateValue(User.class, key, val);
+                if (constraintViolations.size() > 0) {
+                    String validKey = "valid."+key;
+                    resultMap.put("error", errorMessageMap.containsKey(validKey)?errorMessageMap.get(validKey):
+                            constraintViolations.iterator().next().getMessage());
+                }else if(errorMessageMap.containsKey(key)&&!){
+
+                }
+            });
+        } catch (IllegalArgumentException e) {
+            LOGGER.debug(e.getMessage());
+            return Collections.singletonMap("error", "Invalid data");
+        }
+
+         if (param.containsKey("login")&&!userService.isLoginFree(param.get("login"))){
+            resultMap.put("error", "Такой логин уже занят");
+        } else if (param.containsKey("email")&&!userService.isEmailFree(param.get("email"))) {
+            resultMap.put("error", "Такой email уже занят");
+
+        }
+
+       userUtilValidator.validate(param, bindingResult);
         String error = null;
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
+            Set<ConstraintViolation<User>> constraintViolations =
+                    validator.validateValue(User.class, "email", param.get("email"));
             error = bindingResult.getAllErrors().get(0).getDefaultMessage();
-        }else if(param.containsKey("login")){
+        } else if (param.containsKey("login")) {
             result = userService.isLoginFree(param.get("login"));
-            error = result?null:"Такой логин уже занят";
-        }else if(param.containsKey("email")){
+            error = result ? null : "Такой логин уже занят";
+        } else if (param.containsKey("email")) {
             result = userService.isEmailFree(param.get("email"));
-            error = result?null:"Такой email уже занят";
+            error = result ? null : "Такой email уже занят";
         }
         //Map<String,Object> resultMap = Collections.singletonMap("success",result);
-        Map<String,Object> resultMap = new HashMap();
-        resultMap.put("success",result);
-        if(error!=null){
-            resultMap.put("error",error);
-        }
+        Map<String, Object> resultMap = new HashMap();
+        resultMap.put("success", result);
+        if (error != null) {
+            resultMap.put("error", error);
+        }*/
         return resultMap;
     }
 
