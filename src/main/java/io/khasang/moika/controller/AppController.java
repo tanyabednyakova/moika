@@ -1,10 +1,15 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.annotation.AddMenuPath;
 import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
+import io.khasang.moika.entity.User;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
+import io.khasang.moika.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +29,29 @@ import java.util.List;
 public class AppController {
     @Autowired
     private CreateTable createTable;
+    @Autowired
+    private CompanyService companyService;
+    @Autowired
+    private CompanyDao companyDao;
+    @Autowired
+    private UserService userService;
 
-    @Autowired
-    CompanyService companyService;
-    @Autowired
-    CompanyDao companyDao;
+    private User getCurrentUser() {
+        String currentLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.findByLogin(currentLogin);
+
+    }
 
     @RequestMapping("/")
-    public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
-        model.addAttribute("name", name);
+    @AddMenuPath(name="hello")
+    public String hello(Model model) {
+        User user = getCurrentUser();
+        if(user==null){
+            model.addAttribute("isAuth", false);
+        }else{
+            model.addAttribute("isAuth", true);
+            model.addAttribute("userFirstName", user.getFirstName());
+        }
         return "index";
     }
 
@@ -74,7 +93,7 @@ public class AppController {
     @RequestMapping(value = "/company/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-      companyService.deleteCompany(Long.parseLong(inputId));
+      companyService.deleteCompany(Integer.parseInt(inputId));
       return "redirect:/company";
     }
 
@@ -87,6 +106,6 @@ public class AppController {
     @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Company company(@PathVariable(value = "id") String id){
-        return companyService.getCompanyById(Long.parseLong(id));
+        return companyService.getCompanyById(Integer.parseInt(id));
     }
 }

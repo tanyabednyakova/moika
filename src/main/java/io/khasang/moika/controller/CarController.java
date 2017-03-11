@@ -15,7 +15,7 @@ import java.util.List;
  * @author Nikolay Ilichev, Lyubarev Aleksandr
  * @since 2017-03-01
  */
-@Controller
+//@Controller
 public class CarController {
     @Autowired
     private CarService carService;
@@ -100,25 +100,9 @@ public class CarController {
         return "cars";
     }
 
-    /**
-     * Обновление информации об авто
-     *
-     * @return автомобиль
-     */
-    @RequestMapping(value = "/car/update",
-            method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public Car updateCar(@RequestBody Car car){
-        carService.updateCar(car);
-        return car;
-    }
-
-    /**
-     * Удаление авто по его id
-     *
-     * @param id искомого автомобиля
-     * @return редирект на список всех авто
-     */
+//    @RequestMapping(value = "/car/update/${id}",
+//            method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+//    @ResponseBody
     @RequestMapping(value = "/car/delete/{id}",
             method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")
     @ResponseBody

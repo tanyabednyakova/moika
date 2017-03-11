@@ -3,3 +3,7 @@
 *.iml
 /target/
 /rr/
+/classes/
+/lib/
+/DB/
+*.gitmodules

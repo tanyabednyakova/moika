@@ -1,6 +1,6 @@
 package io.khasang.moika.service.impl;
 
-import io.khasang.moika.dao.CarDAO;
+import io.khasang.moika.dao.CarDao;
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service("CarServiceImpl")
-@Transactional
+//@Service("CarServiceImpl")
+//@Transactional
 public class CarServiceImpl implements CarService {
     @Autowired
-    private CarDAO carDAO;
+    private CarDao carDAO;
 
     public CarServiceImpl() {
     }
 
-    @Override
+    /*@Override
     public void addCar(Car car) {
         carDAO.addCar(car);
     }
@@ -53,10 +53,45 @@ public class CarServiceImpl implements CarService {
         Car car = new Car();
         car.setId(id);
         carDAO.deleteCar(car);
+    }*/
+
+    @Override
+    public void addCar(Car car) {
+
     }
 
     @Override
-    public void updateCar(Car car) {
-        carDAO.updateCar(car);
+    public Car getCarById(long id) {
+        return null;
+    }
+
+    @Override
+    public List getCarByType(String type) {
+        return null;
+    }
+
+    @Override
+    public List getCarByNumber(String number) {
+        return null;
+    }
+
+    @Override
+    public List getCarByModel(String model) {
+        return null;
+    }
+
+    @Override
+    public List<Car> getCarList() {
+        return null;
+    }
+
+    @Override
+    public void deleteCar(long id) {
+
+    }
+
+    @Override
+    public Car updateCar(Car car) {
+        return null;
     }
 }

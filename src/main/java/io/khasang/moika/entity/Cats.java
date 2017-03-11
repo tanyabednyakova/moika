@@ -1,5 +1,7 @@
 package io.khasang.moika.entity;
 
+import org.hibernate.annotations.JoinColumnsOrFormulas;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,7 +12,6 @@ public class Cats implements Serializable{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "number")
     private long id;
-
     private Date additionalInfo;
     private String description;
 
