@@ -17,11 +17,11 @@ public class OrdermController {
     @Autowired
     OrdermAccessService ordermAccessService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String List(Model model) {
         List<Orderm> listOrderm = ordermAccessService.getAllOrderm();
         model.addAttribute("listOrderm", listOrderm);
-        model.addAttribute("nrows", listOrderm.size() + " строк(и)");
-        return "ps-dao-carwashfacility";
+        model.addAttribute("nrows", "Количество заказов " + listOrderm.size());
+        return "orderm-list";
     }
 }
