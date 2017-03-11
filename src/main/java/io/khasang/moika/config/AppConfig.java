@@ -3,13 +3,17 @@ package io.khasang.moika.config;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.model.MadvDataAcces;
 import io.khasang.moika.model.PskvorDataAccess;
+import io.khasang.moika.model.TatyanaDataAccess;
 import io.khasang.moika.model.impl.MadvDataAccesImpl;
 import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
+import io.khasang.moika.model.impl.TatyanaDataAccessImp;
 import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.MadvDataAccesService;
 import io.khasang.moika.service.PskvorDataAccessService;
+import io.khasang.moika.service.QueueService;
 import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
+import io.khasang.moika.service.impl.QueueServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,10 +72,18 @@ public class AppConfig {
     }
 
     @Bean
+    public TatyanaDataAccess tatyanaDataAccess(){
+        return new TatyanaDataAccessImp(jdbcTemplate());
+    }
+
+    @Bean
     public PskvorDataAccessService pskvorDataAccessService() {
         return new PskvorDataAccessService(pskvorDataAccess());
     }
 
     @Bean
     public CompanyService companyService() { return new CompanyServiceImpl();}
+
+    @Bean
+    public QueueService queueService() { return new QueueServiceImpl();}
 }

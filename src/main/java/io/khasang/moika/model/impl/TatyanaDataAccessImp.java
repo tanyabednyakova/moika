@@ -1,12 +1,11 @@
-package io.khasang.moika.model;
+package io.khasang.moika.model.impl;
 
+import io.khasang.moika.model.TatyanaDataAccess;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
 public class TatyanaDataAccessImp implements TatyanaDataAccess {
-
-
     private JdbcTemplate jdbcTemplate;
 
     public TatyanaDataAccessImp(JdbcTemplate jdbcTemplate)

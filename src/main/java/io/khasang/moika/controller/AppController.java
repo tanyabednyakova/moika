@@ -1,25 +1,18 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
+import io.khasang.moika.entity.Queue;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
+import io.khasang.moika.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.util.List;
-
 
 
 @Controller
@@ -29,8 +22,9 @@ public class AppController {
 
     @Autowired
     CompanyService companyService;
+
     @Autowired
-    CompanyDao companyDao;
+    QueueService queueService;
 
     @RequestMapping("/")
     public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
@@ -60,6 +54,13 @@ public class AppController {
         return company;
     }
 
+    @RequestMapping(value = "queue/add/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Queue addQueue(@RequestBody Queue queue, @PathVariable("id") String id) {
+        queueService.addQueue(queue);
+        return queue;
+    }
+
     @RequestMapping(value = "/company", method = RequestMethod.GET)
     public String getCompanyList(Model model) {
         model.addAttribute("companies", companyService.getCompanyGazpromList());
@@ -78,12 +79,6 @@ public class AppController {
     public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
       companyService.deleteCompany(Long.parseLong(inputId));
       return "redirect:/company";
-    }
-
-    @RequestMapping("/restHql")
-    public String testHql() {
-        List<Company> companyList = companyDao.getCompanyHqlList();
-        return "redirect:yandex.ru";
     }
 
     @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")

@@ -11,12 +11,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-<<<<<<< HEAD
-@ComponentScan({"io.khasang.moika"})//.controller","io.khasang.moika.config", "io.khasang.moika.model"})
-=======
-@ComponentScan({"io.khasang.moika.controller","io.khasang.moika.config","io.khasang.moika.dao","io.khasang.moika.model",
-        "io.khasang.moika.service"})
->>>>>>> development
+@ComponentScan({"io.khasang.moika", "io.khasang.moika.controller"})
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Bean
     public InternalResourceViewResolver viewResolver() {
