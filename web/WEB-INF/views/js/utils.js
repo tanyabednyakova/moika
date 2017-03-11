@@ -17,61 +17,37 @@
  */
 function setActiveFormInput(toURL, selector, result) {
     /*var div = $(selector).closest('div.form-group');
-    var glyphicon = div.find('span.glyphicon');*/
+     var glyphicon = div.find('span.glyphicon');*/
     setChangeListener(selector, 1000, function () {
         var value = $(selector).val();
+        console.log("I am acting for: " + value);
         if (value) {
             var sendObj = new Object();
             sendObj[$(selector).attr('name')] = value;
             $.ajax({
                 method: "POST",
                 url: toURL,
-                contentType:"application/json;charset=UTF-8",
+                contentType: "application/json;charset=UTF-8",
                 data: JSON.stringify(sendObj),
                 success: function (data) {
-                    if (data.success==true) {
+                    if (data.success == true) {
                         if (result) {
                             result(true);
                         }
                         //TODO заменить имеющимися методами
                         setStatusElement(selector, 'success');
-                        /*if (!div.hasClass('has-success')) {
-                            div.removeClass('has-error').addClass('has-success');
-                            glyphicon.removeClass("glyphicon-remove").addClass("glyphicon-ok").removeClass("hide");
-                            if ($(selector).hasClass('popover-dismissible')) {
-                                $(selector).removeClass('popover-dismissible')
-                            }
-                        }*/
                     } else {
                         if (result) {
                             result(false);
                         }
+                        //TODO Возможно сюда стоит вставлять сообение с сервера?!
                         setStatusElement(selector, 'error',
-                            //TODO Возможно стоит вставлять сообение с сервера?!
-                            'Введенные Вами данные уже кем-то используюься, введите другое значение');
-                        /*if (!div.hasClass('has-error')) {
-                            div.removeClass('has-success').addClass('has-error');
-                            if (!$(selector).hasClass('popover-dismissible')) {
-                                $(selector).addClass('popover-dismissible');
-                                glyphicon.removeClass("glyphicon-ok").addClass("glyphicon-remove").removeClass("hide");
-                                $(selector).popover({
-                                    content: '<span style="color:#a94442">Введенные Вами данные уже кем-то используюься, введите другое значение</span>',
-                                    html: true,
-                                    placement: 'auto',
-                                    trigger: 'hover'
-                                }).popover('show');
-                            }
-                        }*/
+                            data.error?data.error:'Введенные Вами данные уже кем-то используюься, введите другое значение');
                     }
                 }
             });
         } else {
-            $(selector).popover({
-                content: '<span style="color:#a94442">Введите данные</span>',
-                html: true,
-                placement: 'auto',
-                trigger: 'hover'
-            }).popover('show');
+            setStatusElement(selector, 'none', "Введите данные")
         }
     });
 }
@@ -128,40 +104,48 @@ function resetStatusElement(selector) {
     var elem = $(selector);
     var div = elem.closest('div.form-group');
     var glyphicon = div.find('span.glyphicon');
-    if (div.hasClass('has-error')) {
-        div.removeClass('has-error');
-        glyphicon.removeClass("glyphicon-remove");
-    } else if (div.hasClass('has-success')) {
-        div.removeClass('has-success');
-        glyphicon.removeClass("glyphicon-ok");
-    } else if (div.hasClass('has-warning')) {
-        div.removeClass('has-warning');
-        glyphicon.removeClass("glyphicon-warning-sign");
+    var mapClassNames = {
+        'has-error': 'glyphicon-remove',
+        'has-success': 'glyphicon-ok',
+        'has-warning': 'glyphicon-warning-sign'
+    };
+    for (var key in mapClassNames) {
+        if (div.hasClass(key)) {
+            div.removeClass(key);
+            glyphicon.removeClass(mapClassNames[key]);
+            break;
+        }
     }
     if (!glyphicon.hasClass('hide')) {
         glyphicon.addClass('hide');
     }
-    if (elem.hasClass('popover-dismissible')) {
-        elem.removeClass('popover-dismissible')
-    }
+    if ($(selector).hasClass('popover-dismissible')) {
+        $(selector).popover('destroy');
+        $(selector).removeClass('popover-dismissible');
+     }
 }
 
 /**
  * Устанавить статус (оформление) элемента на стандартный
  *
  * @param selector - Селектор input-элемента
- * @param status - статус элемента (его оформление), строковое значение, может принимать одно из трех значений:
- * error | warning | success
+ * @param status - статус элемента (его оформление), строковое значение, может принимать
+ * одно из перечисленных значений:
+ * none | error | warning | success
  * @param msg - текст всплывающий подсказки
  *
  */
 function setStatusElement(selector, status, msg) {
     var elem = $(selector);
-    if (elem && status && status.search(/^(error|warning|success)$/i) > -1) {
+    if (elem && status && status.search(/^(none|error|warning|success)$/i) > -1) {
         resetStatusElement(selector);
         var div = elem.closest('div.form-group');
         var glyphicon = div.find('span.glyphicon');
         var color = 'black';
+        if (glyphicon.hasClass('hide') && status != 'none') {
+            glyphicon.removeClass('hide');
+        }
+
         switch (status) {
             case 'error':
                 div.addClass('has-error');
@@ -179,17 +163,20 @@ function setStatusElement(selector, status, msg) {
                 color = '#3c763d';
                 break;
         }
-        if (glyphicon.hasClass('hide')) {
-            glyphicon.removeClass('hide');
-        }
+
         if (msg) {
-            elem.addClass('popover-dismissible');
-            elem.popover({
-                content: '<span style="color:' + color + '">' + msg + '</span>',
-                html: true,
-                placement: 'auto',
-                trigger: 'hover'
-            }).popover('show');
+            //Обязательно надо выждать 200ms после вызова метода $(selector).popover('destroy')!!!
+            setTimeout(function () {
+                $(selector).popover({
+                    content: '<span style="color:' + color + '">' + msg + '</span>',
+                    html: true,
+                    placement: 'auto',
+                    trigger: 'hover'
+                });
+                $(selector).popover('show');
+            }, 200);
+            console.log("create popover");
+            $(selector).addClass('popover-dismissible');
         }
     }
 }
@@ -213,4 +200,3 @@ function setChangeListener(selector, ms, action) {
         });
     }
 }
-

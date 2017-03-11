@@ -5,7 +5,7 @@ import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
 import io.khasang.moika.util.BindingResultToMapParser;
 import io.khasang.moika.util.DataAccessUtil;
-import javafx.util.Pair;
+import io.khasang.moika.validator.UserUtilValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -38,6 +39,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private Validator mvcValidator;
+    @Autowired
+    private UserUtilValidator userUtilValidator;
     @Autowired
     private DataAccessUtil dataAccessUtil;
 
@@ -101,15 +104,26 @@ public class UserController {
 
     @RequestMapping(value = "/util", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object utilUser(@RequestBody Map<String,String> param) {
+    public Object utilUser(@RequestBody Map<String,String> param, BindingResult bindingResult) {
         boolean result = false;
-        if (param.containsKey("login")){
+        userUtilValidator.validate(param,bindingResult);
+        String error = null;
+        if(bindingResult.hasErrors()){
+            error = bindingResult.getAllErrors().get(0).getDefaultMessage();
+        }else if(param.containsKey("login")){
             result = userService.isLoginFree(param.get("login"));
+            error = result?null:"Такой логин уже занят";
         }else if(param.containsKey("email")){
             result = userService.isEmailFree(param.get("email"));
+            error = result?null:"Такой email уже занят";
         }
-        //TODO поменять везде Pair на Collections.singletonMap
-        return Collections.singletonMap("success",result);
+        //Map<String,Object> resultMap = Collections.singletonMap("success",result);
+        Map<String,Object> resultMap = new HashMap();
+        resultMap.put("success",result);
+        if(error!=null){
+            resultMap.put("error",error);
+        }
+        return resultMap;
     }
 
     //Функции управления ролями

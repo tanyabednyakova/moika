@@ -67,6 +67,10 @@
                                     <li><a href="<c:url value="/user"/>"><span class="glyphicon glyphicon-user"
                                                                                aria-hidden="true"></span>${userFirstName}
                                     </a></li>
+                                    <%--TODO Вставить ссылку на logout--%>
+                                    <li><a href="<c:url value="/user"/>"><span class="glyphicon glyphicon-log-out"
+                                                                               aria-hidden="true"></span>Выход
+                                    </a></li>
                                     <li><a href="<c:url value="/user/logout"/>"><span
                                             class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Выйти</a></li>
                                 </c:otherwise>
@@ -195,6 +199,7 @@
                             <input type="password" class="form-control" name="password" id="loginInputPassword"
                                    placeholder="Password">
                         </div>
+                        <%--TODO добавить checkbox "remeber me" для Spring Secucurity--%>
                     </form>
                 </div>
                 <div class="modal-footer">

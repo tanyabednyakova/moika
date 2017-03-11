@@ -1,5 +1,7 @@
 package io.khasang.moika.config.application;
 
+import io.khasang.moika.annotation.AddMenuPathAnnotationBeanPostProcessor;
+import io.khasang.moika.util.MenuMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +36,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         viewResolver.setSuffix(".jsp");
         viewResolver.setContentType("text/html; charset=utf-8");
         return viewResolver;
+    }
+
+    @Bean
+    public AddMenuPathAnnotationBeanPostProcessor addMenuPathAnnotationBeanPostProcessor(){
+        return new AddMenuPathAnnotationBeanPostProcessor();
+    }
+
+    @Bean
+    public MenuMapper menuMapper(){
+        return new MenuMapper();
     }
 
     @Override
