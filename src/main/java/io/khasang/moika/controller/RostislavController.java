@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequestMapping(path = "/rostislav")
-@Controller
+//@Controller
 public class RostislavController {
 
     private final

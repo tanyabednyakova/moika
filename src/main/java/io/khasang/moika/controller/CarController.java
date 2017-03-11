@@ -15,7 +15,7 @@ import java.util.List;
  * @author Nikolay Ilichev, Lyubarev Aleksandr
  * @since 2017-03-01
  */
-@Controller
+//@Controller
 public class CarController {
     @Autowired
     private CarService carService;
