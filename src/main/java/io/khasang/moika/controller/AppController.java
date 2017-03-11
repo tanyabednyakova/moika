@@ -93,7 +93,7 @@ public class AppController {
     @RequestMapping(value = "/company/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-      companyService.deleteCompany(Long.parseLong(inputId));
+      companyService.deleteCompany(Integer.parseInt(inputId));
       return "redirect:/company";
     }
 
@@ -106,6 +106,6 @@ public class AppController {
     @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Company company(@PathVariable(value = "id") String id){
-        return companyService.getCompanyById(Long.parseLong(id));
+        return companyService.getCompanyById(Integer.parseInt(id));
     }
 }

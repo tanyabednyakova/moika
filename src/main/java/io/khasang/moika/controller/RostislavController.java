@@ -1,6 +1,7 @@
 package io.khasang.moika.controller;
 
 import io.khasang.moika.entity.Car;
+import io.khasang.moika.entity.CarType;
 import io.khasang.moika.service.CarService;
 import io.khasang.moika.service.RostislavDataAccessService;
 import org.springframework.beans.BeanWrapper;
@@ -74,8 +75,10 @@ public class RostislavController {
     public Object addCarVia(@PathVariable(value = "description") String description,
                             @PathVariable(value = "carType") String carType) {
         Car car = new Car();
+        CarType carTypeEntity = new CarType();
+        carTypeEntity.setTypeCode(carType);
         car.setDescription(description);
-        car.setCarType(carType);
+        car.setCarTypeEntity(carTypeEntity);//getCarTypeEntity().getTypeName(carType);
         carService.addCar(car);
         return car;
     }

@@ -1,17 +1,7 @@
 package io.khasang.moika.config_for_test_purposes;
 
 import io.khasang.moika.config.AppConfig;
-import io.khasang.moika.model.CreateTable;
-import io.khasang.moika.model.MadvDataAcces;
-import io.khasang.moika.model.PskvorDataAccess;
-import io.khasang.moika.model.impl.MadvDataAccesImpl;
-import io.khasang.moika.model.impl.PskvorDataAccessJdbcImpl;
-import io.khasang.moika.service.CompanyService;
-import io.khasang.moika.service.MadvDataAccesService;
-import io.khasang.moika.service.PskvorDataAccessService;
-import io.khasang.moika.service.impl.AKovalevDataAccessServiceImpl;
-import io.khasang.moika.service.impl.CompanyServiceImpl;
-import io.khasang.moika.service.impl.MadvDataAccesServiceImpl;
+
 import io.khasang.moika.service.impl.RostislavDataAccessServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -37,7 +27,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = "io.khasang.moika.config.application.*"),
                 @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = {
                         RostislavDataAccessServiceImpl.class,
-                        AKovalevDataAccessServiceImpl.class,
+                       // AKovalevDataAccessServiceImpl.class,
                         AppConfig.class})
         })
 //@EnableCaching
@@ -71,7 +61,7 @@ public class TestAppConfig {
         jdbcTemplate.setDataSource(dataSource());
         return jdbcTemplate;
     }
-
+/*
     @Bean
     public CreateTable createTable() {
         return new CreateTable(jdbcTemplate());
@@ -87,7 +77,7 @@ public class TestAppConfig {
         return new MadvDataAccesServiceImpl(madvDataAcces());
     }
 
-/*  DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
+ DRS 2017-03-01 см. новую реализацию (с опорой на сущности User и Role) в классе UserDetailsServiceImpl.
     @Bean
     public UserDetailsService userDetailsService() {
         JdbcDaoImpl jdbcImpl = new JdbcDaoImpl();
@@ -96,7 +86,7 @@ public class TestAppConfig {
         jdbcImpl.setAuthoritiesByUsernameQuery(environment.getRequiredProperty("rolesByQuery"));
         return jdbcImpl;
     }
-*/
+
 
     @Bean
     public PskvorDataAccess pskvorDataAccess() {
@@ -112,4 +102,5 @@ public class TestAppConfig {
     public CompanyService companyService() {
         return new CompanyServiceImpl();
     }
+    */
 }

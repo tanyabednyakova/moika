@@ -1,6 +1,7 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.dao.ClientDAO;
+import io.khasang.moika.dao.ClientDao;
+import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.Client;
 import io.khasang.moika.util.BindingResultToMapParser;
 import io.khasang.moika.validator.CarValidator;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/client")
 public class ClientController {
     @Autowired
-    private ClientDAO clientDAO;
+    private ClientDao clientDAO;
     @Autowired
     private ClientValidator clientValidator;
     @Autowired
@@ -31,8 +32,12 @@ public class ClientController {
 
     @RequestMapping("/list")
     public String getListClients(Model model){
-        model.addAttribute("clients",clientDAO.getAllClients());
-        model.addAttribute("contClientId",clientDAO.containClientById(2L));
+        try {
+            model.addAttribute("clients",clientDAO.getAllEntities());
+            model.addAttribute("contClientId",clientDAO.getEntityById(2));
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
         return "clientlist";
     }
 
