@@ -70,12 +70,10 @@ public class DataAccessUtil {
 
         TypedQuery<E> query;
         if (fieldValueMap != null && !fieldValueMap.isEmpty()) {
-            Predicate where = builder.conjunction();
-            List<Object> values;
-            values = new ArrayList<>();
+            Predicate where = null;
+            List<Object> values = new ArrayList<>();
 
             for (Map.Entry<String, Object> attr : fieldValueMap.entrySet()) {
-                String fieldName = attr.getKey();
                 Object value = attr.getValue();
 
                 ParameterExpression params;
@@ -84,15 +82,17 @@ public class DataAccessUtil {
                 } else {
                     params = builder.parameter(value.getClass());
                 }
-                criteriaQuery.where(builder.equal(root.get(fieldName), params));
-
-                where = builder.and(where, builder.equal(root.get(attr.getKey()), params));
+                if(where==null){
+                    where = builder.equal(root.get(attr.getKey()), params);
+                }else{
+                    where = builder.and(where, builder.equal(root.get(attr.getKey()), params));
+                }
                 values.add(attr.getValue());
             }
             criteriaQuery.where(where);
             query = sessionFactory.getCurrentSession().createQuery(criteriaQuery);
             for (int i = 0; i < values.size(); i++) {
-                query.setParameter(i + 1, values.get(i));
+                query.setParameter("param"+i, values.get(i));
             }
 
         } else {

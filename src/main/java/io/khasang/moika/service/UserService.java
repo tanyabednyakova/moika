@@ -39,7 +39,6 @@ public interface UserService {
      */
     User findByEmail(String email);
 
-
     /**
      * Создать учетную запись пользователя
      *
@@ -76,7 +75,6 @@ public interface UserService {
      * @return возвращает булевое значение, true - если данный email свободен, false - если нет
      */
     boolean isEmailFree(String email);
-
     /**
      * Вернуть закодированную версию исходного пароля.
      *

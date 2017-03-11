@@ -22,7 +22,6 @@ public interface UserDAO extends BasicDao<User>{
      * @param login ID искомого пользователя
      * @return пользователь
      */
-
     User findByLogin(String login);
 
     /**
@@ -32,6 +31,15 @@ public interface UserDAO extends BasicDao<User>{
      * @return пользователь
      */
     User findByEmail(String email);
+
+    /**
+     * Найти прользователя по значению его поля
+     *
+     * @param field наименование поля класса
+     * @param value значение поля
+     * @return пользователь
+     */
+    User findByFieldValue(String field,Object value);
 
     /**
      * Наделить пользователя ролью

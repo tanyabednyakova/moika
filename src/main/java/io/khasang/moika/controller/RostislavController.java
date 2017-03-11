@@ -1,6 +1,7 @@
 package io.khasang.moika.controller;
 
 import io.khasang.moika.entity.Car;
+import io.khasang.moika.entity.CarType;
 import io.khasang.moika.service.CarService;
 import io.khasang.moika.service.RostislavDataAccessService;
 import org.springframework.beans.BeanWrapper;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequestMapping(path = "/rostislav")
-@Controller
+//@Controller
 public class RostislavController {
 
     private final
@@ -74,8 +75,10 @@ public class RostislavController {
     public Object addCarVia(@PathVariable(value = "description") String description,
                             @PathVariable(value = "carType") String carType) {
         Car car = new Car();
+        CarType carTypeEntity = new CarType();
+        carTypeEntity.setTypeCode(carType);
         car.setDescription(description);
-        car.setCarType(carType);
+        car.setCarTypeEntity(carTypeEntity);//getCarTypeEntity().getTypeName(carType);
         carService.addCar(car);
         return car;
     }
@@ -89,10 +92,8 @@ public class RostislavController {
 
     @RequestMapping(value = "/car/update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateCar(@RequestBody Map<String, Object> carValuesMap) {
-
-        String carId = (String) carValuesMap.remove("id");
-        return carService.updateCar(Long.parseLong(carId), carValuesMap);
+    public Car updateCar(@RequestBody Car car) {
+        return carService.updateCar(car);
     }
 
     @RequestMapping(value = "/car", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")

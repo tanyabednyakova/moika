@@ -4,49 +4,71 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.cache.annotation.Cacheable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.io.Serializable;
-import java.util.Objects;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Entity(name = "cars")
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Car implements Serializable {
-    @Id
-    @GeneratedValue
-    private long id;
-    private String carType;
-    private String carNumber;
-    private String carModel;
-    private String description;
+public class Car extends ABaseMoikaEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(name = "id_car_type")
+    private Short idCarType;
+    @ManyToOne
+    @JoinColumn(name = "id_car_type", foreignKey = @ForeignKey(name = "fk_car_type"), insertable = false, updatable = false)
+    private CarType CarTypeEntity;
+    private String carNumber;
+    @Column(name = "carmodel")
+    private String carModel;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "status")
+    private Short status;
+    @Column(name = "note")
+    private String note;
+    @Column(name = "date_reg")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar dateReg;
+    @Column(name = "date_Last_Wash")
+    @Temporal(TemporalType.DATE)
+    private Date dateLastWash;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "r_client_car", joinColumns = {
+            @JoinColumn(name = "id_car", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "id_client",
+                    nullable = false, updatable = false)})
+    private List<Client> clients = new ArrayList<>();
     public Car() {
     }
 
-    public long getId() {
-        return id;
+    public Short getIdCarType() {
+        return idCarType;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdCarType(Short idCarType) {
+        this.idCarType = idCarType;
     }
 
-    public String getCarType() {
-        return carType;
+    public CarType getCarTypeEntity() {
+        return CarTypeEntity;
     }
 
-    public void setCarType(String carType) {
-        this.carType = carType;
+    public void setCarTypeEntity(CarType carTypeEntity) {
+        CarTypeEntity = carTypeEntity;
     }
 
     public String getCarNumber() {
         return carNumber;
     }
 
-    public void setCarNumber(String carNumber) {
-        this.carNumber = carNumber;
+    public void setCarNumber(String carNum) {
+        this.carNumber = carNum;
     }
 
     public String getCarModel() {
@@ -65,16 +87,57 @@ public class Car implements Serializable {
         this.description = description;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Car)) return false;
-        Car car = (Car) o;
-        return getId() == car.getId();
+    public int getStatus() {
+        return status;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
+    public void setStatus(Short status) {
+        this.status = status;
     }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Calendar getDateReg() {
+        return dateReg;
+    }
+
+    public void setDateReg(Calendar dateReg) {
+        this.dateReg = dateReg;
+    }
+
+    public Date getDateLastWash() {
+        return dateLastWash;
+    }
+
+    public void setDateLastWash(Date dateLastWash) {
+        this.dateLastWash = dateLastWash;
+    }
+
+    public List<Client> getClients() {
+        return this.clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
+    }
+
+    public void changeClient(Client oldClient, Client newClient) {
+        clients.remove(oldClient);
+        clients.add(newClient);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 }

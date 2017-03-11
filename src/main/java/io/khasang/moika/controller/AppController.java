@@ -1,5 +1,6 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.annotation.AddMenuPath;
 import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.entity.User;
@@ -42,6 +43,7 @@ public class AppController {
     }
 
     @RequestMapping("/")
+    @AddMenuPath(name="hello")
     public String hello(Model model) {
         User user = getCurrentUser();
         if(user==null){
@@ -91,7 +93,7 @@ public class AppController {
     @RequestMapping(value = "/company/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-      companyService.deleteCompany(Long.parseLong(inputId));
+      companyService.deleteCompany(Integer.parseInt(inputId));
       return "redirect:/company";
     }
 
@@ -104,6 +106,6 @@ public class AppController {
     @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Company company(@PathVariable(value = "id") String id){
-        return companyService.getCompanyById(Long.parseLong(id));
+        return companyService.getCompanyById(Integer.parseInt(id));
     }
 }

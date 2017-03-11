@@ -1,6 +1,7 @@
 package io.khasang.moika.service.impl;
 
 import io.khasang.moika.dao.CompanyDao;
+import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.Butterfly;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.service.CompanyService;
@@ -27,32 +28,58 @@ public class CompanyServiceImpl implements CompanyService {
         if(company.getName().startsWith("b")){
             company.setAmount(BigDecimal.valueOf(50L));
         }
-        companyDao.addCompany(company);
+        try {
+            companyDao.addEntity(company);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addCompany(Company company, String name) {
         company.setName(name);
-        companyDao.addCompany(company);
+        try {
+            companyDao.addEntity(company);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Company getCompanyById(long id) {
-        return companyDao.getCompanyById(id);
+    public Company getCompanyById(int id) {
+        try {
+            return companyDao.getEntityById(id);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public void updateCompany(Company company) {
-        companyDao.updateCompany(company);
+        try {
+            companyDao.updateEntity(company);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void deleteCompany(long id) {
+    public void deleteCompany(int id) {
         Company company = new Company();
         company.setId(id);
-        companyDao.deleteCompany(company);
+        try {
+            companyDao.deleteEntity(company);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Company> getCompanyGazpromList() {
-        return companyDao.getCompanyList();
+        try {
+            return companyDao.getAllEntities();
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

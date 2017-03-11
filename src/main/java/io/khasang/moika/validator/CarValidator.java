@@ -16,7 +16,7 @@ public class CarValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Car car = (Car) target;
-        if(StringUtils.isEmpty(car.getCarType())){
+        if(StringUtils.isEmpty(car.getCarTypeEntity().getTypeCode())){
             errors.rejectValue("carType","cartype_empty");
         }
         if(!car.getCarNumber().matches("^[A-Z]\\d{3}[A-Z]{2}\\d{3}")){

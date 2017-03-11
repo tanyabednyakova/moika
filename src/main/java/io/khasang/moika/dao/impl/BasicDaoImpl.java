@@ -13,7 +13,7 @@ import java.util.Map;
 @Transactional
 public abstract class BasicDaoImpl<T> implements BasicDao<T> {
 
-    protected final Class<T> entityClass;
+    private final Class<T> entityClass;
 
     @Autowired
     protected DataAccessUtil dataAccessUtil;
