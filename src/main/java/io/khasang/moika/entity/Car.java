@@ -1,11 +1,9 @@
 package io.khasang.moika.entity;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import java.util.*;
-
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity(name = "cars")
 @Cacheable
@@ -13,17 +11,9 @@ import java.util.*;
 public class Car extends ABaseMoikaEntity{
 
     @Id
-    @Column(name = "id_car", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name = "id_car_type")
-    private Short idCarType;
-    @ManyToOne
-    @JoinColumn(name = "id_car_type", foreignKey = @ForeignKey(name = "fk_car_type"), insertable=false, updatable=false )
-    private CarType CarTypeEntity;
-
-    @Column(name = "carnum")
+    private long id;
+    private String carType;
     private String carNumber;
     @Column(name = "carmodel")
     private String carModel;
