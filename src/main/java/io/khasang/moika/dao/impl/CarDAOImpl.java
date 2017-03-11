@@ -2,10 +2,8 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.CarDAO;
 import io.khasang.moika.entity.Car;
-import io.khasang.moika.entity.Company;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.QueryParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +29,8 @@ public class CarDAOImpl implements CarDAO {
 
     @Override
     public Car updateCar(Car car) {
-        sessionFactory.getCurrentSession().update(car);
+        sessionFactory.getCurrentSession().
+                update(car);
         return car;
     }
 
@@ -51,27 +50,32 @@ public class CarDAOImpl implements CarDAO {
     //TODO: реализовать
     @Override
     public List getCarByType(String carType) {
-        return  sessionFactory.getCurrentSession().createQuery("from cars where carType = ?").
+        return  sessionFactory.getCurrentSession().
+                createQuery("from cars where carType = ?").
                 setParameter(0, carType).list();
     }
 
     //TODO: реализовать
     @Override
     public List getCarByNumber(String carNumber) {
-        return  sessionFactory.getCurrentSession().createQuery("from cars as c where c.carNumber = ?").
+        return  sessionFactory.getCurrentSession().
+                createQuery("from cars as c where c.carNumber = ?").
                 setParameter(0, carNumber).list();
     }
 
     //TODO: реализовать
     @Override
     public List getCarByModel(String carModel) {
-        return  sessionFactory.getCurrentSession().createQuery("from cars as c where c.carModel = ?").
+        return  sessionFactory.getCurrentSession().
+                createQuery("from cars as c where c.carModel = ?").
                 setParameter(0, carModel).list();
     }
 
     @Override
     public List getCarList() {
-        return sessionFactory.getCurrentSession().createQuery("from cars").list();
+        return sessionFactory.getCurrentSession().
+                createQuery("from cars").
+                list();
     }
 
 }

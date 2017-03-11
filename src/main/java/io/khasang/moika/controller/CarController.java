@@ -20,6 +20,12 @@ public class CarController {
     @Autowired
     private CarService carService;
 
+    /**
+     * Добавления автомобиля
+     * @param car автомобиль для добавления
+     * @return сохранённый автомобиль
+     */
+
     @RequestMapping(value = "car/add",
             method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     @ResponseBody
@@ -27,14 +33,22 @@ public class CarController {
         carService.addCar(car);
         return car;
     }
-
-    @RequestMapping(value = "/car/{id}",
+    /**
+     * Возвращение автомобиля по id
+     * @param id автомобиль для добавления
+     * @return  автомобиль по id
+     */
+    @RequestMapping(value = "/car/id/{id}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public Car getCarById(@PathVariable("id") String id){
         return carService.getCarById(Long.parseLong(id));
     }
-
+    /**
+     * Возвращение автомобиля по номеру
+     * @param carNumber автомобиль для добавления
+     * @return  автомобили
+     */
     //TODO: реализовать
     @RequestMapping(value = "/car/number/{number}",
             method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
