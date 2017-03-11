@@ -8,11 +8,14 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+@Transactional
 public abstract class MoikaDaoCrudImpl <T extends ABaseMoikaEntity> implements IMoikaDaoCrud<T> {
 
     protected SessionFactory sessionFactory;
