@@ -13,11 +13,11 @@ import java.util.List;
 
 @Component
 @Transactional
-public class CarDAOImpl implements CarDAO {
+public class CarDaoImpl implements CarDAO {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public CarDAOImpl(SessionFactory sessionFactory) {
+    public CarDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
