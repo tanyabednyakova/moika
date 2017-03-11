@@ -19,13 +19,14 @@ import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
 public class User implements Serializable {
 
     @Id
+    @Column(name = "id_user")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotNull
     @Size(min = 4, max = 16)
     @NaturalId(mutable = true)
-    @Column(nullable = false, unique = true)
+    @Column(name = "login", nullable = false, unique = true)
     private String login;
 
     @NotNull
@@ -33,8 +34,8 @@ public class User implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id_role"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
     )
     private Set<Role> roles = new HashSet<>();

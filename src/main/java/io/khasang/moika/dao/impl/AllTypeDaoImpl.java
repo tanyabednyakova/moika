@@ -17,71 +17,13 @@ import java.util.List;
 
 /**
  * Базовый абстрактный класс для всех стправочников типов (xxx_type)
+ *
  * @param <T> наследники ABaseMoikaTypeReference
  */
 
 @Transactional
-public abstract class AllTypeDaoImpl<T extends ABaseMoikaTypeReference> implements BaseMoikaTypeDao<T> {
+public abstract class AllTypeDaoImpl<T extends ABaseMoikaTypeReference> extends MoikaDaoCrudImpl<T> implements BaseMoikaTypeDao<T> {
     protected SessionFactory sessionFactory;
-
-    @Autowired
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    protected Class<? extends T> daoType;
-
-    /**
-     * By defining this class as abstract, we prevent Spring from creating
-     * instance of this class If not defined as abstract,
-     * getClass().getGenericSuperClass() would return Object. There would be
-     * exception because Object class does not hava constructor with parameters.
-     */
-
-    public AllTypeDaoImpl() {
-        Type t = getClass().getGenericSuperclass();
-        ParameterizedType pt = (ParameterizedType) t;
-        daoType = (Class) pt.getActualTypeArguments()[0];
-    }
-
-
-    @Override
-    public T addEntity(T entity) throws MoikaDaoException {
-        sessionFactory.getCurrentSession().save(entity);
-        return entity;
-    }
-
-    @Override
-    public void updateEntity(T entity) throws MoikaDaoException {
-        sessionFactory.getCurrentSession().update(entity);
-    }
-
-    @Override
-    public void deleteEntity(T entity) throws MoikaDaoException {
-        final Session session = sessionFactory.getCurrentSession();
-        session.delete(entity);
-        session.flush();
-    }
-
-    /**
-     *
-     * @param id
-     * @return entity
-     * @throws MoikaDaoException
-     */
-    @Override
-    public T getEntityById(int id) throws MoikaDaoException {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(daoType);
-        criteria.add(Restrictions.eq("id", id));
-        return (T) criteria.uniqueResult();
-    }
 
 
     @Override
@@ -93,11 +35,5 @@ public abstract class AllTypeDaoImpl<T extends ABaseMoikaTypeReference> implemen
         return (T) criteria.uniqueResult();
     }
 
-    @Override
-    public List<T> getAllEntities() throws MoikaDaoException {
-        //return sessionFactory.getCurrentSession().createQuery("from service ").list();
-        final Session session = sessionFactory.getCurrentSession();
-        List<T> list = session.createCriteria(daoType).list();
-        return list;
-    }
+
 }

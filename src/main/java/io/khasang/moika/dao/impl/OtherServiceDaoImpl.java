@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository("otherServiceDao")
-public class OtherServiceDaoImpl extends AMoikaServiceDaoImpl<OtherService> implements OtherServiceDao{
+public class OtherServiceDaoImpl extends AllServiceFieldsDaoImpl<OtherService> implements OtherServiceDao{
 
     public OtherServiceDaoImpl() {
         super();
