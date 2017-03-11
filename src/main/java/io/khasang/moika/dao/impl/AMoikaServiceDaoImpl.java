@@ -7,6 +7,7 @@ import io.khasang.moika.entity.BaseMoikaService;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.stereotype.Repository;
 
@@ -58,8 +59,13 @@ public abstract class AMoikaServiceDaoImpl<T extends BaseMoikaService> extends M
     @Override
     public List<T> getAllEntities() throws MoikaDaoException {
         //return sessionFactory.getCurrentSession().createQuery("from service ").list();
+        //final Session session = sessionFactory.getCurrentSession();
+        List objects = null;
         final Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(type).list();
+        Query query = session.createQuery("from " + type);
+        objects = query.list();
+        return objects;
+        //return  session.createCriteria(type).list();
     }
 
 
