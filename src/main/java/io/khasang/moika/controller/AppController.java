@@ -1,5 +1,6 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.annotation.AddMenuPath;
 import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
 import io.khasang.moika.entity.User;
@@ -42,6 +43,7 @@ public class AppController {
     }
 
     @RequestMapping("/")
+    @AddMenuPath(name="hello")
     public String hello(Model model) {
         User user = getCurrentUser();
         if(user==null){

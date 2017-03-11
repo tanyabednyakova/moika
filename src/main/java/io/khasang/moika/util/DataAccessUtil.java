@@ -82,9 +82,9 @@ public class DataAccessUtil {
                 } else {
                     params = builder.parameter(value.getClass());
                 }
-                if (where == null) {
+                if(where==null){
                     where = builder.equal(root.get(attr.getKey()), params);
-                } else {
+                }else{
                     where = builder.and(where, builder.equal(root.get(attr.getKey()), params));
                 }
                 values.add(attr.getValue());
@@ -92,7 +92,7 @@ public class DataAccessUtil {
             criteriaQuery.where(where);
             query = sessionFactory.getCurrentSession().createQuery(criteriaQuery);
             for (int i = 0; i < values.size(); i++) {
-                query.setParameter("param" + i, values.get(i));
+                query.setParameter("param"+i, values.get(i));
             }
 
         } else {

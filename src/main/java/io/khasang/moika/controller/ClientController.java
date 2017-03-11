@@ -40,17 +40,17 @@ public class ClientController {
 //        return "clientlist";
 //    }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object addClient(@RequestBody Client client, BindingResult result){
-        clientValidator.validate(client,result);
-        if(result.hasErrors()){
-            return BindingResultToMapParser.getMap(result);
-        }else{
-            //TODO
-            //clientDAO.addClient(client);
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String crateClient(){
+        return "client";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String addClient(@RequestBody Client client, Model model){
+        if(client!=null){
+            model.addAttribute("client",client);
         }
-        return BindingResultToMapParser.getSuccess("success");
+        return "client";
     }
 
 }
