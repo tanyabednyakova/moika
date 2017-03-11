@@ -21,9 +21,4 @@ public interface RostislavDataAccessService {
      * @return
      */
     List<Map<String, Object>> getCars(String carType);
-<<<<<<< HEAD
-
-=======
->>>>>>> alynil
-
 }

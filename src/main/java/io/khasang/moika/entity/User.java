@@ -13,6 +13,7 @@ import java.util.Set;
 
 import static io.khasang.moika.util.DataValidationPatterns.EMAIL_PATTERN;
 import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
+import static javax.swing.text.StyleConstants.Size;
 
 @Entity
 @Table(name = "users")

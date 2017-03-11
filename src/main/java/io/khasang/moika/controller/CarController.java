@@ -79,13 +79,15 @@ public class CarController {
         return "cars";
     }
 
-    @RequestMapping(value = "/car/update",
-            method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public Car updateCar(@RequestBody Car car){
-        carService.updateCar(car);
-        return car;
-    }
+//    @RequestMapping(value = "/car/update/${id}",
+//            method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+//    @ResponseBody
+//    public Object updateCar(@ModelAttribute(value = "company") Car car, @PathVariable("id") String id){
+//        carService.updateCar(car, id);
+//        return car;
+//    }
+
+
 
     @RequestMapping(value = "/car/delete/{id}",
             method = RequestMethod.DELETE, produces = "application/json; charset=UTF-8")

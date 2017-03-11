@@ -56,7 +56,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void updateCar(Car car) {
-        carDAO.updateCar(car);
+    public Car updateCar(Car car) {
+        return carDAO.updateCar(car);
     }
 }
