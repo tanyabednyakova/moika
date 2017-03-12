@@ -49,9 +49,7 @@ public class User extends ABaseMoikaEntity implements Serializable {
     private String firstName;
 
     private String middleName;
-
-    @NotNull
-    @Size(min = 1, max = 32)
+    
     private String lastName;
 
     private Date birthday;

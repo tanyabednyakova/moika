@@ -16,11 +16,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
@@ -59,8 +62,9 @@ public class UserController {
     @ResponseBody
     public Object createUser(@RequestBody @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
-            return BindingResultToMapParser.getMap(result);
+            return Collections.singletonMap("errors",BindingResultToMapParser.getMap(result));
         }
+        user.setEnabled(true);
         userService.createUser(user);
         return Collections.singletonMap("redirect", " ");
     }
@@ -94,6 +98,15 @@ public class UserController {
         Autowire rememberMeService and call:
         rememberMeServices.onLoginSuccess(request, response, authenticatedUser);
     */
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        if (getCurrentUser() != null) {
+            new SecurityContextLogoutHandler().logout(request, response,
+                    SecurityContextHolder.getContext().getAuthentication());
+        }
+        return "redirect: /";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")

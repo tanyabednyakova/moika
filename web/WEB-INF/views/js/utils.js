@@ -16,13 +16,11 @@
  * false если отрицательный
  */
 function setActiveFormInput(toURL, selector, result) {
-    /*var div = $(selector).closest('div.form-group');
-     var glyphicon = div.find('span.glyphicon');*/
     setChangeListener(selector, 1000, function () {
         var value = $(selector).val();
         console.log("I am acting for: " + value);
         if (value) {
-            var sendObj = new Object();
+            var sendObj = {};
             sendObj[$(selector).attr('name')] = value;
             $.ajax({
                 method: "POST",
@@ -34,7 +32,6 @@ function setActiveFormInput(toURL, selector, result) {
                         if (result) {
                             result(true);
                         }
-                        //TODO заменить имеющимися методами
                         setStatusElement(selector, 'success');
                     } else {
                         if (result) {
@@ -74,7 +71,7 @@ function formSubmitAjax(toURL, selector, method) {
  * @param selector - Селектор формы
  */
 function parseFormToJSON(selector) {
-    var obj = new Object();
+    var obj = {};
     $(selector).find('[name]').each(function () {
         obj[$(this).attr('name')] = $(this).val();
     });
@@ -189,6 +186,7 @@ function setStatusElement(selector, status, msg) {
  * @param action - callback функция которая запускается при срабатывании события
  * */
 function setChangeListener(selector, ms, action) {
+    $(selector).attr('active','active');
     if ($(selector) && ms && ms > 0) {
         $(selector).on('input', function () {
             if ($(this).attr('timer')) {
