@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
+import java.util.Set;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -46,6 +49,14 @@ public class UserServiceImpl implements UserService {
             user.setPassword(getEncodedPassword(user.getPassword()));
         }
         return userDAO.create(user);
+    }
+
+    @Override
+    public User createClientUser(User user) {
+        Role role = roleDAO.findByName("ROLE_CLIENT");
+        user.setRoles(Collections.singleton(role));
+        createUser(user);
+        return user;
     }
 
     @Override

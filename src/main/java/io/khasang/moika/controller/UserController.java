@@ -65,7 +65,7 @@ public class UserController {
             return Collections.singletonMap("errors",BindingResultToMapParser.getMap(result));
         }
         user.setEnabled(true);
-        userService.createUser(user);
+        userService.createClientUser(user);
         return Collections.singletonMap("redirect", " ");
     }
 

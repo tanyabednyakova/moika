@@ -47,6 +47,13 @@ public interface UserService {
     User createUser(User user);
 
     /**
+     * Создать учетную запись пользователя
+     * с бозавой ролью ROLE_CLIENT
+     * @param user - Данные в объекте user
+     */
+    User createClientUser(User user);
+
+    /**
      * Удалить учетную запись пользователя
      *
      * @param user пользователь
