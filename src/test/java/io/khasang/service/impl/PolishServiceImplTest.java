@@ -3,8 +3,9 @@ package io.khasang.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.PolishService;
-import io.khasang.moika.service.PolishServiceDataAccessService;
+import io.khasang.moika.entity.IBaseMoikaServiceAddInfo;
+import io.khasang.moika.entity.MoikaService;
+import io.khasang.moika.service.MoikaServiceDataAccessService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,29 +24,32 @@ import java.util.List;
 public class PolishServiceImplTest {
 
     @Autowired
-    PolishServiceDataAccessService moikaService;
+    MoikaServiceDataAccessService moikaService;
 
 
     @Test
     @Transactional
-    public void testPolishServiceList(){
-        List<PolishService> serviceList = null;
+    public void testCleanServiceList(){
+        List<MoikaService> serviceList = null;
         try {
             serviceList = moikaService.getAllServices();
         } catch (MoikaDaoException e) {
-            Assert.fail( e.getMessage());
+            Assert.fail(e.getMessage());
         }
-        Assert.assertNotNull("Service  list is null",serviceList);
+        Assert.assertNotNull("Service  list is null", serviceList);
         Assert.assertFalse("Service  list is empty", serviceList.isEmpty());
         boolean isCode = false;
-        BigDecimal polishCost = null;
-        for (PolishService item : serviceList) {
-            if (item.getServiceName().equalsIgnoreCase("Полировка")) {
+        BigDecimal cost = null;
+        for (MoikaService item : serviceList) {
+            if (item.getTypeCode().equalsIgnoreCase("POLISH")) {
                 isCode = true;
-                polishCost = item.getServiceCost();
+                List<IBaseMoikaServiceAddInfo> addInfo = item.getServiceAddInfo();
+                for (IBaseMoikaServiceAddInfo serviceInfo : addInfo) {
+                        cost = serviceInfo.getServiceCost();
+                }
             }
         }
-        Assert.assertTrue("Service types list not contain name \"Полировка\"",isCode);
-        Assert.assertNotEquals("Service types name \"Полировка\" not cost",BigDecimal.valueOf(1000).setScale(0),polishCost);
+        Assert.assertTrue("Service types list not contain name \"Химчиска салона\"",isCode);
+        Assert.assertEquals("Service types list not contain name \"Химчиска салона\"",BigDecimal.valueOf(500).setScale(0),cost);
     }
 }

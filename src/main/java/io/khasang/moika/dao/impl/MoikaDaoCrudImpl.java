@@ -17,9 +17,11 @@ import java.util.Map;
 
 @Transactional
 public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IMoikaDaoCrud<T> {
-
+    @Autowired
     protected DataAccessUtil dataAccessUtil;
+    @Autowired
     protected SessionFactory sessionFactory;
+
     protected Class<? extends T> daoType;
 
     /**
@@ -35,6 +37,9 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
         daoType = (Class) pt.getActualTypeArguments()[0];
     }
 
+    public Class<? extends T> getDaoType() {
+        return daoType;
+    }
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -43,6 +48,11 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     public DataAccessUtil getDataAccessUtil() {
@@ -91,8 +101,4 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
         return dataAccessUtil.getQueryOfEntity((Class<T>) daoType).getResultList();
     }
 
-    @Override
-    public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
 }

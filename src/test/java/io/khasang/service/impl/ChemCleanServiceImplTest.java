@@ -4,7 +4,9 @@ package io.khasang.service.impl;
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.ChemCleanService;
-import io.khasang.moika.service.ChemCleanServiceDataAccessService;
+import io.khasang.moika.entity.IBaseMoikaServiceAddInfo;
+import io.khasang.moika.entity.MoikaService;
+import io.khasang.moika.service.MoikaServiceDataAccessService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,29 +25,36 @@ import java.util.List;
 public class ChemCleanServiceImplTest {
 
     @Autowired
-    ChemCleanServiceDataAccessService moikaService;
+    MoikaServiceDataAccessService moikaService;
 
 
     @Test
     @Transactional
     public void testChemCleanServiceList(){
-        List<ChemCleanService> serviceList = null;
+        List<MoikaService> serviceList = null;
         try {
             serviceList = moikaService.getAllServices();
         } catch (MoikaDaoException e) {
-            Assert.fail( e.getMessage());
+            Assert.fail(e.getMessage());
         }
-        Assert.assertNotNull("Service  list is null",serviceList);
+        Assert.assertNotNull("Service  list is null", serviceList);
         Assert.assertFalse("Service  list is empty", serviceList.isEmpty());
         boolean isCode = false;
-        BigDecimal chemCleanCost = null;
-        for (ChemCleanService item : serviceList) {
+        BigDecimal cost = null;
+        for (MoikaService item : serviceList) {
             if (item.getServiceName().equalsIgnoreCase("Химчиска салона")) {
                 isCode = true;
-                chemCleanCost = item.getServiceCost();
+                List<IBaseMoikaServiceAddInfo> addInfo = item.getServiceAddInfo();
+                for (IBaseMoikaServiceAddInfo serviceInfo : addInfo) {
+                    if (((ChemCleanService)serviceInfo).getDirtTypeEntity().equals("NORM")) {
+                        if (((ChemCleanService)serviceInfo).getSalonMaterial().getTypeCode().equals("VELUR")) {
+                            cost = serviceInfo.getServiceCost();
+                        }
+                    }
+                }
             }
         }
         Assert.assertTrue("Service types list not contain name \"Химчиска салона\"",isCode);
-        Assert.assertNotEquals("Service types list not contain name \"Химчиска салона\"",BigDecimal.valueOf(500).setScale(0),chemCleanCost);
+        Assert.assertEquals("Service types list not contain name \"Химчиска салона\"",BigDecimal.valueOf(500).setScale(0),cost);
     }
 }
