@@ -4,7 +4,7 @@ import io.khasang.moika.entity.Queue_t;
 
 import java.util.List;
 
-public interface QueueServise {
+public interface Queue_tServiсe {
     void createQueue(Queue_t queue_t);
     void updateQueue(Queue_t queue_t);
     void deleteQueue(Queue_t queue_t);

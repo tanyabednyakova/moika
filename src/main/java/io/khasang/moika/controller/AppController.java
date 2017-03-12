@@ -7,13 +7,13 @@ import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 
@@ -69,12 +69,12 @@ public class AppController {
         return company;
     }
 
-    @RequestMapping(value = "queue/add/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Queue addQueue(@RequestBody Queue queue, @PathVariable("id") String id) {
-        queueService.addQueue(queue);
-        return queue;
-    }
+//    @RequestMapping(value = "queue/add/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+//    @ResponseBody
+//    public Queue addQueue(@RequestBody Queue queue, @PathVariable("id") String id) {
+//        queueService.addQueue(queue);
+//        return queue;
+//    }
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
     public String getCompanyList(Model model) {

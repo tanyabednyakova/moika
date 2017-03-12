@@ -5,7 +5,6 @@ import io.khasang.moika.model.PskvorDataAccess;
 import io.khasang.moika.model.PskvorDataAccessJdbcImpl;
 import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.PskvorDataAccessService;
-import io.khasang.moika.service.QueueService;
 import io.khasang.moika.service.impl.CompanyServiceImpl;
 import io.khasang.moika.service.impl.PskvorDataAccessServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 //@EnableCaching
@@ -75,11 +72,6 @@ public class AppConfig {
     @Bean
     public PskvorDataAccess pskvorDataAccess(){
          return new PskvorDataAccessJdbcImpl(jdbcTemplate());
-    }
-
-    @Bean
-    public TatyanaDataAccess tatyanaDataAccess(){
-        return new TatyanaDataAccessImp(jdbcTemplate());
     }
 
     @Bean

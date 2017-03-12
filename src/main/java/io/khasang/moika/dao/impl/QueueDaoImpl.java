@@ -1,7 +1,7 @@
 package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.QueueDAO;
-import io.khasang.moika.entity.Queue;
+import io.khasang.moika.entity.Queue_t;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,38 +9,41 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
 @Transactional
-public class QueueDaoImpl implements QueueDAO {
-    private final SessionFactory sessionFactory;
+@Repository("QueueDAO")
+public class QueueDAOImpl implements QueueDAO {
+    private SessionFactory sessionFactory;
 
     @Autowired
-    public QueueDaoImpl(SessionFactory sessionFactory) {
+    public QueueDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public void addQueue(Queue queue) {
-        sessionFactory.getCurrentSession().save(queue);
+    public QueueDAOImpl() {
     }
 
     @Override
-    public void updateQueue(Queue queue) {
-        sessionFactory.getCurrentSession().update(queue);
+    public void createQueue(Queue_t queue_t) {
+        sessionFactory.getCurrentSession().save(queue_t);
     }
 
     @Override
-    public void deleteQueue(Queue queue) {
-        sessionFactory.getCurrentSession().delete(queue);
+    public void updateQueue(Queue_t queue_t) {
+        sessionFactory.getCurrentSession().update(queue_t);
     }
 
     @Override
-    public List<Queue> getAllQueue() {
-        return sessionFactory.getCurrentSession().createQuery("from Queue ").list();
+    public void deleteQueue(Queue_t queue_t) {
+        sessionFactory.getCurrentSession().delete(queue_t);
     }
 
     @Override
-    public Queue getQueueById(long id) {
-        return sessionFactory.getCurrentSession().get(Queue.class,id);
+    public Queue_t getQueueById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<Queue_t> getAllQueue() {
+        return sessionFactory.getCurrentSession().createQuery("from Queue_t").list();
     }
 }
