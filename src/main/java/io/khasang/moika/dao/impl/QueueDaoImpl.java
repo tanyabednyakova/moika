@@ -11,15 +11,15 @@ import java.util.List;
 
 @Transactional
 @Repository("QueueDAO")
-public class QueueDAOImpl implements QueueDAO {
+public class QueueDaoImpl implements QueueDAO {
     private SessionFactory sessionFactory;
 
     @Autowired
-    public QueueDAOImpl(SessionFactory sessionFactory) {
+    public QueueDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public QueueDAOImpl() {
+    public QueueDaoImpl() {
     }
 
     @Override
