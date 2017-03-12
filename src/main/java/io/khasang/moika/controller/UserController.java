@@ -39,7 +39,7 @@ import java.util.Map;
 @RequestMapping(path = "/user")
 @Controller
 public class UserController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserDAOImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
     @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired
@@ -65,7 +65,7 @@ public class UserController {
             return Collections.singletonMap("errors",BindingResultToMapParser.getMap(result));
         }
         user.setEnabled(true);
-        userService.createUser(user);
+        userService.createClientUser(user);
         return Collections.singletonMap("redirect", " ");
     }
 

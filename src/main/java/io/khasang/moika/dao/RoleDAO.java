@@ -1,10 +1,7 @@
 package io.khasang.moika.dao;
 
 import io.khasang.moika.entity.Role;
-import io.khasang.moika.entity.User;
 import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 /**
  * Интерфейс DAO ролей пользователей
@@ -12,8 +9,12 @@ import java.util.Collection;
  * @since 2017-03-01
  * @author Rostislav Dublin
  */
-public interface RoleDAO {
+public interface RoleDAO  extends IMoikaDaoCrud<Role>{
 
+    /**
+    * Инициализация базовых ролей в таблице БД
+    * */
+    void init();
     /**
      * Найти роль по названию
      * @param name название роли

@@ -10,6 +10,7 @@ import io.khasang.moika.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class AppController {
@@ -49,11 +51,12 @@ public class AppController {
         User user = getCurrentUser();
         String headLine = "---------Security-----------";
         String footLine = "----------------------------";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         logger.debug(String.format("%n%s%nIs authenticated: %s%nWho: %s%nRole: %s%n%s",
                 headLine,
-                SecurityContextHolder.getContext().getAuthentication().isAuthenticated(),
-                SecurityContextHolder.getContext().getAuthentication().getName(),
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities().iterator().next().toString(),
+                auth.isAuthenticated(),
+                auth.getName(),
+                auth.getAuthorities().stream().map(a->a.toString()).collect(Collectors.joining(", ")),
                 footLine
         ));
         if(user==null){
