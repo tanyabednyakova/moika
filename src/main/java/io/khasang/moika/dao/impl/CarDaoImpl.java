@@ -14,10 +14,6 @@ import java.util.List;
 public class CarDaoImpl extends MoikaDaoCrudImpl<Car> implements CarDao {
     private static final Logger logger = LoggerFactory.getLogger(CarDaoImpl.class);
 
-    protected CarDaoImpl() {
-        super(Car.class);
-    }
-
     @Override
     public List<Car> getByType(String type) {
         return null;
@@ -32,8 +28,4 @@ public class CarDaoImpl extends MoikaDaoCrudImpl<Car> implements CarDao {
     public List<Car> getByModel(String model) {
         return null;
     }
-import io.khasang.moika.entity.ABaseMoikaEntity;
-import io.khasang.moika.entity.Car;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
+}
