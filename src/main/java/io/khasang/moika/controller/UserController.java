@@ -79,7 +79,7 @@ public class UserController {
             Authentication request = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
             Authentication result = authenticationManager.authenticate(request);
             SecurityContextHolder.getContext().setAuthentication(result);
-            return Collections.singletonMap("redirect", "");//TODO добавить актуальную ссылку
+            return Collections.singletonMap("redirect", " ");//TODO добавить актуальную ссылку
         } catch (AuthenticationException e) {
             return Collections.singletonMap("errorMsg", "Authentication failed: " + e.getMessage());
         }
@@ -111,9 +111,27 @@ public class UserController {
 
     @RequestMapping(value = "/util", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object utilUser(@RequestBody Map<String, String> param) {
+    public Object utilUser(@RequestBody Map<String, String> param, BindingResult bindingResult) {
         //TODO переделать на работу с javax.validation.Validator и создать две доп. аннотации
-        javax.validation.Validator validator = (javax.validation.Validator) mvcValidator;
+        boolean result = false;
+        userUtilValidator.validate(param,bindingResult);
+        String error = null;
+        if(bindingResult.hasErrors()){
+            error = bindingResult.getAllErrors().get(0).getDefaultMessage();
+        }else if(param.containsKey("login")){
+            result = userService.isLoginFree(param.get("login"));
+            error = result?null:"Такой логин уже занят";
+        }else if(param.containsKey("email")){
+            result = userService.isEmailFree(param.get("email"));
+            error = result?null:"Такой email уже занят";
+        }
+        //Map<String,Object> resultMap = Collections.singletonMap("success",result);
+        Map<String,Object> resultMap = new HashMap();
+        resultMap.put("success",result);
+        if(error!=null){
+            resultMap.put("error",error);
+        }
+       /* javax.validation.Validator validator = (javax.validation.Validator) mvcValidator;
         Map<String, Object> resultMap = new HashMap();
         Map<String, String> errorMessageMap = new HashMap<>();
         errorMessageMap.put("valid.email", "Неверный формат email адреса");
@@ -121,7 +139,7 @@ public class UserController {
         errorMessageMap.put("login", "Такой логин уже занят");
         errorMessageMap.put("email", "Такой email уже занят");
         boolean result = false;
-        /*try {
+        try {
             param.forEach((key, val) -> {
                 Set<ConstraintViolation<User>> constraintViolations = validator.validateValue(User.class, key, val);
                 if (constraintViolations.size() > 0) {

@@ -121,11 +121,10 @@
                 url:"<c:url value="/user/login"/>",//TODO добавить актуальные url
                 data: jsonData,
                 success: function (data) {
-                    var obj = $.parseJSON(data);
-                    if (obj.redirect) {
-                        window.location.replace(obj.redirect);
+                    if (data.redirect) {
+                        window.location.replace(data.redirect);
                     }
-                    if (obj.errorMsg) {
+                    if (data.errorMsg) {
                         var div = $('#loginForm').find('div.alert');
                         div.removeClass('hide'); //TODO Возможно стоит добавить отображение сообщения с бэка?!
                     }
@@ -142,12 +141,11 @@
                     url:"<c:url value="/user/reg"/>",//TODO добавить актуальные url
                     data: jsonData,
                     success: function (data) {
-                        var obj = $.parseJSON(data);
-                        if (obj.redirect) {
-                            window.location.replace(obj.redirect);
+                        if (data.redirect) {
+                            window.location.replace(data.redirect);
                         }
-                        if (obj.errors) {
-                            processErrors(obj.errors);
+                        if (data.errors) {
+                            processErrors(data.errors);
                         }
                     }
                 });
