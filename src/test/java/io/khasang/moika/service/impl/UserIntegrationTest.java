@@ -87,7 +87,7 @@ public class UserIntegrationTest {
         Assert.assertNotNull(resultUser);
 
         HttpEntity<User> httpEntity = new HttpEntity<>(resultUser, headers);
-        resultUser.setName("Копыта и рога");
+        resultUser.setLastName("Копыта и рога");
         User resultUpdUser = restTemplate.exchange
                 ("http://localhost:8080/User/update",
                         HttpMethod.PUT,
@@ -96,7 +96,7 @@ public class UserIntegrationTest {
                 .getBody();
 
         Assert.assertNotNull(resultUpdUser);
-        Assert.assertEquals("Копыта и рога", resultUpdUser.getName());
+        Assert.assertEquals("Копыта и рога", resultUpdUser.getLastName());
         Assert.assertNotNull(resultUpdUser.getId());
     }
     

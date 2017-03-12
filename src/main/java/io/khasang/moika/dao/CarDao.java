@@ -6,6 +6,6 @@ import io.khasang.moika.entity.Car;
 import java.util.List;
 import java.util.Map;
 
-public interface CarDao extends BasicDao<Car>{
+public interface CarDao extends IMoikaDaoCrud<Car>{
 
 }

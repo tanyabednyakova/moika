@@ -29,7 +29,7 @@ public class CompanyServiceImpl implements CompanyService {
             company.setAmount(BigDecimal.valueOf(50L));
         }
         try {
-            companyDao.addEntity(company);
+            companyDao.create(company);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
     public void addCompany(Company company, String name) {
         company.setName(name);
         try {
-            companyDao.addEntity(company);
+            companyDao.create(company);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     public Company getCompanyById(int id) {
         try {
-            return companyDao.getEntityById(id);
+            return companyDao.get(id);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;
@@ -56,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void updateCompany(Company company) {
         try {
-            companyDao.updateEntity(company);
+            companyDao.update(company);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = new Company();
         company.setId(id);
         try {
-            companyDao.deleteEntity(company);
+            companyDao.delete(company);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -75,7 +75,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     public List<Company> getCompanyGazpromList() {
         try {
-            return companyDao.getAllEntities();
+            return companyDao.getAll();
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;
