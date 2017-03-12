@@ -5,18 +5,17 @@ import io.khasang.moika.entity.Car;
 import io.khasang.moika.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
-@Service
+@Service("CarServiceImpl")
+@Transactional
 public class CarServiceImpl implements CarService {
-
-    private final CarDao carDao;
-
     @Autowired
-    public CarServiceImpl(CarDao carDao) {
-        this.carDao = carDao;
+    private CarDao carDao;
+
+    public CarServiceImpl() {
     }
 
     @Override
@@ -25,23 +24,39 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getCarList() {
-        return carDao.getList();
+    public Car getCarById(long id) {
+        return carDao.get(id);
     }
 
     @Override
-    public void updateCar(Car car) {
-        carDao.update(car);
+    public List getCarByType(String type) {
+        return carDao.getByType(type);
     }
 
     @Override
-    public Car updateCar(long carId, Map<String, Object> fieldValueMap) {
-        return carDao.updateById(carId, fieldValueMap);
+    public List getCarByNumber(String number) {
+        return carDao.getByNumber(number);
     }
 
     @Override
-    public Car getCarById(long carId) {
-        return carDao.getById(carId);
+    public List getCarByModel(String model) {
+        return carDao.getByModel(model);
     }
 
+    @Override
+    public List getCarList() {
+        return carDao.getAll();
+    }
+
+    @Override
+    public void deleteCar(long id) {
+        Car car = new Car();
+        car.setId(id);
+        carDao.delete(car);
+    }
+
+    @Override
+    public Car updateCar(Car car) {
+        return carDao.update(car);
+    }
 }

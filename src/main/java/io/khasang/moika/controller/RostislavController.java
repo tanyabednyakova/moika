@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequestMapping(path = "/rostislav")
-@Controller
+//@Controller
 public class RostislavController {
 
     private final
@@ -92,10 +92,8 @@ public class RostislavController {
 
     @RequestMapping(value = "/car/update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateCar(@RequestBody Map<String, Object> carValuesMap) {
-
-        String carId = (String) carValuesMap.remove("id");
-        return carService.updateCar(Long.parseLong(carId), carValuesMap);
+    public Car updateCar(@RequestBody Car car) {
+        return carService.updateCar(car);
     }
 
     @RequestMapping(value = "/car", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")

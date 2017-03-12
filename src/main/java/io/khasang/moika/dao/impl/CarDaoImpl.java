@@ -2,24 +2,30 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.CarDao;
 import io.khasang.moika.entity.Car;
-import io.khasang.moika.util.DataAccessUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
-@Repository
+@Repository("carDao")
 @Transactional
-public class CarDaoImpl extends BasicDaoImpl<Car> implements CarDao {
+public class CarDaoImpl extends MoikaDaoCrudImpl<Car> implements CarDao {
+    private static final Logger logger = LoggerFactory.getLogger(CarDaoImpl.class);
 
-    @Autowired
-    public CarDaoImpl(SessionFactory sessionFactory, DataAccessUtil dataAccessUtil) {
-        super(Car.class);
+    @Override
+    public List<Car> getByType(String type) {
+        return null;
     }
 
+    @Override
+    public List<Car> getByNumber(String number) {
+        return null;
+    }
+
+    @Override
+    public List<Car> getByModel(String model) {
+        return null;
+    }
 }

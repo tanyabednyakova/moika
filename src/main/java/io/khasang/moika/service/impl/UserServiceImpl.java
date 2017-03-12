@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        return userDAO.getById(id);
+        return userDAO.get(id);
     }
 
     @Override
@@ -61,12 +61,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isLoginFree(String login) {
-        return userDAO.findByLogin(login) != null;
+        return userDAO.findByLogin(login) == null;
     }
 
     @Override
     public boolean isEmailFree(String email) {
-        return userDAO.findByEmail(email) != null;
+        return userDAO.findByEmail(email) == null;
     }
 
     @Override

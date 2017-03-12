@@ -12,7 +12,7 @@ public interface RostislavDataAccessService {
      *
      * @return
      */
-    public List<Map<String, Object>> getAllCars();
+    List<Map<String, Object>> getAllCars();
 
     /**
      * Получить сведения машинах определённого типа.
@@ -21,6 +21,4 @@ public interface RostislavDataAccessService {
      * @return
      */
     List<Map<String, Object>> getCars(String carType);
-
-
 }

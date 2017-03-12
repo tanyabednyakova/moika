@@ -14,7 +14,7 @@ import java.util.Collection;
  * @since 2017-03-01
  */
 
-public interface UserDAO extends BasicDao<User>{
+public interface UserDAO extends IMoikaDaoCrud<User>{
 
     /**
      * Найти пользователя по логину
@@ -31,6 +31,15 @@ public interface UserDAO extends BasicDao<User>{
      * @return пользователь
      */
     User findByEmail(String email);
+
+    /**
+     * Найти прользователя по значению его поля
+     *
+     * @param field наименование поля класса
+     * @param value значение поля
+     * @return пользователь
+     */
+    User findByFieldValue(String field,Object value);
 
     /**
      * Наделить пользователя ролью

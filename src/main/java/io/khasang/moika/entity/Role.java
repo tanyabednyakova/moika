@@ -6,10 +6,13 @@ import javax.persistence.*;
 @Table(name = "roles")
 public class Role implements Serializable {
     @Id
+    @Column(name = "id_role")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false, unique = true)
+    @Column(name = "role_name", nullable = false, unique = true)
     private String name;
+    @Column(name = "description", nullable = false, unique = true)
+    private String descruiption;
 
     public Role() {
     }
@@ -28,5 +31,13 @@ public class Role implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescruiption() {
+        return descruiption;
+    }
+
+    public void setDescruiption(String descruiption) {
+        this.descruiption = descruiption;
     }
 }

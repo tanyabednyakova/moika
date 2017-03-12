@@ -5,12 +5,14 @@ import io.khasang.moika.dao.RoleDAO;
 import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,12 +25,13 @@ import java.util.stream.Collectors;
  */
 @Repository("userDao")
 @Transactional
-public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
-    private final RoleDAO roleDAO;
+public class UserDAOImpl extends MoikaDaoCrudImpl<User> implements UserDAO {
+    private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
+
+    private RoleDAO roleDAO;
 
     @Autowired
-    public UserDAOImpl(RoleDAO roleDAO) {
-        super(User.class);
+    public void setRoleDAO(RoleDAO roleDAO) {
         this.roleDAO = roleDAO;
     }
 
@@ -39,7 +42,24 @@ public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
 
     @Override
     public User findByEmail(String email) {
-        return dataAccessUtil.getQueryOfEntityWithSoleEqualCondition(User.class, "email", email).getSingleResult();
+        try{
+            return dataAccessUtil.getQueryOfEntityWithSoleEqualCondition(User.class, "email", email)
+                    .getSingleResult();
+        }catch(NoResultException e){
+            logger.debug(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public User findByFieldValue(String field, Object value) {
+        try{
+            return dataAccessUtil.getQueryOfEntityWithSoleEqualCondition(User.class, field, value)
+                    .getSingleResult();
+        }catch(NoResultException e){
+            logger.debug(e.getMessage());
+            return null;
+        }
     }
 
     @Override
