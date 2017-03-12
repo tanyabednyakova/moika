@@ -17,7 +17,7 @@ import static javax.swing.text.StyleConstants.Size;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User extends ABaseMoikaEntity implements Serializable {
 
     @Id
     @Column(name = "id_user")

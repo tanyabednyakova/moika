@@ -14,7 +14,7 @@ import java.util.Collection;
  * @since 2017-03-01
  */
 
-public interface UserDAO extends BasicDao<User>{
+public interface UserDAO extends IMoikaDaoCrud<User>{
 
     /**
      * Найти пользователя по логину

@@ -3,33 +3,23 @@ package io.khasang.moika.dao.impl;
 import io.khasang.moika.dao.IMoikaDaoCrud;
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.ABaseMoikaEntity;
-import org.hibernate.Criteria;
+import io.khasang.moika.util.DataAccessUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
+
 
 @Transactional
-public abstract class MoikaDaoCrudImpl <T extends ABaseMoikaEntity> implements IMoikaDaoCrud<T> {
+public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IMoikaDaoCrud<T> {
 
+    protected DataAccessUtil dataAccessUtil;
     protected SessionFactory sessionFactory;
-
-    @Autowired
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
     protected Class<? extends T> daoType;
 
     /**
@@ -46,37 +36,63 @@ public abstract class MoikaDaoCrudImpl <T extends ABaseMoikaEntity> implements I
     }
 
 
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public DataAccessUtil getDataAccessUtil() {
+        return dataAccessUtil;
+    }
+
+    @Autowired
+    public void setDataAccessUtil(DataAccessUtil dataAccessUtil) {
+        this.dataAccessUtil = dataAccessUtil;
+    }
+
     @Override
-    public T addEntity(T entity) throws MoikaDaoException {
-        sessionFactory.getCurrentSession().save(entity);
+    public T create(T entity) throws MoikaDaoException {
+        getCurrentSession().save(entity);
         return entity;
     }
 
     @Override
-    public void updateEntity(T entity) throws MoikaDaoException {
-        sessionFactory.getCurrentSession().update(entity);
+    public T update(T entity) throws MoikaDaoException {
+        getCurrentSession().update(entity);
+        return entity;
     }
 
     @Override
-    public void deleteEntity(T entity) throws MoikaDaoException {
-        final Session session = sessionFactory.getCurrentSession();
-        session.delete(entity);
-        session.flush();
-    }
-
-    @Override
-    public T getEntityById(int id) throws MoikaDaoException {
-        Criteria criteria = sessionFactory.
-                getCurrentSession().
-                createCriteria(daoType);
-        criteria.add(Restrictions.eq("id", id));
-        return (T) criteria.uniqueResult();
+    public T update(long id, Map<String, Object> fieldValueMap) throws MoikaDaoException {
+        T entity = get(id);
+        dataAccessUtil.setNewValuesToBean(entity, fieldValueMap);
+        return update(entity);
     }
 
 
     @Override
-    public List<T> getAllEntities() throws MoikaDaoException {
-        final Session session = sessionFactory.getCurrentSession();
-        return session.createCriteria(daoType).list();
+    public T delete(T entity) throws MoikaDaoException {
+        getCurrentSession().delete(entity);
+        //DRS session.flush();
+        return entity;
+    }
+
+    @Override
+    public T get(long id) throws MoikaDaoException {
+        return getCurrentSession().get(daoType, id);
+    }
+
+    @Override
+    public List<T> getAll() throws MoikaDaoException {
+        return dataAccessUtil.getQueryOfEntity((Class<T>) daoType).getResultList();
+    }
+
+    @Override
+    public Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 }

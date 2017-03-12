@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
  */
 @Repository("userDao")
 @Transactional
-public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserDAOImpl.class);
-    private final RoleDAO roleDAO;
+public class UserDAOImpl extends MoikaDaoCrudImpl<User> implements UserDAO {
+    private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
+
+    private RoleDAO roleDAO;
 
     @Autowired
-    public UserDAOImpl(RoleDAO roleDAO) {
-        super(User.class);
+    public void setRoleDAO(RoleDAO roleDAO) {
         this.roleDAO = roleDAO;
     }
 
@@ -46,7 +46,7 @@ public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
             return dataAccessUtil.getQueryOfEntityWithSoleEqualCondition(User.class, "email", email)
                     .getSingleResult();
         }catch(NoResultException e){
-            LOGGER.debug(e.getMessage());
+            logger.debug(e.getMessage());
             return null;
         }
     }
@@ -57,7 +57,7 @@ public class UserDAOImpl extends BasicDaoImpl<User> implements UserDAO {
             return dataAccessUtil.getQueryOfEntityWithSoleEqualCondition(User.class, field, value)
                     .getSingleResult();
         }catch(NoResultException e){
-            LOGGER.debug(e.getMessage());
+            logger.debug(e.getMessage());
             return null;
         }
     }

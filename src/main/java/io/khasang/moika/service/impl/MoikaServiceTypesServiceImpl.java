@@ -21,22 +21,22 @@ public class MoikaServiceTypesServiceImpl implements MoikaServiceTypesService {
 
     @Override
     public ServiceType addServiceType(ServiceType entity) throws MoikaDaoException {
-        return serviceTypeDao.addEntity((ServiceType) entity);
+        return serviceTypeDao.create((ServiceType) entity);
     }
 
     @Override
     public void updateServiceType(ServiceType entity) throws MoikaDaoException {
-        serviceTypeDao.updateEntity((ServiceType) entity);
+        serviceTypeDao.update((ServiceType) entity);
     }
 
     @Override
     public void deleteServiceType(ServiceType entity) throws MoikaDaoException {
-        serviceTypeDao.deleteEntity((ServiceType) entity);
+        serviceTypeDao.delete((ServiceType) entity);
     }
 
     @Override
     public ServiceType getServiceTypeByID(int id) throws MoikaDaoException {
-        return serviceTypeDao.getEntityById(id);
+        return serviceTypeDao.get(id);
     }
 
     @Override
@@ -45,6 +45,6 @@ public class MoikaServiceTypesServiceImpl implements MoikaServiceTypesService {
     }
     @Override
     public List<ServiceType> getAllServiceTypes() throws MoikaDaoException {
-        return serviceTypeDao.getAllEntities();
+        return serviceTypeDao.getAll();
     }
 }

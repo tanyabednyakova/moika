@@ -32,8 +32,8 @@ public class ClientController {
 //    @RequestMapping("/list")
 //    public String getListClients(Model model){
 //        try {
-//            model.addAttribute("clients",clientDAO.getAllEntities());
-//            model.addAttribute("contClientId",clientDAO.getEntityById(2));
+//            model.addAttribute("clients",clientDAO.getAll());
+//            model.addAttribute("contClientId",clientDAO.get(2));
 //        } catch (MoikaDaoException e) {
 //            e.printStackTrace();
 //        }

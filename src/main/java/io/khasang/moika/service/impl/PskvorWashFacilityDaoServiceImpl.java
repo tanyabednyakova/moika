@@ -24,7 +24,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     @Override
     public void addWashFacility(WashFacility washFacility) {
         try {
-            washFacilityDao.addEntity(washFacility);
+            washFacilityDao.create(washFacility);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     @Override
     public void updateWashFacility(WashFacility washFacility) {
         try {
-            washFacilityDao.updateEntity(washFacility);
+            washFacilityDao.update(washFacility);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     @Override
     public void deleteWashFacility(WashFacility washFacility) {
         try {
-            washFacilityDao.deleteEntity(washFacility);
+            washFacilityDao.delete(washFacility);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
@@ -51,7 +51,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     @Override
     public WashFacility getWashFacilityByID(int id) {
         try {
-            return washFacilityDao.getEntityById(id);
+            return washFacilityDao.get(id);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;
@@ -61,7 +61,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     @Override
     public List<WashFacility> getAllWashFacilities() {
         try {
-            return washFacilityDao.getAllEntities();
+            return washFacilityDao.getAll();
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;

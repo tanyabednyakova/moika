@@ -21,22 +21,22 @@ public class MoikaServiceStatusServiceImpl implements MoikaServiceStatusService 
 
     @Override
     public ServiceStatus addServiceStatus(ServiceStatus entity) throws MoikaDaoException {
-        return serviceStatusDao.addEntity((ServiceStatus) entity);
+        return serviceStatusDao.create((ServiceStatus) entity);
     }
 
     @Override
     public void updateServiceStatus(ServiceStatus entity) throws MoikaDaoException {
-        serviceStatusDao.updateEntity((ServiceStatus) entity);
+        serviceStatusDao.update((ServiceStatus) entity);
     }
 
     @Override
     public void deleteServiceStatus(ServiceStatus entity) throws MoikaDaoException {
-        serviceStatusDao.deleteEntity((ServiceStatus) entity);
+        serviceStatusDao.delete((ServiceStatus) entity);
     }
 
     @Override
     public ServiceStatus getServiceStatusByID(int id) throws MoikaDaoException {
-        return serviceStatusDao.getEntityById(id);
+        return serviceStatusDao.get(id);
     }
 
     @Override
@@ -46,6 +46,6 @@ public class MoikaServiceStatusServiceImpl implements MoikaServiceStatusService 
 
     @Override
     public List<ServiceStatus> getAllServiceStatuses() throws MoikaDaoException {
-        return serviceStatusDao.getAllEntities();
+        return serviceStatusDao.getAll();
     }
 }

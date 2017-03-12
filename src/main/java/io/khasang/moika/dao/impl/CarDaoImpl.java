@@ -11,12 +11,8 @@ import java.util.List;
 
 @Repository("carDao")
 @Transactional
-public class CarDaoImpl extends BasicDaoImpl<Car> implements CarDao {
+public class CarDaoImpl extends MoikaDaoCrudImpl<Car> implements CarDao {
     private static final Logger logger = LoggerFactory.getLogger(CarDaoImpl.class);
-
-    protected CarDaoImpl() {
-        super(Car.class);
-    }
 
     @Override
     public List<Car> getByType(String type) {
