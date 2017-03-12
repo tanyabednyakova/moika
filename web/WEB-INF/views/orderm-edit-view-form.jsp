@@ -18,12 +18,23 @@
             <td><form:input path="number" /></td>
         </tr>
         <tr>
-            <td><form:label path="registrationDate">Дата регистрации</form:label></td>
+            <td><form:label path="registrationDate">Дата регистрации (месяц/день/год)</form:label></td>
             <td><form:input path="registrationDate" /></td>
         </tr>
         <tr>
+            <td><form:label path="executiontionDate">Дата исполнения (месяц/день/год)</form:label></td>
+            <td><form:input path="executiontionDate" /></td>
+        </tr>
+        <tr>
+            <td>
+                <td><form:checkbox path="is_prepaid"/></td>
+            </td>
+        </tr>
+
+        <tr>
             <td><input type="submit" value="Записать" /></td>
         </tr>
+
     </table>
 </form:form>
 

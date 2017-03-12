@@ -25,9 +25,10 @@ public class OrdermAccessServiceImplTest {
     public void commonOrderm() throws Exception {
         Orderm orderm = new Orderm("1");
         ordermAccessService.addOrderm(orderm);
+        long id = orderm.getId();
         orderm = new Orderm("2");
         ordermAccessService.addOrderm(orderm);
-        orderm = ordermAccessService.getOrderm(1l);
+        orderm = ordermAccessService.getOrderm(id);
         orderm.setNumber("11");
         ordermAccessService.updateOrderm(orderm);
         orderm = new Orderm("33");

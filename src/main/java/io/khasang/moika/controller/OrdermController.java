@@ -34,12 +34,13 @@ public class OrdermController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String submit(@ModelAttribute("orderm")
-             final Orderm orderm, final BindingResult result, final ModelMap model) {
+    public String submit(@ModelAttribute("orderm") final Orderm orderm,
+                         final BindingResult result, final ModelMap model) {
         if (result.hasErrors()) {
             return "error";
         }
-        return "orderm-list";
+        ordermAccessService.addOrderm(orderm);
+        return "redirect:/orderm/list";
     }
 
 }
