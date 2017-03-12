@@ -58,9 +58,21 @@
                             <span class="glyphicon glyphicon-ok hide form-control-feedback" aria-hidden="true"></span>
                         </div>
                         <div class="form-group has-feedback">
+                            <label for="regInputPhone">Телефон</label>
+                            <input type="tel" class="form-control" name="phone" id="regInputPhone"
+                                   placeholder="Phone">
+                            <span class="glyphicon glyphicon-ok hide form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                        <div class="form-group has-feedback">
                             <label for="regInputLogin">Логин</label>
-                            <input type="email" class="form-control" name="login" id="regInputLogin"
+                            <input type="text" class="form-control" name="login" id="regInputLogin"
                                    placeholder="Login">
+                            <span class="glyphicon glyphicon-ok hide form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="regInputFirstName">Имя</label>
+                            <input type="text" class="form-control" name="firstName" id="regInputFirstName"
+                                   placeholder="FirstName">
                             <span class="glyphicon glyphicon-ok hide form-control-feedback" aria-hidden="true"></span>
                         </div>
                         <div class="form-group has-feedback">
@@ -89,29 +101,43 @@
     <%--TODO вынести в отдельный js--%>
     <script type="text/javascript">
         <%-- Здесь описана логика работы модальных окон регистрации и аутентификации --%>
-        $("#regForm").attr('error', 1);
-        var changeErr = function (res) {
-            var form = $("#regForm");
-            var err = parseInt(form.attr('error'));
-            if (res) {
-                form.attr('error', err == 0 ? err : err - 1);
-            } else {
-                form.attr('error', err == 2 ? err : err + 1);
-            }
+        var hasErr = function () {
+            var result = false;
+            $("#regForm").find('[active]').each(function () {
+                var div =$(this).closest('div.form-group');
+                if(div.hasClass('has-error')){
+                    result = true;
+                    return;
+                }
+            });
+            return result;
         };
 
         setChangeListener('#regInputPassword1', 1500, function (elem) {
-            if ($('#regInputPassword').val() == elem.val()) {
+            if (elem.val()&&$('#regInputPassword').val() == elem.val()) {
                 setStatusElement('#regInputPassword1', 'success');
-                changeErr(true);
             } else {
                 setStatusElement('#regInputPassword1', 'error', 'Пароли должны совпадать!');
-                changeErr(false);
             }
         });
-        //TODO добавить актуальные url
-        setActiveFormInput('<c:url value="/user/util"/>', '#regInputEmail', changeErr);
-        setActiveFormInput('<c:url value="/user/util"/>', '#regInputLogin', changeErr);
+
+        setChangeListener('#regInputPhone', 1500, function (elem) {
+            if (elem.val()) {
+                setStatusElement('#regInputPhone', 'none');
+            } else {
+                setStatusElement('#regInputPhone', 'error', 'Строка не должна быть пустой!');
+            }
+        });
+
+        setChangeListener('#regInputFirstName', 1500, function (elem) {
+            if (elem.val()) {
+                setStatusElement('#regInputFirstName', 'none');
+            } else {
+                setStatusElement('#regInputFirstName', 'error', 'Строка не должна быть пустой!');
+            }
+        });
+        setActiveFormInput('<c:url value="/user/util"/>', '#regInputEmail');
+        setActiveFormInput('<c:url value="/user/util"/>', '#regInputLogin');
 
         $("#loginBtn").click(function () {
             var jsonData = parseFormToJSON('#loginForm');
@@ -121,11 +147,10 @@
                 url:"<c:url value="/user/login"/>",//TODO добавить актуальные url
                 data: jsonData,
                 success: function (data) {
-                    var obj = $.parseJSON(data);
-                    if (obj.redirect) {
-                        window.location.replace(obj.redirect);
+                    if (data.redirect) {
+                        window.location.replace(data.redirect);
                     }
-                    if (obj.errorMsg) {
+                    if (data.errorMsg) {
                         var div = $('#loginForm').find('div.alert');
                         div.removeClass('hide'); //TODO Возможно стоит добавить отображение сообщения с бэка?!
                     }
@@ -134,7 +159,7 @@
         });
 
         $("#regBtn").click(function () {
-            if ($("#regForm").attr('hasError') == 0) {
+            if (!hasErr()) {
                 var jsonData = parseFormToJSON("#regForm");
                 $.ajax({
                     method: "POST",
@@ -142,12 +167,11 @@
                     url:"<c:url value="/user/reg"/>",//TODO добавить актуальные url
                     data: jsonData,
                     success: function (data) {
-                        var obj = $.parseJSON(data);
-                        if (obj.redirect) {
-                            window.location.replace(obj.redirect);
+                        if (data.redirect) {
+                            window.location.replace(data.redirect);
                         }
-                        if (obj.errors) {
-                            processErrors(obj.errors);
+                        if (data.errors) {
+                            processErrors(data.errors);
                         }
                     }
                 });

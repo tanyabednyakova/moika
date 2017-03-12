@@ -9,89 +9,54 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//@Service("CarServiceImpl")
-//@Transactional
+@Service("CarServiceImpl")
+@Transactional
 public class CarServiceImpl implements CarService {
     @Autowired
-    private CarDao carDAO;
+    private CarDao carDao;
 
     public CarServiceImpl() {
     }
 
-    /*@Override
+    @Override
     public void addCar(Car car) {
-        carDAO.addCar(car);
+        carDao.create(car);
     }
 
     @Override
     public Car getCarById(long id) {
-        return carDAO.getCarById(id);
+        return carDao.get(id);
     }
 
     @Override
     public List getCarByType(String type) {
-        return carDAO.getCarByType(type);
+        return carDao.getByType(type);
     }
 
     @Override
     public List getCarByNumber(String number) {
-        return carDAO.getCarByNumber(number);
+        return carDao.getByNumber(number);
     }
 
     @Override
     public List getCarByModel(String model) {
-        return carDAO.getCarByModel(model);
+        return carDao.getByModel(model);
     }
 
     @Override
     public List getCarList() {
-        return carDAO.getCarList();
+        return carDao.getAll();
     }
 
     @Override
     public void deleteCar(long id) {
         Car car = new Car();
         car.setId(id);
-        carDAO.deleteCar(car);
-    }*/
-
-    @Override
-    public void addCar(Car car) {
-
-    }
-
-    @Override
-    public Car getCarById(long id) {
-        return null;
-    }
-
-    @Override
-    public List getCarByType(String type) {
-        return null;
-    }
-
-    @Override
-    public List getCarByNumber(String number) {
-        return null;
-    }
-
-    @Override
-    public List getCarByModel(String model) {
-        return null;
-    }
-
-    @Override
-    public List<Car> getCarList() {
-        return null;
-    }
-
-    @Override
-    public void deleteCar(long id) {
-
+        carDao.delete(car);
     }
 
     @Override
     public Car updateCar(Car car) {
-        return null;
+        return carDao.update(car);
     }
 }

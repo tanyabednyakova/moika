@@ -16,17 +16,18 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolation;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Контроллер интерфейсов пользователя
@@ -61,10 +62,11 @@ public class UserController {
     @ResponseBody
     public Object createUser(@RequestBody @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
-            return BindingResultToMapParser.getMap(result);
+            return Collections.singletonMap("errors",BindingResultToMapParser.getMap(result));
         }
+        user.setEnabled(true);
         userService.createUser(user);
-        return BindingResultToMapParser.getSuccess("All good!!! =)");
+        return Collections.singletonMap("redirect", " ");
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -79,10 +81,32 @@ public class UserController {
             Authentication request = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
             Authentication result = authenticationManager.authenticate(request);
             SecurityContextHolder.getContext().setAuthentication(result);
-            return Collections.singletonMap("redirect", "");//TODO добавить актуальную ссылку
+            return Collections.singletonMap("redirect", " ");
         } catch (AuthenticationException e) {
             return Collections.singletonMap("errorMsg", "Authentication failed: " + e.getMessage());
         }
+        /*
+        The solution is the following:
+        Check user's password
+        Authorize user:
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+        token.setDetails(new WebAuthenticationDetails(request));
+        Authentication authenticatedUser = authenticationManager.authenticate(token);
+        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+
+        Autowire rememberMeService and call:
+        rememberMeServices.onLoginSuccess(request, response, authenticatedUser);
+    */
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutUser(HttpServletRequest request, HttpServletResponse response) {
+        if (getCurrentUser() != null) {
+            new SecurityContextLogoutHandler().logout(request, response,
+                    SecurityContextHolder.getContext().getAuthentication());
+        }
+        return "redirect: /";
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
@@ -111,9 +135,27 @@ public class UserController {
 
     @RequestMapping(value = "/util", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object utilUser(@RequestBody Map<String, String> param) {
+    public Object utilUser(@RequestBody Map<String, String> param, BindingResult bindingResult) {
         //TODO переделать на работу с javax.validation.Validator и создать две доп. аннотации
-        javax.validation.Validator validator = (javax.validation.Validator) mvcValidator;
+        boolean result = false;
+        userUtilValidator.validate(param, bindingResult);
+        String error = null;
+        if (bindingResult.hasErrors()) {
+            error = bindingResult.getAllErrors().get(0).getDefaultMessage();
+        } else if (param.containsKey("login")) {
+            result = userService.isLoginFree(param.get("login"));
+            error = result ? null : "Такой логин уже занят";
+        } else if (param.containsKey("email")) {
+            result = userService.isEmailFree(param.get("email"));
+            error = result ? null : "Такой email уже занят";
+        }
+        //Map<String,Object> resultMap = Collections.singletonMap("success",result);
+        Map<String, Object> resultMap = new HashMap();
+        resultMap.put("success", result);
+        if (error != null) {
+            resultMap.put("error", error);
+        }
+       /* javax.validation.Validator validator = (javax.validation.Validator) mvcValidator;
         Map<String, Object> resultMap = new HashMap();
         Map<String, String> errorMessageMap = new HashMap<>();
         errorMessageMap.put("valid.email", "Неверный формат email адреса");
@@ -121,7 +163,7 @@ public class UserController {
         errorMessageMap.put("login", "Такой логин уже занят");
         errorMessageMap.put("email", "Такой email уже занят");
         boolean result = false;
-        /*try {
+        try {
             param.forEach((key, val) -> {
                 Set<ConstraintViolation<User>> constraintViolations = validator.validateValue(User.class, key, val);
                 if (constraintViolations.size() > 0) {

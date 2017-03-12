@@ -32,7 +32,7 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
     @Override
     public List<WashBox> getWashBoxesOnFacility(int idFacility) {
        // Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_fclt = ?;")
-      //          .addEntity(WashBox.class);
+      //          .create(WashBox.class);
         Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idFacility = ?");
         query.setParameter(0, idFacility);
      //   query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
@@ -42,7 +42,7 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
     @Override
     public List<WashBox> getWashBoxesByType(int boxType) {
      //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where id_type = ?;")
-     //           .addEntity(WashBox.class);
+     //           .create(WashBox.class);
         Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where idType = ?");
         query.setParameter(0, boxType);
       //  query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
@@ -52,7 +52,7 @@ public class WashBoxDaoImpl extends MoikaDaoCrudImpl<WashBox> implements WashBox
     @Override
     public List<WashBox> getWashBoxesByStatus(int boxStatus) {
      //   Query query = sessionFactory.getCurrentSession().createNativeQuery("select * from wash_box where status = ?;")
-      //          .addEntity(WashBox.class);
+      //          .create(WashBox.class);
         Query query  = sessionFactory.getCurrentSession().createQuery("from wash_boxes where boxStatus = ?");
         query.setParameter(0, boxStatus);
      //   query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);

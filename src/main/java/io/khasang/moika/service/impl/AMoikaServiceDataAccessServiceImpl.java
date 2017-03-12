@@ -28,29 +28,29 @@ public abstract class AMoikaServiceDataAccessServiceImpl<T extends BaseMoikaServ
 
     @Override
     public T addService(T service) throws MoikaDaoException {
-        return baseMoikaServiceDao.addEntity(service);
+        return baseMoikaServiceDao.create(service);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public T getServiceById(int id) throws MoikaDaoException {
-        return baseMoikaServiceDao.getEntityById(id);
+        return baseMoikaServiceDao.get(id);
     }
 
     @Override
     public void updateService(T service) throws MoikaDaoException {
-        baseMoikaServiceDao.updateEntity(service);
+        baseMoikaServiceDao.update(service);
     }
 
     @Override
     public void deleteService(T service) throws MoikaDaoException {
-        baseMoikaServiceDao.deleteEntity(service);
+        baseMoikaServiceDao.delete(service);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<T> getAllServices() throws MoikaDaoException {
-        return baseMoikaServiceDao.getAllEntities();
+        return baseMoikaServiceDao.getAll();
     }
 
     @Override
