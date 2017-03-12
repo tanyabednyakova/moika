@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
  */
 @Repository("userDao")
 @Transactional
-public class UserDAOImpl extends MoikaDaoCrudImpl<User> implements UserDAO {
-    private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
+public class UUserDAOImpl extends MoikaDaoCrudImpl<User> implements UserDAO {
+    private static final Logger logger = LoggerFactory.getLogger(UUserDAOImpl.class);
 
     private RoleDAO roleDAO;
 
