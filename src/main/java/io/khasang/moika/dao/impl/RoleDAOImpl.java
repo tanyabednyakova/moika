@@ -16,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("roleDao")
 @Transactional
 public class RoleDAOImpl implements RoleDAO {
+    public RoleDAOImpl() {
+
+    }
 
     @Override
     public Role findByName(String name) {
