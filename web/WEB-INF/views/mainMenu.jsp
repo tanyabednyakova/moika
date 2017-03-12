@@ -48,9 +48,6 @@
                                                                    aria-hidden="true"></span>${userFirstName}
                         </a></li>
                         <%--TODO Вставить ссылку на logout--%>
-                        <li><a href="<c:url value="/user"/>"><span class="glyphicon glyphicon-log-out"
-                                                                   aria-hidden="true"></span>Выход
-                        </a></li>
                         <li><a href="<c:url value="/user/logout"/>"><span
                                 class="glyphicon glyphicon-log-out" aria-hidden="true"></span>Выйти</a></li>
                     </c:otherwise>

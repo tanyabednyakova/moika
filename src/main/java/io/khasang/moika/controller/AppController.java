@@ -7,8 +7,9 @@ import io.khasang.moika.entity.User;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +27,7 @@ import java.util.List;
 
 @Controller
 public class AppController {
+    private static final Logger logger = LoggerFactory.getLogger(AppController.class);
     @Autowired
     private CreateTable createTable;
     @Autowired
@@ -46,6 +47,15 @@ public class AppController {
     @AddMenuPath(name="hello")
     public String hello(Model model) {
         User user = getCurrentUser();
+        String headLine = "---------Security-----------";
+        String footLine = "----------------------------";
+        logger.debug(String.format("%n%s%nIs authenticated: %s%nWho: %s%nRole: %s%n%s",
+                headLine,
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated(),
+                SecurityContextHolder.getContext().getAuthentication().getName(),
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities().iterator().next().toString(),
+                footLine
+        ));
         if(user==null){
             model.addAttribute("isAuth", false);
         }else{
