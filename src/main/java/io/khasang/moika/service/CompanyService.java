@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface CompanyService {
     void addCompany(Company company);
-    //void addCompany(Company company, String name);
-    Company getCompanyById(long id);
+    void addCompany(Company company, String name);
+    Company getCompanyById(int id);
     void updateCompany(Company company);
-    void deleteCompany(long id);
+    void deleteCompany(int id);
     List<Company> getCompanyGazpromList();
     void addButterfly(Butterfly butterfly);
 }

@@ -29,25 +29,6 @@ public class CompanyServiceImplTest {
     @Autowired
     CompanyDao companyDao;
 
-//    @Before
-//    public void beforeMethod(){
-//
-//    }
-//
-//    @BeforeClass
-//    public void beforeClassMethod(){
-//
-//    }
-//
-//    @After
-//    public void afterMethod(){
-//
-//    }
-//
-//    @AfterClass
-//    public void afterClassMethod(){
-//
-//    }
 
     @Test
     @Rollback

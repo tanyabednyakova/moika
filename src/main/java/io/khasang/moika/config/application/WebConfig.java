@@ -11,8 +11,21 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"io.khasang.moika", "io.khasang.moika.controller"})
+@ComponentScan({
+        "io.khasang.moika.controller",
+        "io.khasang.moika.config",
+        "io.khasang.moika.dao",
+        "io.khasang.moika.service",
+        "io.khasang.moika.model",
+        "io.khasang.moika.validator",
+        "io.khasang.moika.util"
+})
 public class WebConfig extends WebMvcConfigurerAdapter {
+
+    public WebConfig() {
+
+    }
+
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();

@@ -1,16 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%--Перенесено из index.jsp--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" trimDirectiveWhitespaces="true"%>
 <html>
 <head>
-    <title>Title</title>
+    <title>CarWash</title>
 </head>
 <body>
-    <h3>Clients list</h3>
-    <ul>
-    <c:forEach items="${clients}" var="client">
-        <li>${client.id}: ${client.lastname} ${client.name}</li>
-    </c:forEach>
-    </ul>
-    <div>Client: ${contClientId}</div>
+<%-- comment --%>
+<h1>Здравствуй, ${name}!</h1>
 </body>
 </html>
