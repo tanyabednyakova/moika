@@ -1,38 +1,73 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.annotation.AddMenuPath;
+import io.khasang.moika.dao.CompanyDao;
 import io.khasang.moika.entity.Company;
+import io.khasang.moika.entity.User;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
 import io.khasang.moika.service.OrlovDataAccessService;
 import io.khasang.moika.service.RostislavDataAccessService;
+import io.khasang.moika.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+>>>>>>> development
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 public class AppController {
+    private static final Logger logger = LoggerFactory.getLogger(AppController.class);
     @Autowired
-    CreateTable createTable;
+    private CreateTable createTable;
     @Autowired
-    RostislavDataAccessService rostislavDataAccessService;
+    private CompanyService companyService;
     @Autowired
     CompanyService companyService;
     @Autowired
     OrlovDataAccessService orlovDataAccessService;
+    private CompanyDao companyDao;
+    @Autowired
+    private UserService userService;
+
+    private User getCurrentUser() {
+        String currentLogin = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userService.findByLogin(currentLogin);
+
+    }
 
     @RequestMapping("/")
-    public String hello(@RequestParam(value = "name", required = false, defaultValue = "Car washer") String name, Model model) {
-        model.addAttribute("name", name);
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-
+    @AddMenuPath(name="hello")
+    public String hello(Model model) {
+        User user = getCurrentUser();
+        String headLine = "---------Security-----------";
+        String footLine = "----------------------------";
+        logger.debug(String.format("%n%s%nIs authenticated: %s%nWho: %s%nRole: %s%n%s",
+                headLine,
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated(),
+                SecurityContextHolder.getContext().getAuthentication().getName(),
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities().iterator().next().toString(),
+                footLine
+        ));
+        if(user==null){
+            model.addAttribute("isAuth", false);
+        }else{
+            model.addAttribute("isAuth", true);
+            model.addAttribute("userFirstName", user.getFirstName());
+        }
         return "index";
     }
 
@@ -50,49 +85,44 @@ public class AppController {
         return modelAndView;
     }
 
-
-    @RequestMapping("/rostislav/listAllCars")
-    public String listAllCars(Model model) {
-        model.addAttribute("name", "Хороший человек");
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        model.addAttribute("information", "Вот все тачки, что у нас зарегистрированы: " + rostislavDataAccessService.getAllCars().toString());
-        return "index";
-    }
-
-    @RequestMapping("/rostislav/listCarsOfType")
-    public String listCarsOfType(Model model) {
-        model.addAttribute("name", "Хороший человек");
-        model.addAttribute("currentTime", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-        model.addAttribute("information", "Вот все тачки типа LADA, что у нас зарегистрированы: "
-                + rostislavDataAccessService.getCars("lada").toString());
-        return "index";
-    }
-
-    @RequestMapping(value = "company/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "company/add/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object addCompany(@RequestBody Company company){
+    public Company addCompany(@RequestBody Company company, @PathVariable("id") String id) {
+        company.setAmount(BigDecimal.valueOf(Long.parseLong(id)));
         companyService.addCompany(company);
         return company;
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
-    public String getCompanyList(Model model){
+    public String getCompanyList(Model model) {
         model.addAttribute("companies", companyService.getCompanyGazpromList());
         return "companies";
     }
 
-    @RequestMapping(value = "company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateCompany(@RequestBody Company company){
-//        companyService.updateCompany(company);
+    public Company updateCompany(@RequestBody Company company) {
+        companyService.updateCompany(company);
         return company;
     }
 
-    @RequestMapping(value = "/company/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/company/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-//        companyService.deleteCompany(company);
-        return "redirect:ya.ru";
+      companyService.deleteCompany(Integer.parseInt(inputId));
+      return "redirect:/company";
+    }
+
+    @RequestMapping("/restHql")
+    public String testHql() {
+        List<Company> companyList = companyDao.getCompanyHqlList();
+        return "redirect:yandex.ru";
+    }
+
+    @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Company company(@PathVariable(value = "id") String id){
+        return companyService.getCompanyById(Integer.parseInt(id));
     }
 
     @RequestMapping("/dorlov")
