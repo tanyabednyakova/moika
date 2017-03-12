@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class AppController {
@@ -48,6 +49,7 @@ public class AppController {
         return userService.findByLogin(currentLogin);
 
     }
+    CompanyDao companyDao;
 
     @RequestMapping("/")
     @AddMenuPath(name="hello")
@@ -112,6 +114,11 @@ public class AppController {
       companyService.deleteCompany(Integer.parseInt(inputId));
       return "redirect:/company";
     }
+
+    @RequestMapping("/dorlov")
+    public String selectDorlovCars(Model model) {
+        model.addAttribute("cars", orlovDataAccessService.select());
+        return "dorlov";
 
     @RequestMapping("/restHql")
     public String testHql() {
