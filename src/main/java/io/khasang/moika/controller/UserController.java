@@ -1,6 +1,6 @@
 package io.khasang.moika.controller;
 
-import io.khasang.moika.dao.impl.UUserDAOImpl;
+import io.khasang.moika.dao.impl.UserDAOImpl;
 import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
@@ -39,7 +39,7 @@ import java.util.Map;
 @RequestMapping(path = "/user")
 @Controller
 public class UserController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UUserDAOImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDAOImpl.class);
     @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired
