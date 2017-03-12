@@ -1,7 +1,12 @@
 package io.khasang.moika.entity;
 
+//import javax.persistence.*;
+//import java.util.*;
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 @Entity(name = "clients")
 public class Client extends ABaseMoikaEntity  {
@@ -33,6 +38,8 @@ public class Client extends ABaseMoikaEntity  {
             inverseJoinColumns = { @JoinColumn(name = "id_car",
                     nullable = false, updatable = false) })
     private List<Car> cars = new ArrayList<>();
+    @OneToOne(mappedBy = "client")
+    private Bucket bucket;
 
     public Client() {
     }
@@ -152,5 +159,13 @@ public class Client extends ABaseMoikaEntity  {
     @Override
     public int hashCode() {
         return getId();
+    }
+
+    public Bucket getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(Bucket bucket) {
+        this.bucket = bucket;
     }
 }

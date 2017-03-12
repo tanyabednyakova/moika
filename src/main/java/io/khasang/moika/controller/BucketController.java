@@ -1,23 +1,66 @@
 package io.khasang.moika.controller;
 
 import io.khasang.moika.dao.BucketDao;
+import io.khasang.moika.dao.ClientDao;
+import io.khasang.moika.dao.ProductDao;
+import io.khasang.moika.entity.Bucket;
+import io.khasang.moika.entity.Client;
+import io.khasang.moika.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class BucketController {
     @Autowired
     BucketDao bucketDao;
+    @Autowired
+    ClientDao clientDao;
+    @Autowired
+    ProductDao productDao;
 
     public void addProductToClientBucket(long productId, long clientId, int amount) {
-        bucketDao.addProductToClientBucket(productId, clientId, amount);
+        Bucket bucket = bucketDao.getBucketByClientAndProduct(productId, clientId);
+        if (bucket == null) {
+            bucket = new Bucket();
+            Client client = clientDao.getClientById(clientId);
+            Product product = productDao.getProductById(productId);
+            bucket.setClient(client);
+            bucket.setProduct(product);
+            bucket.setAmount(amount);
+            Date expTime = new Date();
+            expTime.setTime(expTime.getTime() + 60000);
+            bucket.setExpireDatetime(expTime);
+            bucketDao.addBucket(bucket);
+        }
+        else {
+            bucket.setAmount(bucket.getAmount() + amount);
+            bucketDao.updateBucket(bucket);
+        }
     }
 
     public void deleteProductFromClientBucket(long productId, long clientId, int amount) {
-        bucketDao.deleteProductFromClientBucket(productId, clientId, amount);
+        Bucket bucket = bucketDao.getBucketByClientAndProduct(productId, clientId);
+        int curAmount = bucket.getAmount();
+        if (curAmount == amount) {
+            bucketDao.deleteBucket(bucket);
+        }
+        else if (curAmount > amount) {
+            bucket.setAmount(curAmount - amount);
+            bucketDao.updateBucket(bucket);
+        }
+        else {
+            //exception?
+        }
     }
 
     public void clearClientBucket(long clientId) {
-        bucketDao.clearClientBucket(clientId);
+        List<Bucket> bucketList = bucketDao.getClientBucket(clientId);
+        for (Bucket bucket : bucketList) {
+            bucketDao.deleteBucket(bucket);
+        }
     }
+
 }

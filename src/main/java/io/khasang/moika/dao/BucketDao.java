@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface BucketDao {
     List<Bucket> getClientBucket(long clientId);
-    void addProductToClientBucket(long productId, long clientId, int amount);
-    void deleteProductFromClientBucket(long productId, long clientId, int amount);
-    void clearClientBucket(long clientId);
+    Bucket getBucketByClientAndProduct(long clientId, long productId);
+    void addBucket(Bucket bucket);
+    void updateBucket(Bucket bucket);
+    void deleteBucket(Bucket bucket);
 }

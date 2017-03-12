@@ -1,17 +1,19 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "bucket")
 public class Bucket {
     @Id
-    @Column(name = "client_id")
-    private long clientId;
-    @Column(name = "product_id")
-    private long productId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @OneToOne
+    private Client client;
+
+    @ManyToOne
+    private Product product;
     private int amount;
     @Column(name = "expire_datetime")
     private Date expireDatetime;
@@ -20,20 +22,28 @@ public class Bucket {
 
     }
 
-    public long getClientId() {
-        return clientId;
+    public long getId() {
+        return id;
     }
 
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public long getProductId() {
-        return productId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getAmount() {

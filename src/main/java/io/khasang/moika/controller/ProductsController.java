@@ -13,14 +13,17 @@ public class ProductsController {
     @Autowired
     ProductDao productDao;
 
-    @RequestMapping("/shop/products")
-    public String getProductList() {
+    @RequestMapping(value = "/shop/products", method = RequestMethod.GET, produces ="application/json;charset=UTF-8")
+    @ResponseBody
+    public List<Product> getProductList() {
         List<Product> productList = productDao.getProductList();
-        return "redirect:yandex.ru";
+        return productList; //"redirect:yandex.ru";
     }
 
-    public Product getProductById(long id) {
-        return productDao.getProductById(id);
+    @RequestMapping(value = "/shop/products/{id}", method = RequestMethod.GET, produces ="application/json;charset=UTF-8")
+    @ResponseBody
+    public Product getProductById(@PathVariable(value = "id") String id) {
+        return productDao.getProductById(Long.parseLong(id));
     }
 
     public Product getProductByName(String name) {

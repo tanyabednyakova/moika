@@ -1,9 +1,7 @@
 package io.khasang.moika.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "products")
 public class Product {
@@ -13,6 +11,9 @@ public class Product {
     private String name;
     private double price;
     private int amount;
+
+    @OneToMany(mappedBy = "product")
+    private Set<Bucket> buckets;
 
     public Product() {
 
@@ -48,5 +49,13 @@ public class Product {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public Set<Bucket> getBuckets() {
+        return buckets;
+    }
+
+    public void setBuckets(Set<Bucket> buckets) {
+        this.buckets = buckets;
     }
 }
