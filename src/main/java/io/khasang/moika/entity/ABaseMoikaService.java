@@ -3,12 +3,11 @@ package io.khasang.moika.entity;
 import javax.persistence.*;
 
 /**
- * Базовый класс-entity для сервисов
+ * Базовый класс-entity для услуг
  */
 
-@Entity(name = "services")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class BaseMoikaService extends ABaseMoikaEntity {
+@MappedSuperclass
+public abstract class ABaseMoikaService extends ABaseMoikaEntity {
     @Id
     @Column(name = "id_service", columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.AUTO) //не IDENTITY, а тот что в таблицах
@@ -42,7 +41,7 @@ public class BaseMoikaService extends ABaseMoikaEntity {
     private String description;
 
 
-    protected BaseMoikaService() {
+    protected ABaseMoikaService() {
     }
 
 
@@ -133,6 +132,10 @@ public class BaseMoikaService extends ABaseMoikaEntity {
         return idType;
     }
 
+    public String getTypeCode() {
+       return getServiceTypeEntity().getTypeCode();
+    }
+
     public void setIdType(int idType) {
         this.idType = idType;
     }
@@ -156,9 +159,9 @@ public class BaseMoikaService extends ABaseMoikaEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BaseMoikaService)) return false;
+        if (!(o instanceof ABaseMoikaService)) return false;
 
-        BaseMoikaService that = (BaseMoikaService) o;
+        ABaseMoikaService that = (ABaseMoikaService) o;
 
         if (getId() != that.getId()) return false;
         if (getIdFacility() != that.getIdFacility()) return false;
@@ -178,7 +181,7 @@ public class BaseMoikaService extends ABaseMoikaEntity {
 
     @Override
     public String toString() {
-        return "BaseMoikaService{" +
+        return this.getClass().getName()+" {" +
                 "id=" + id +
                 ", idFacility=" + idFacility +
                 ", washFacility=" + washFacility +

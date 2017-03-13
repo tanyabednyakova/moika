@@ -1,11 +1,10 @@
-package io.khasang.service.impl;
+package io.khasang.moika.service.impl;
 
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.ServiceType;
-import io.khasang.moika.service.MoikaServiceTypesService;
-
+import io.khasang.moika.entity.ServiceStatus;
+import io.khasang.moika.service.MoikaServiceStatusService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,29 +19,29 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class ServiceTypesImplTest {
+public class ServiceStatusImplTest {
 
     @Autowired
-    MoikaServiceTypesService serviceTypesService;
+    MoikaServiceStatusService serviceStatusService;
 
 
     @Test
     @Transactional
     public void testGetServiceStatusList(){
-        List<ServiceType> serviceTypesList = null;
+        List<ServiceStatus> serviceStatusList = null;
         try {
-            serviceTypesList = serviceTypesService.getAllServiceTypes();
+            serviceStatusList = serviceStatusService.getAllServiceStatuses();
         } catch (MoikaDaoException e) {
             Assert.fail( e.getMessage());
         }
-        Assert.assertNotNull("Service types list is null",serviceTypesList);
-        Assert.assertFalse("Service types list is empty", serviceTypesList.isEmpty());
+        Assert.assertNotNull("Service status list is null",serviceStatusList);
+        Assert.assertFalse("Service status list is empty", serviceStatusList.isEmpty());
         boolean isCode = false;
-        for (ServiceType item : serviceTypesList) {
-            if (item.getTypeCode().equals("WASH")) {
+        for (ServiceStatus item : serviceStatusList) {
+            if (item.getStatusCode().equals("ON")) {
                 isCode = true;
             }
         }
-        Assert.assertTrue("Service types list not contain type code WASH",isCode);
+        Assert.assertTrue("Service status list not contain status code ON",isCode);
     }
 }
