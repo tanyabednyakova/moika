@@ -9,5 +9,5 @@
 <%-- Bootstrap JavaScript v3.3.7--%>
 <script src="<c:url value="js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="js/utils.js"/>"></script>
-<link rel="stylesheet" href="<c:url value="css/main_style.css"/>">
+<link rel="stylesheet" href="<c:url value="css/main-style.css"/>">
 
