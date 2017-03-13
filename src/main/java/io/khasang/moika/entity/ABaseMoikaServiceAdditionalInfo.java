@@ -1,8 +1,8 @@
 package io.khasang.moika.entity;
 
+import io.khasang.moika.util.Interval;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.postgresql.util.PGInterval;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  *
  */
 @MappedSuperclass
-@TypeDef(name="interval", typeClass = PGInterval.class)
+@TypeDef(name="interval", typeClass = Interval.class)
 public abstract class ABaseMoikaServiceAdditionalInfo extends ABaseMoikaEntity implements IBaseMoikaServiceAddInfo {
 
 
@@ -23,7 +23,7 @@ public abstract class ABaseMoikaServiceAdditionalInfo extends ABaseMoikaEntity i
 
     @Column(name = "duration")
     @Type(type = "interval")
-    protected PGInterval serviceDuration;
+    protected Integer serviceDuration;
 
     @Transient
     protected String AdditionalServiceInfo;
@@ -37,21 +37,21 @@ public abstract class ABaseMoikaServiceAdditionalInfo extends ABaseMoikaEntity i
         this.serviceCost = cost;
     }
 
-    public PGInterval getServiceDuration() {
+    public Integer getServiceDuration() {
         return serviceDuration;
     }
 
-    public int getDurationMinutes(){
-        return serviceDuration.getMinutes();
-    }
+   // public Integer getDurationMinutes(){
+   //     return serviceDuration; PGInterval
+   // }
 
-    public void setServiceDuration(PGInterval serviceDuration) {
+    public void setServiceDuration(Integer serviceDuration) {
         this.serviceDuration = serviceDuration;
     }
 
-    public void setServiceDuration(int serviceDurationInMinutes) {
-        this.serviceDuration.setMinutes(serviceDurationInMinutes);
-    }
+  //  public void setServiceDuration(int serviceDurationInMinutes) {
+  //      this.serviceDuration = serviceDurationInMinutes;
+  //  }
 
     public String getAdditionalServiceInfo() {
         return AdditionalServiceInfo;
