@@ -36,7 +36,7 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
 
 
     public ChemCleanService(){
-        setAdditionalServiceInfo(salonMaterial.getTypeName() + " " +dirtTypeEntity.getTypeName());
+      //  setAdditionalServiceInfo(salonMaterial.getTypeName() + " " +dirtTypeEntity.getTypeName());
     }
 
     public int getidDirtType() {

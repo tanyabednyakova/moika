@@ -20,7 +20,7 @@ public class OtherService extends ABaseMoikaServiceAdditionalInfo {
     private String addInfo;
 
     public OtherService() {
-        setAdditionalServiceInfo(addInfo);
+        //setAdditionalServiceInfo(addInfo);
     }
 
     public String getAddInfo() {

@@ -20,7 +20,7 @@ public class PolishService extends ABaseMoikaServiceAdditionalInfo {
     private String addInfo;
 
     public PolishService() {
-        setAdditionalServiceInfo(addInfo);
+        //setAdditionalServiceInfo(addInfo);
     }
 
     public String getAddInfo() {

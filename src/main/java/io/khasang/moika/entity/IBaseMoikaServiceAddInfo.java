@@ -1,7 +1,5 @@
 package io.khasang.moika.entity;
 
-import org.postgresql.util.PGInterval;
-
 import java.math.BigDecimal;
 
 /**
@@ -12,13 +10,13 @@ public interface IBaseMoikaServiceAddInfo {
 
     void setServiceCost(BigDecimal cost);
 
-    PGInterval getServiceDuration();
+    Integer getServiceDuration();
 
-    int getDurationMinutes();
+  //  int getDurationMinutes();
 
-    void setServiceDuration(PGInterval serviceDuration);
+    void setServiceDuration(Integer serviceDuration);
 
-    void setServiceDuration(int serviceDurationInMinutes);
+  //  void setServiceDuration(int serviceDurationInMinutes);
 
     String getAdditionalServiceInfo();
 

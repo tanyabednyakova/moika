@@ -2,6 +2,7 @@ package io.khasang.moika.dao.impl;
 
 import io.khasang.moika.dao.OtherServiceDao;
 import io.khasang.moika.entity.OtherService;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,5 +14,7 @@ public class OtherServiceDaoImpl extends BaseMoikaConcreatServiceDaoImpl<OtherSe
         super();
     }
 
-
+    public OtherServiceDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 }

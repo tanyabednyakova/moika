@@ -39,19 +39,19 @@ public class MoikaServiceAddInfoDaoFabrica {
                 concreatServiceDao = new WashServiceDaoImpl(sessionFactory);
                 break;
             case "CLEAN":
-                concreatServiceDao = new CleanServiceDaoImpl();
+                concreatServiceDao = new CleanServiceDaoImpl(sessionFactory);
                 break;
             case "CHEM_CLEAN":
-                concreatServiceDao = new ChemCleanServiceDaoImpl();
+                concreatServiceDao = new ChemCleanServiceDaoImpl(sessionFactory);
                 break;
             case "POLISH":
-                concreatServiceDao = new PolishServiceDaoImpl();
+                concreatServiceDao = new PolishServiceDaoImpl(sessionFactory);
                 break;
             case "COMPLEX":
                 // concreatServiceDao = new ComplexServiceDaoImpl();
                 break;
             case "OTHER":
-                concreatServiceDao = new OtherServiceDaoImpl();
+                concreatServiceDao = new OtherServiceDaoImpl(sessionFactory);
                 break;
         }
         return concreatServiceDao;

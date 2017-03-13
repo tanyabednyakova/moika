@@ -60,7 +60,7 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
     public List<MoikaService> getServicesByStatus(int idStatus) throws MoikaDaoException {
         final Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(daoType);
-        criteria.add(Restrictions.eq("idStatus", 0));
+        criteria.add(Restrictions.eq("idStatus", idStatus));
         List<MoikaService> services = session.createCriteria(daoType).list();
         for (MoikaService entity : services) {
             entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
@@ -72,7 +72,7 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
     public List<MoikaService> getServicesByType(int idType) throws MoikaDaoException {
         final Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(daoType);
-        criteria.add(Restrictions.eq("idType", 0));
+        criteria.add(Restrictions.eq("idType", idType));
         List<MoikaService> services = session.createCriteria(daoType).list();
         for (MoikaService entity : services) {
             entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
@@ -83,5 +83,29 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
     @Override
     public List<MoikaService> getActualServices() throws MoikaDaoException {
         return getServicesByStatus(0);
+    }
+
+    @Override
+    public List<MoikaService> getServicesByStatus(String statusCode) throws MoikaDaoException {
+        final Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(daoType);
+        criteria.add(Restrictions.eq("statusCode", statusCode));
+        List<MoikaService> services = session.createCriteria(daoType).list();
+        for (MoikaService entity : services) {
+            entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
+        }
+        return services;
+    }
+
+    @Override
+    public List<MoikaService> getServicesByType(String typeCode) throws MoikaDaoException {
+        final Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(daoType);
+        criteria.add(Restrictions.eq("typeCode", typeCode));
+        List<MoikaService> services = session.createCriteria(daoType).list();
+        for (MoikaService entity : services) {
+            entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
+        }
+        return services;
     }
 }

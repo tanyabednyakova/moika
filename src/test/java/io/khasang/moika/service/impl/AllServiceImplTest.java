@@ -1,11 +1,11 @@
-package io.khasang.service.impl;
+package io.khasang.moika.service.impl;
 
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.CleanService;
 import io.khasang.moika.entity.IBaseMoikaServiceAddInfo;
 import io.khasang.moika.entity.MoikaService;
+import io.khasang.moika.entity.WashService;
 import io.khasang.moika.service.MoikaServiceDataAccessService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class CleanServiceImplTest {
+public class AllServiceImplTest {
 
     @Autowired
     MoikaServiceDataAccessService moikaService;
@@ -30,7 +30,7 @@ public class CleanServiceImplTest {
 
     @Test
     @Transactional
-    public void testCleanServiceList() {
+    public void testAllServiceList() {
         List<MoikaService> serviceList = null;
         try {
             serviceList = moikaService.getAllServices();
@@ -39,20 +39,23 @@ public class CleanServiceImplTest {
         }
         Assert.assertNotNull("Service  list is null", serviceList);
         Assert.assertFalse("Service  list is empty", serviceList.isEmpty());
-        boolean isCode = false;
+        boolean isWashCode = false;
         BigDecimal cost = null;
+        int dur = 0;
         for (MoikaService item : serviceList) {
-            if (item.getServiceName().equalsIgnoreCase("Чиска салона")) {
-                isCode = true;
+            if (item.getServiceName().equalsIgnoreCase("Ручная мойка машины")) {
+                isWashCode = true;
                 List<IBaseMoikaServiceAddInfo> addInfo = item.getServiceAddInfo();
                 for (IBaseMoikaServiceAddInfo serviceInfo : addInfo) {
-                    if (((CleanService) serviceInfo).getDirtTypeEntity().equals("NORM")) {
-                        cost = serviceInfo.getServiceCost();
+                    if (((WashService)serviceInfo).getCarTypeEntity().getTypeCode().equals("CAR")) {
+                       cost = serviceInfo.getServiceCost();
+                       dur = serviceInfo.getServiceDuration();
                     }
                 }
             }
         }
-        Assert.assertTrue("Service types list not contain name \"Чиска салона\"", isCode);
-        Assert.assertEquals("Service types list not contain name \"Чиска салона\" загрязннеие \"NORM\"", BigDecimal.valueOf(500).setScale(0), cost);
+        Assert.assertTrue("Service types list not contain name \"Ручная мойка машины\"", isWashCode);
+        Assert.assertEquals("Service types list  name \"Ручная мойка машины\" not cost", new BigDecimal("1000.00").setScale(2), cost);
+        Assert.assertEquals("Service types list  name \"Ручная мойка машины\" not last", 300, dur);
     }
 }
