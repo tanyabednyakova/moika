@@ -12,7 +12,7 @@ public class Product {
     private double price;
     private int amount;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private Set<Bucket> buckets;
 
     public Product() {

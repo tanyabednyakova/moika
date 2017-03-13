@@ -11,22 +11,23 @@ import java.util.List;
 @Controller
 public class ProductsController {
     @Autowired
-    ProductDao productDao;
+    private ProductDao productDao;
 
-    @RequestMapping(value = "/shop/products", method = RequestMethod.GET, produces ="application/json;charset=UTF-8")
+    @RequestMapping(value = "/shop/products", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public List<Product> getProductList() {
-        List<Product> productList = productDao.getProductList();
-        return productList; //"redirect:yandex.ru";
+        return productDao.getProductList(); //"redirect:yandex.ru";
     }
 
-    @RequestMapping(value = "/shop/products/{id}", method = RequestMethod.GET, produces ="application/json;charset=UTF-8")
+    @RequestMapping(value = "/shop/products/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Product getProductById(@PathVariable(value = "id") String id) {
         return productDao.getProductById(Long.parseLong(id));
     }
 
-    public Product getProductByName(String name) {
+    @RequestMapping(value = "/shop/products/byname", method = RequestMethod.GET)
+    @ResponseBody
+    public Product getProductByName(@RequestParam("name") String name) {
         return productDao.getProductByName(name);
     }
 
@@ -39,11 +40,12 @@ public class ProductsController {
 
     @RequestMapping(value = "/shop/products/addamount", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public void addProductById(@RequestBody Product product) {
-        long id = product.getId();
-        int amount = product.getAmount();
-        product = productDao.getProductById(id);
-        product.setAmount(product.getAmount() + amount);
+    public void addProductById(@RequestBody @RequestParam("productId") String productId,
+                               @RequestParam("amount") String amount) {
+        long id = Long.parseLong(productId);
+        int productAmount = Integer.parseInt(amount);
+        Product product = productDao.getProductById(id);
+        product.setAmount(product.getAmount() + productAmount);
         productDao.updateProduct(product);
     }
 

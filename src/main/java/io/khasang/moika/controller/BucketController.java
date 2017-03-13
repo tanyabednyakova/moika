@@ -8,6 +8,9 @@ import io.khasang.moika.entity.Client;
 import io.khasang.moika.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +24,10 @@ public class BucketController {
     @Autowired
     ProductDao productDao;
 
-    public void addProductToClientBucket(long productId, long clientId, int amount) {
+    @RequestMapping(value = "/shop/bucket/add", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public void addProductToClientBucket(@RequestParam(name = "productId") long productId,
+                                         @RequestParam(name = "clientId") long clientId,
+                                         @RequestParam(name = "amount") int amount) {
         Bucket bucket = bucketDao.getBucketByClientAndProduct(productId, clientId);
         if (bucket == null) {
             bucket = new Bucket();
