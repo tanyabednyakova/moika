@@ -1,11 +1,9 @@
 package io.khasang.moika.model.impl;
 
-import io.khasang.moika.config.AppConfig;
 import io.khasang.moika.model.PskvorDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.util.StringUtils;
 
 
 import java.sql.Connection;
