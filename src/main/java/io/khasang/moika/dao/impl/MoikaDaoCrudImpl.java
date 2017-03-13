@@ -3,12 +3,16 @@ package io.khasang.moika.dao.impl;
 import io.khasang.moika.dao.IMoikaDaoCrud;
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.ABaseMoikaEntity;
+import io.khasang.moika.entity.Company;
 import io.khasang.moika.util.DataAccessUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -21,6 +25,8 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
     protected DataAccessUtil dataAccessUtil;
     protected SessionFactory sessionFactory;
     protected Class<? extends T> daoType;
+
+
 
     /**
      * By defining this class as abstract, we prevent Spring from creating

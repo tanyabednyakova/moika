@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -67,6 +68,12 @@ public class UserController {
         user.setEnabled(true);
         userService.createClientUser(user);
         return Collections.singletonMap("redirect", " ");
+    }
+
+    @RequestMapping("/getallusers")
+    @ResponseBody
+    public List<User> user (){
+        return userService.getAllUsers();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
