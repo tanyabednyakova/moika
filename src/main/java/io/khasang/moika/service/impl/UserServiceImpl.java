@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -49,6 +50,11 @@ public class UserServiceImpl implements UserService {
             user.setPassword(getEncodedPassword(user.getPassword()));
         }
         return userDAO.create(user);
+    }
+
+    @Override
+    public List<User> getAllUsers(){
+        return userDAO.getAll();
     }
 
     @Override
