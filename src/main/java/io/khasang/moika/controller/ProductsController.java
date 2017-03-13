@@ -40,7 +40,7 @@ public class ProductsController {
 
     @RequestMapping(value = "/shop/products/addamount", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public void addProductById(@RequestBody @RequestParam("productId") String productId,
+    public void addProductById(@RequestParam("productId") String productId,
                                @RequestParam("amount") String amount) {
         long id = Long.parseLong(productId);
         int productAmount = Integer.parseInt(amount);
@@ -51,11 +51,12 @@ public class ProductsController {
 
     @RequestMapping(value = "/shop/products/changeprice", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public void changeProductPriceById(@RequestBody Product product) {
-        long id = product.getId();
-        double price = product.getPrice();
-        product = productDao.getProductById(id);
-        product.setPrice(price);
+    public void changeProductPriceById(@RequestParam("productId") String productId,
+                                       @RequestParam("price") String price) {
+        long id = Long.parseLong(productId);
+        double productPrice = Double.parseDouble(price);
+        Product product = productDao.getProductById(id);
+        product.setPrice(productPrice);
         productDao.updateProduct(product);
     }
 
