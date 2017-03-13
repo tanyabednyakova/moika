@@ -20,7 +20,7 @@ public abstract class ABaseMoikaService extends ABaseMoikaEntity {
     @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_service_id_fclt"), insertable = false, updatable = false)
     private WashFacility washFacility;
 
-    @Column(name = "id_type", insertable = false, updatable = false)
+    @Column(name = "id_type", updatable = false)
     private int idType;
 
     @ManyToOne(cascade = CascadeType.REFRESH)

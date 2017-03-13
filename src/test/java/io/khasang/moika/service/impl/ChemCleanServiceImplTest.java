@@ -33,7 +33,7 @@ public class ChemCleanServiceImplTest {
     public void testChemCleanServiceList(){
         List<MoikaService> serviceList = null;
         try {
-            serviceList = moikaService.getAllServices();
+            serviceList = moikaService.getServicesByType(3);
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }

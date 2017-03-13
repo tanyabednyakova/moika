@@ -6,13 +6,12 @@ import io.khasang.moika.dao.MoikaServiceDao;
 import io.khasang.moika.entity.ABaseMoikaServiceAdditionalInfo;
 import io.khasang.moika.entity.IBaseMoikaServiceAddInfo;
 import io.khasang.moika.entity.MoikaService;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Query;
 import java.util.List;
 
 @Transactional
@@ -40,9 +39,9 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
 
     @Override
     public MoikaService get(long id) throws MoikaDaoException {
-        MoikaService entity = getCurrentSession().get(daoType, id);
+        MoikaService entity = getCurrentSession().get(MoikaService.class, id);
         entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
-        return getCurrentSession().get(daoType, id);
+        return getCurrentSession().get(MoikaService.class, id);
     }
 
     @Override
@@ -59,9 +58,8 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
     @Override
     public List<MoikaService> getServicesByStatus(int idStatus) throws MoikaDaoException {
         final Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(daoType);
-        criteria.add(Restrictions.eq("idStatus", idStatus));
-        List<MoikaService> services = session.createCriteria(daoType).list();
+        Query query = session.createQuery("from services where idStatus="+ idStatus);
+        List<MoikaService> services = query.getResultList();
         for (MoikaService entity : services) {
             entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
         }
@@ -71,9 +69,8 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
     @Override
     public List<MoikaService> getServicesByType(int idType) throws MoikaDaoException {
         final Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(daoType);
-        criteria.add(Restrictions.eq("idType", idType));
-        List<MoikaService> services = session.createCriteria(daoType).list();
+        Query query = session.createQuery("from services where idType="+ idType);
+        List<MoikaService> services = query.getResultList();
         for (MoikaService entity : services) {
             entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
         }
@@ -88,9 +85,10 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
     @Override
     public List<MoikaService> getServicesByStatus(String statusCode) throws MoikaDaoException {
         final Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(daoType);
-        criteria.add(Restrictions.eq("statusCode", statusCode));
-        List<MoikaService> services = session.createCriteria(daoType).list();
+
+        Query query = session.createQuery("from services s join service_status t on s.idStatus = t.id where t.code="+ statusCode);
+        List<MoikaService> services = query.getResultList();
+
         for (MoikaService entity : services) {
             entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
         }
@@ -100,9 +98,8 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
     @Override
     public List<MoikaService> getServicesByType(String typeCode) throws MoikaDaoException {
         final Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(daoType);
-        criteria.add(Restrictions.eq("typeCode", typeCode));
-        List<MoikaService> services = session.createCriteria(daoType).list();
+        Query query = session.createQuery("from services s join service_types t on s.idType = t.id where t.code="+ typeCode);
+        List<MoikaService> services = query.getResultList();
         for (MoikaService entity : services) {
             entity.setServiceAddInfo(moikaServiceAddInfoDaoFabrica.getListOfServiceAddInfo(entity.getId(), entity.getTypeCode()));
         }
