@@ -12,6 +12,10 @@ public class SomeSubEntity extends ABaseMoikaEntity {
     @NotNull
     private String name;
     private String content;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "somes_subsomes", joinColumns = @JoinColumn(name = "sub_id",referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "some_id",referencedColumnName = "id"))
+    private SomeEntity someEntity;
 
     public long getId() {
         return id;
@@ -35,5 +39,13 @@ public class SomeSubEntity extends ABaseMoikaEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public SomeEntity getSomeEntity() {
+        return someEntity;
+    }
+
+    public void setSomeEntity(SomeEntity someEntity) {
+        this.someEntity = someEntity;
     }
 }
