@@ -5,6 +5,7 @@ import io.khasang.moika.entity.SomeSubEntity;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -64,10 +65,11 @@ public class SomeEntityIntegrationTest {
 
         httpEntity = new HttpEntity<>(resultEntity, httpHeaders);
         resultEntity = restTemplate.exchange(
-                String.format("http://localhost:8080/some/%d", resultEntity.getId()),
+                "http://localhost:8080/some/{id}",
                 HttpMethod.GET,
                 httpEntity,
-                SomeEntity.class
+                SomeEntity.class,
+                resultEntity.getId()
         ).getBody();
 
         Assert.assertNotNull(resultEntity);
@@ -76,23 +78,91 @@ public class SomeEntityIntegrationTest {
 
         httpEntity = new HttpEntity<>(resultEntity, httpHeaders);
         resultEntity = restTemplate.exchange(
-                String.format("http://localhost:8080/some/%d", resultEntity.getId()),
+                "http://localhost:8080/some/{id}",
                 HttpMethod.DELETE,
                 httpEntity,
-                SomeEntity.class
+                SomeEntity.class,
+                resultEntity.getId()
         ).getBody();
 
         Assert.assertNotNull(resultEntity);
 
         httpEntity = new HttpEntity<>(resultEntity, httpHeaders);
         resultEntity = restTemplate.exchange(
-                String.format("http://localhost:8080/some/%d", resultEntity.getId()),
+                "http://localhost:8080/some/{id}",
                 HttpMethod.GET,
                 httpEntity,
-                SomeEntity.class
+                SomeEntity.class,
+                resultEntity.getId()
         ).getBody();
 
         Assert.assertNull(resultEntity);
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void getSomeEntityList() {
+        SomeEntity someEntity = new SomeEntity();
+        someEntity.setName("One");
+        someEntity.setSubEntityList(getTestSubList());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        HttpEntity<SomeEntity> httpEntity = new HttpEntity<>(someEntity, httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        SomeEntity resultEntity = restTemplate.exchange(
+                "http://localhost:8080/some/add",
+                HttpMethod.POST,
+                httpEntity,
+                SomeEntity.class
+        ).getBody();
+
+        Assert.assertNotNull(resultEntity);
+
+        someEntity = new SomeEntity();
+        someEntity.setName("Two");
+        someEntity.setSubEntityList(getTestSubList());
+        httpEntity = new HttpEntity<>(someEntity, httpHeaders);
+        restTemplate = new RestTemplate();
+        resultEntity = restTemplate.exchange(
+                "http://localhost:8080/some/add",
+                HttpMethod.POST,
+                httpEntity,
+                SomeEntity.class
+        ).getBody();
+
+        Assert.assertNotNull(resultEntity);
+
+        @SuppressWarnings("unchecked")
+        List<SomeEntity> resultList = restTemplate.exchange(
+                "http://localhost:8080/some",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<SomeEntity>>(){}
+        ).getBody();
+
+        Assert.assertNotNull(resultList);
+        Assert.assertEquals(2,resultList.size());
+
+        for(SomeEntity some: resultList){
+            resultEntity = restTemplate.exchange(
+                    "http://localhost:8080/some/{id}",
+                    HttpMethod.DELETE,
+                    null,
+                    SomeEntity.class,
+                    some.getId()
+            ).getBody();
+            Assert.assertNotNull(resultEntity);
+        }
+
+        resultList = restTemplate.exchange(
+                "http://localhost:8080/some",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<SomeEntity>>(){}
+        ).getBody();
+
+        Assert.assertNotNull(resultList);
+        Assert.assertEquals(0,resultList.size());
+    }
 }
