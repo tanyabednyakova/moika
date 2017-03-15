@@ -1,6 +1,8 @@
 package io.khasang.moika.entity;
 
+import io.khasang.moika.validator.user.UserEmailUnique;
 import org.hibernate.annotations.NaturalId;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,11 +13,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import static io.khasang.moika.util.DataValidationPatterns.EMAIL_PATTERN;
 import static io.khasang.moika.util.DataValidationPatterns.PHONE_NUMBER_PATTERN;
-import static javax.swing.text.StyleConstants.Size;
 
 @Entity
+@UserEmailUnique
 @Table(name = "users")
 public class User extends ABaseMoikaEntity implements Serializable {
 
@@ -25,7 +26,7 @@ public class User extends ABaseMoikaEntity implements Serializable {
     private long id;
 
     @NotNull
-    @Size(min = 4, max = 16)
+    @Size(min = 3, max = 16)
     @NaturalId(mutable = true)
     @Column(name = "login", nullable = false, unique = true)
     private String login;
@@ -60,7 +61,8 @@ public class User extends ABaseMoikaEntity implements Serializable {
     private String phone;
 
     @NotNull
-    @Pattern(regexp = EMAIL_PATTERN)
+    //@Pattern(regexp = EMAIL_PATTERN)
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
 

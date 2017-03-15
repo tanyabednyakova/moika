@@ -77,26 +77,33 @@ public class UserIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<User> responseEntity = restTemplate.exchange(
-                "http://localhost:8080/User/{id}",
+                "http://localhost:8085/user/{id}",
                 HttpMethod.GET,
                 null,
                 User.class,
-                37
+                1L
         );
         User resultUser = responseEntity.getBody();
         Assert.assertNotNull(resultUser);
 
         HttpEntity<User> httpEntity = new HttpEntity<>(resultUser, headers);
-        resultUser.setLastName("Копыта и рога");
-        User resultUpdUser = restTemplate.exchange
-                ("http://localhost:8080/User/update",
-                        HttpMethod.PUT,
-                        httpEntity,
-                        User.class)
-                .getBody();
-
+        resultUser.setLastName("Дублин");
+        resultUser.setLogin(null);
+        User resultUpdUser = null;
+        try {
+            resultUpdUser = restTemplate.exchange
+                    ("http://localhost:8085/user/update/{id}",
+                            HttpMethod.PUT,
+                            httpEntity,
+                            User.class,
+                            resultUser.getId())
+                    .getBody();
+        }catch(Exception e){
+            System.out.println(e);
+            throw e;
+        }
         Assert.assertNotNull(resultUpdUser);
-        Assert.assertEquals("Копыта и рога", resultUpdUser.getLastName());
+        Assert.assertEquals("Дублин", resultUpdUser.getLastName());
         Assert.assertNotNull(resultUpdUser.getId());
     }
     

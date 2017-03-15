@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 public class MoikaSessionFactory {
     protected SessionFactory sessionFactory;
 
-    @Autowired
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }

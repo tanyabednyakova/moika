@@ -1,6 +1,5 @@
 package io.khasang.moika.dao.impl;
 
-import com.sun.istack.internal.NotNull;
 import io.khasang.moika.dao.RoleDAO;
 import io.khasang.moika.dao.UserDAO;
 import io.khasang.moika.entity.Role;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
