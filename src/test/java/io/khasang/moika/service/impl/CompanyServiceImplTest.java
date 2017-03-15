@@ -1,4 +1,4 @@
-package io.khasang.service.impl;
+package io.khasang.moika.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.CompanyDao;
