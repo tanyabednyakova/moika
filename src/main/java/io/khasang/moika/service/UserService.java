@@ -11,8 +11,17 @@ import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface UserService {
+
+    /**
+     * Найти всех пользователей
+     *
+     * @return List пользователей
+     */
+    List<User> getAll();
 
     /**
      * Найти пользователя по ID

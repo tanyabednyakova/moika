@@ -9,12 +9,16 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.Map;
+
 public class UserIntegrationTest {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(UserIntegrationTest.class);
+    static final Logger logger = LoggerFactory.getLogger(UserIntegrationTest.class);
 
     @Autowired
     UserService userService;
@@ -33,7 +37,7 @@ public class UserIntegrationTest {
         user = userService.findByLogin(login);
         if (user != null) {
             userService.deleteUser(user);
-            LOGGER.debug("Existed User deleted");
+            logger.debug("Existed User deleted");
         }
 
 
@@ -51,24 +55,44 @@ public class UserIntegrationTest {
 
         HttpEntity<User> httpEntity = new HttpEntity<>(user, headers);
         RestTemplate restTemplate = new RestTemplate();
-        User result = restTemplate
-                .exchange("http://localhost:8080/user/reg", HttpMethod.POST, httpEntity, User.class)
+        Map<String, Object> resultMap = restTemplate
+                .exchange("http://localhost:8080/user/reg",
+                        HttpMethod.POST,
+                        httpEntity,
+                        new ParameterizedTypeReference<Map<String, Object>>() {
+                        })
                 .getBody();
 
-        Assert.assertNotNull(result);
-        Assert.assertEquals(login, result.getLogin());
-        Assert.assertNotNull(result.getId());
+        Assert.assertNotNull(resultMap);
+        Assert.assertTrue(resultMap.containsKey("success"));
 
-        ResponseEntity<User> responseEntity = restTemplate.exchange(
-                "http://localhost:8080/user/{id}", HttpMethod.GET, null, User.class,
-                result.getId()
-        );
-        User resultUser = responseEntity.getBody();
+        List<User> resultList = restTemplate.exchange(
+                "http://localhost:8080/user/admin",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<User>>() {
+                }
+        ).getBody();
+
+        Assert.assertNotNull(resultList);
+        Assert.assertNotEquals(0, resultList.size());
+
+        long currentId = resultList.stream().filter((x) -> login.equals(x.getLogin())).map(User::getId)
+                .findAny().orElse(0L);
+        Assert.assertNotEquals(0, currentId);
+
+        User resultUser = restTemplate.exchange(
+                "http://localhost:8080/user/admin/{id}",
+                HttpMethod.GET,
+                null,
+                User.class,
+                currentId
+        ).getBody();
+
         Assert.assertNotNull(resultUser);
-        Assert.assertEquals(resultUser.getPhone(), result.getPhone());
+        Assert.assertEquals(resultUser.getPhone(), phone);
 
-        LOGGER.debug("New User created");
-
+        logger.debug("New User created");
     }
 
     @Test
@@ -99,6 +123,6 @@ public class UserIntegrationTest {
         Assert.assertEquals("Копыта и рога", resultUpdUser.getLastName());
         Assert.assertNotNull(resultUpdUser.getId());
     }
-    
-    
+
+
 }

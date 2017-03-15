@@ -83,13 +83,13 @@ public class UserServiceImplTest {
 
 //        //Delete
 //        userService.deleteUser(user);
-//        LOGGER.debug("User deleted");
+//        logger.debug("User deleted");
 
 //        //Read by id
 //        user = null;
 //        user = userService.findById(id);
 //        Assert.assertNull(user);
-//        LOGGER.debug("User absent");
+//        logger.debug("User absent");
     }
 
 /*

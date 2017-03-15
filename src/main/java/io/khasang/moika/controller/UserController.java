@@ -60,7 +60,7 @@ public class UserController {
     //TODO Возможно стоит добавить функционал подтверждения регистрации через email (?!phone?!)
     @RequestMapping(value = "/reg", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object createUser(@RequestBody @Valid User user, BindingResult result) {
+    public Object regUser(@RequestBody @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
             return Collections.singletonMap("errors",BindingResultToMapParser.getMap(result));
         }
@@ -125,14 +125,6 @@ public class UserController {
         return BindingResultToMapParser.getSuccess("All good!!! =)");
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object loginUser(@PathVariable("id") long id) {
-        User user = userService.findById(id);
-        userService.deleteUser(user);
-        return user;
-    }
-
     @RequestMapping(value = "/util", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object utilUser(@RequestBody Map<String, String> param, BindingResult bindingResult) {
@@ -155,57 +147,43 @@ public class UserController {
         if (error != null) {
             resultMap.put("error", error);
         }
-       /* javax.validation.Validator validator = (javax.validation.Validator) mvcValidator;
-        Map<String, Object> resultMap = new HashMap();
-        Map<String, String> errorMessageMap = new HashMap<>();
-        errorMessageMap.put("valid.email", "Неверный формат email адреса");
-        errorMessageMap.put("valid.login", "Неверный формат логина");
-        errorMessageMap.put("login", "Такой логин уже занят");
-        errorMessageMap.put("email", "Такой email уже занят");
-        boolean result = false;
-        try {
-            param.forEach((key, val) -> {
-                Set<ConstraintViolation<User>> constraintViolations = validator.validateValue(User.class, key, val);
-                if (constraintViolations.size() > 0) {
-                    String validKey = "valid."+key;
-                    resultMap.put("error", errorMessageMap.containsKey(validKey)?errorMessageMap.get(validKey):
-                            constraintViolations.iterator().next().getMessage());
-                }else if(errorMessageMap.containsKey(key)&&!){
-
-                }
-            });
-        } catch (IllegalArgumentException e) {
-            LOGGER.debug(e.getMessage());
-            return Collections.singletonMap("error", "Invalid data");
-        }
-
-         if (param.containsKey("login")&&!userService.isLoginFree(param.get("login"))){
-            resultMap.put("error", "Такой логин уже занят");
-        } else if (param.containsKey("email")&&!userService.isEmailFree(param.get("email"))) {
-            resultMap.put("error", "Такой email уже занят");
-
-        }
-
-       userUtilValidator.validate(param, bindingResult);
-        String error = null;
-        if (bindingResult.hasErrors()) {
-            Set<ConstraintViolation<User>> constraintViolations =
-                    validator.validateValue(User.class, "email", param.get("email"));
-            error = bindingResult.getAllErrors().get(0).getDefaultMessage();
-        } else if (param.containsKey("login")) {
-            result = userService.isLoginFree(param.get("login"));
-            error = result ? null : "Такой логин уже занят";
-        } else if (param.containsKey("email")) {
-            result = userService.isEmailFree(param.get("email"));
-            error = result ? null : "Такой email уже занят";
-        }
-        //Map<String,Object> resultMap = Collections.singletonMap("success",result);
-        Map<String, Object> resultMap = new HashMap();
-        resultMap.put("success", result);
-        if (error != null) {
-            resultMap.put("error", error);
-        }*/
         return resultMap;
+    }
+
+    /**
+     * Функции администратора
+     * */
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object addUser() {
+        return userService.getAll();
+    }
+
+    @RequestMapping(value = "/admin/create", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object addUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
+
+    @RequestMapping(value = "/admin/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object getUser(@PathVariable("id") long id) {
+        return userService.findById(id);
+    }
+
+    @RequestMapping(value = "/admin/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
+    }
+
+    @RequestMapping(value = "/admin/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public Object deleteUser(@PathVariable("id") long id) {
+        User user = userService.findById(id);
+        userService.deleteUser(user);
+        return user;
     }
 
     //Функции управления ролями
