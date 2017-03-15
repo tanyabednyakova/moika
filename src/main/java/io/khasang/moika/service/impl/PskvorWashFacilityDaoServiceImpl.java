@@ -22,21 +22,25 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     }
 
     @Override
-    public void addWashFacility(WashFacility washFacility) {
+    public WashFacility addWashFacility(WashFacility washFacility) {
+        WashFacility resFclt = null;
         try {
-            washFacilityDao.create(washFacility);
+            resFclt = washFacilityDao.create(washFacility);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
+        return resFclt;
     }
 
     @Override
-    public void updateWashFacility(WashFacility washFacility) {
+    public WashFacility updateWashFacility(WashFacility washFacility) {
+        WashFacility resFclt = null;
         try {
-            washFacilityDao.update(washFacility);
+            resFclt = washFacilityDao.update(washFacility);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
+        return resFclt;
     }
 
     @Override
@@ -70,13 +74,20 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
 
     @Override
     public List<WashFacility> getWashFacilitiesOnNet(int idNet) {
-        return null;
+        try {
+            return washFacilityDao.getWashFacilitiesOnNet(idNet); //getWashBoxesOnFacility(idFclt);
+        } catch (MoikaDaoException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
     public List<WashBox> getWashBoxesOnFacility(WashFacility washFacility) {
         try {
-            return washFacilityDao.getWashBoxesOnFacility(washFacility.getId());
+            // return washFacilityDao.getWashBoxesOnFacility(washFacility.getId());
+            WashFacility fclt = washFacilityDao.get(washFacility.getId());
+            return fclt.getWashBoxes();
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;
@@ -86,7 +97,8 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     @Override
     public List<WashBox> getWashBoxesOnFacility(int idFclt) {
         try {
-            return washFacilityDao.getWashBoxesOnFacility(idFclt);
+            WashFacility fclt = washFacilityDao.get(idFclt);
+            return fclt.getWashBoxes(); //getWashBoxesOnFacility(idFclt);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
             return null;

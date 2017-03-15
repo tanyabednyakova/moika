@@ -30,7 +30,7 @@ public abstract class ABaseMoikaService extends ABaseMoikaEntity {
     @Column(name = "id_status")
     private Short idStatus;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id_status", foreignKey = @ForeignKey(name = "fk_service_status"), insertable = false, updatable = false)
     private ServiceStatus serviceStatusEntity;
 

@@ -6,7 +6,9 @@ import io.khasang.moika.dao.MoikaServiceDao;
 import io.khasang.moika.entity.ABaseMoikaServiceAdditionalInfo;
 import io.khasang.moika.entity.IBaseMoikaServiceAddInfo;
 import io.khasang.moika.entity.MoikaService;
+import io.khasang.moika.util.DataAccessUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +19,29 @@ import java.util.List;
 @Transactional
 @Repository("moikaServiceDao")
 public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implements MoikaServiceDao {
+    @Autowired
+    protected SessionFactory sessionFactory;
+    @Autowired
+    protected DataAccessUtil dataAccessUtil;
 
     @Autowired
     private MoikaServiceAddInfoDaoFabrica moikaServiceAddInfoDaoFabrica;
 
     public MoikaServiceDaoImpl() {
+    }
+
+    public MoikaServiceDaoImpl(SessionFactory sessionFactory ) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    @Override
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -33,6 +53,19 @@ public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implemen
             concreatServiceDao.delete((ABaseMoikaServiceAdditionalInfo) child);
         }
         getCurrentSession().delete(entity);
+        return entity;
+    }
+
+
+    @Override
+    public MoikaService create(MoikaService entity) throws MoikaDaoException {
+        List<? extends IBaseMoikaServiceAddInfo> addServiceInfoList = entity.getServiceAddInfo();
+        getCurrentSession().save(entity);
+        for (IBaseMoikaServiceAddInfo child : addServiceInfoList) {
+            BaseMoikaConcreatServiceDao concreatServiceDao = moikaServiceAddInfoDaoFabrica.
+                    getMoikaConcreatServiceDao(entity.getId(), entity.getTypeCode());
+            concreatServiceDao.create((ABaseMoikaServiceAdditionalInfo) child);
+        }
         //DRS session.flush();
         return entity;
     }

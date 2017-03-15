@@ -1,11 +1,8 @@
 package io.khasang.moika.entity;
 
-import org.hibernate.annotations.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 
 @Entity(name = "wash_boxes")
 public class WashBox  extends ABaseMoikaEntity {
@@ -17,14 +14,17 @@ public class WashBox  extends ABaseMoikaEntity {
 
     @Column(name = "id_fclt")
     private int idFacility;
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_box_facility"), insertable=false, updatable=false )
+
+    @ManyToOne//(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_fclt", insertable=false, updatable=false )
+    //@JoinColumn(name = "id_fclt")
+    @JsonIgnore
     private WashFacility washFacility;
 
     @Column(name = "id_type")
     private int idType;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn( name = "id_type", foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
     private BoxType boxTypeEntity;
 
@@ -66,7 +66,7 @@ public class WashBox  extends ABaseMoikaEntity {
         return idType;
     }
 
-    public void setId_type(int id_type) {
+    public void setIdtype(int id_type) {
         this.idType = id_type;
     }
 
@@ -105,6 +105,10 @@ public class WashBox  extends ABaseMoikaEntity {
     public WashFacility getWashFacility() {
         return washFacility;
     }
+
+    //public void setWashFacility(WashFacility washFacility) {
+    //    this.washFacility = washFacility;
+    //}
 
     public void setBoxTypeEntity(BoxType boxTypeEntity) {
         this.boxTypeEntity = boxTypeEntity;
