@@ -1,3 +1,5 @@
+package io.khasang.moika.util;
+
 import org.junit.Test;
 
 import java.util.HashMap;

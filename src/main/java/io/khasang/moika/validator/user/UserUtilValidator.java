@@ -1,4 +1,4 @@
-package io.khasang.moika.validator;
+package io.khasang.moika.validator.user;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

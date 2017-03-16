@@ -76,21 +76,22 @@ public interface UserService {
     User updateUser(User user);
 
     /**
-     * Проверить является ли данный логин пользователя свободным
+     * Проверить, является ли данный логин пользователя занятым
      *
      * @param login - Логин пользолвателя
+     * @param exceptUser - не считать логин занятым, если он занят указанным пользователем
      * @return возвращает булевое значение, true - если данный логин свободен, false - если нет
      */
-    boolean isLoginFree(String login);
+    boolean isLoginUsed(String login, User exceptUser);
 
     /**
-     * Проверить является ли данный email пользователя свободным
+     * Проверить является ли данный email пользователя занятым
      *
      * @param email - Логин пользолвателя
+     * @param exceptUser - не считать email занятым, если он занят указанным пользователем
      * @return возвращает булевое значение, true - если данный email свободен, false - если нет
      */
-    boolean isEmailFree(String email);
-
+    boolean isEmailUsed(String email, User exceptUser);
     /**
      * Вернуть закодированную версию исходного пароля.
      *
