@@ -1,7 +1,41 @@
 package io.khasang.moika.entity;
 
+import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Created by alyubarev on 14.03.2017.
+ * Марка автомобиля
  */
-public class CarMake {
+@Entity
+public class CarMake extends ABaseMoikaEntity {
+
+    @Id
+    @GeneratedValue
+    private  Long id;
+    private String name;
+
+    public CarMake() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CarModel> carModels = new ArrayList<>();
+
+
+    public  List<CarModel> getCarModel() {
+        return carModels;
+    }
 }
