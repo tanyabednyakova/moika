@@ -19,10 +19,6 @@ import java.util.List;
 @Transactional
 @Repository("moikaServiceDao")
 public class MoikaServiceDaoImpl extends MoikaDaoCrudImpl<MoikaService> implements MoikaServiceDao {
-    @Autowired
-    protected SessionFactory sessionFactory;
-    @Autowired
-    protected DataAccessUtil dataAccessUtil;
 
     @Autowired
     private MoikaServiceAddInfoDaoFabrica moikaServiceAddInfoDaoFabrica;
