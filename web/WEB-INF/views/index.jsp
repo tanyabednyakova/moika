@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" trimDirectiveWhitespaces="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE HTML>
 <html>
 <head>
     <%-- HEAD --%>
@@ -15,82 +16,224 @@
     </div>
     <div class="row main-content">
         <div class="col-xs-12">
-            <%--TODO Вставить другой текст--%>
-            <h3>Классический текст Lorem Ipsum, используемый с XVI века</h3>
-            <p>
-                <blockquote>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum."</p>
-            <footer>Абзац 1.10.32 "de Finibus Bonorum et Malorum", написанный Цицероном в 45 году н.э.</footer>
-            </blockquote>
-            <blockquote>
-                <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                    totam
-                    rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-                    explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
-                    dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
-                    tempora
-                    incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis
-                    nostrum
-                    exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
-                    autem
-                    vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel
-                    illum
-                    qui dolorem eum fugiat quo voluptas nulla pariatur?"
-                </p>
-                <footer>Английский перевод 1914 года, H. Rackham</footer>
-            </blockquote>
-            <%-- <blockquote>
-                 <p>"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was
-                     born
-                     and I will give you a complete account of the system, and expound the actual teachings of the great
-                     explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids
-                     pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure
-                     rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or
-                     pursues or desires to obtain pain of itself, because it is pain, but because occasionally
-                     circumstances
-                     occur in which toil and pain can procure him some great pleasure. To take a trivial example, which
-                     of us
-                     ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has
-                     any
-                     right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or
-                     one
-                     who avoids a pain that produces no resultant pleasure?"</p>
-                 <footer>Абзац 1.10.33 "de Finibus Bonorum et Malorum", написанный Цицероном в 45 году н.э.</footer>
-             </blockquote>
-             <blockquote>
-                 <p>"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                     deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
-                     provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum
-                     fuga.
-                     Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est
-                     eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas
-                     assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum
-                     necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque
-                     earum
-                     rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut
-                     perferendis doloribus asperiores repellat."</p>
-                 <footer>Английский перевод 1914 года, H. Rackham</footer>
-             </blockquote>--%>
-            <blockquote>
-                "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and
-                demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the
-                pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty
-                through weakness of will, which is the same as saying through shrinking from toil and pain. These cases
-                are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled
-                and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and
-                every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of
-                business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise
-                man therefore always holds in these matters to this principle of selection: he rejects pleasures to
-                secure other greater pleasures, or else he endures pains to avoid worse pains."
-            </blockquote>
-            </p>
+            <h3>Moika Vision</h3>
+            <ol>
+                <li><h4>Постановка проблемы</h4>
 
+                    <ol>
+                        <li><h4>Решаемые проблемы:</h4>
 
+                            <ul>
+                                <li>Автомобилисты не хотят стоять в очередях на автомойки</li>
+
+                                <li> Автомобилисты хотят планировать свое время</li>
+
+                                <li>Автомобилисты хотят минимизировать свои затраты на автомойку</li>
+
+                                <li>Владельцы автомоек хотят увеличит число клиентов</li>
+
+                                <li>Владельцы автомоек хотят удержать имеющихся клиентов</li>
+
+                                <li>Владельцы автомоек хотят оптимизировать загрузку моек</li>
+
+                                <li>Владельцы автомоек хотят иметь оперативную информацию о загрузке моек и
+
+                                    cash-flow
+                                </li>
+
+                                <li>Таким образом увеличит доходность бизнеса</li>
+                            </ul>
+                        </li>
+
+                        <li><h4>Заинтересованные лица:</h4>
+
+                            <ul>
+                                <li>Автомобилист</li>
+
+                                <li>Менеджер (администратор) автомойки</li>
+
+                                <li>Владелец сервиса автомойки</li>
+                            </ul>
+                        </li>
+
+                        <li><h4>Цели:</h4>
+
+                            <ul><li>Повышение удобства автомобилистов</li>
+
+                                <li>Увеличение числа клиентов сети автомоек</li>
+
+                                <li>Увеличение прибыли владельцев автомоек</li></ul>
+                        </li>
+                    </ol>
+                </li>
+
+                <li><h4>Краткое описание планируемого продукта</h4>
+
+                    <ol>
+                        <li><h4>Предполагаемый продукт представляет собой ИТ-сервис, позволяющий:</h4>
+
+                            <ul>
+                                <li>Автомобилистам находить удобную для себя автомойку (из зарегистрированных) и
+
+                                    записываться на нее в удобное для него время. При этом он может выбирать набор
+
+                                    услуг по мойке/чистке авто и ему сразу считывается стоимость услуг. Так же, в
+
+                                    зависимости от настроек, действует система бонусов и скидок. Например, в
+
+                                    зависимости от частоты мойки, выбранного набора услуг, типа авто и т.д. и т.п. Так
+                                    же
+
+                                    автомобилист может оценивать работу мойки (в виде балов) и оставлять записи в
+
+                                    «книге жалоб/предложений”.
+                                </li>
+
+                                <li>Менеджерам автомоек иметь оперативную информацию о загрузке боксов моек,
+
+                                    количестве клиентов в очереди и т.п.
+                                </li>
+
+                                <li>Владельцам моек иметь оперативную информацию об общей загрузке сети (с
+
+                                    детализацией), генерируемом ей cash-flow, статистику, тенденции и т.п. Они могут
+
+                                    устанавливать бонусные программы и моделировать их параметры.
+                                </li>
+
+                                <li>Сервис также может являться рекламной площадкой, как для собственно рекламы сети
+
+                                    автомоек, так и для рекламы партнеров.
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li><h4>Цикл использования</h4>
+
+                            <ul>
+                                <li> Автовладелец заходит в приложение и выбирает удобную себе мойку</li>
+
+                                <li>Регистрация в сервисе для автовладельцев не требуется (только ввод № авто) и
+
+                                    кэпчу
+                                </li>
+
+                                <li>Автовладелец резервирует удобное время</li>
+
+                                <li>Выбирает набор услуг</li>
+
+                                <li>Получает расчет стоимости (с учетом скидок и т.п.)</li>
+
+                                <li>Фиксирует время</li>
+
+                                <li>При желании оплачивает (плат. карта, яндекс-деньги, pay-pal, СМС-кой?) За это
+
+                                    получает еще доп. скидку
+                                </li>
+
+                                <li>Автовладелец может так-же записаться по телефону (но без скидок)</li>
+
+                                <li>Может настроить напоминания по СМС</li>
+
+                                <li>Может потом видеть статистику по своим помывкам и суммы оплат</li>
+
+                                <li>Может выставит оценку и оставить отзыв</li>
+
+                                <li>Менеджер видит регистрации клиентов и загрузку боксов</li>
+
+                                <li>Устанавливает режим работы боксов</li>
+
+                                <li>Регистрирует клиентов по телефону</li>
+
+                                <li>Если приезжает клиент «с улицы» регистрирует его</li>
+
+                                <li>Видит оценки клиентов.</li>
+
+                                <li>Может клиентам ставить всякие метки (типа VIP, black-list и т.п.)</li>
+
+                                <li>Владелец видит общую загрузку по сети</li>
+
+                                <li>Устанавливает скидочные программы</li>
+
+                                <li>Видит статистику и аналитику</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+                <li><h4>Описание пользователей</h4>
+                    <ul>
+                        <li>Автомобилист – человек, имеющий авто, доступ к Интернет и мобильное устройство
+
+                            (смартфон/планшет).
+                        </li>
+
+                        <li>Менеджер мойки – человек, управляющий работой конкретной автомойки, ее
+
+                            персоналом, очередью клиентов, расчетами с ними и отвечающий за эффективность
+
+                            работы мойки, имеет доступ к Сервису либо через Интернет, либо через локальную
+
+                            сеть, как через WEB-интерфейс, так и через мобильные устройства.
+                        </li>
+
+                        <li>Владелец (может быть одно лицо с менеджером) - собственник сети, получает
+
+                            информацию о работе сети и определяет параметры ее функционирования (расписания
+
+                            работы, бонусные программы и т.п.)
+                        </li>
+                    </ul>
+                </li>
+
+                <li><h4>Функции продукта</h4>
+                    <ul>
+                        <li>Сервис регистрации</li>
+
+                        <li>Сервис выбора моек (Geo)</li>
+
+                        <li>Сервис оплаты</li>
+
+                        <li>Сервис клиентской лояльности</li>
+
+                        <li>Сервис статистики</li>
+                    </ul>
+                </li>
+
+                <li><h4>Дополнительные функциональные требования к продукту</h4>
+
+                    <ul>
+                        <li>Пользователи продукта общаются с сервисом через WEB-интерфейс или мобильные
+
+                            приложения
+                        </li>
+
+                        <li>Продут может предоставляться как «облачный сервис»</li>
+
+                        <li>Интеграция с платежными системами (интернет-эквайринг)</li>
+
+                        <li>Опционально – интеграция с кассовым оборудованием и бухгалтерскими системами</li>
+                    </ul>
+                </li>
+
+                <li><h4>Ключевые свойства</h4>
+
+                    <ul>
+                        <li>Привлекательный и удобный дизайн для пользователей</li>
+
+                        <li>Скорость работы сервиса для пользователей</li>
+
+                        <li>Скорость получения статистики</li>
+
+                        <li>Гибкость настроек программ лояльности</li>
+
+                        <li>Надежность</li>
+
+                        <li>Возможность интеграции с другими сервиса</li>
+
+                        <li>Возможность расширения и доработки</li>
+                    </ul>
+                </li>
+            </ol>
         </div>
     </div>
     <%--TODO вынести в отдельную стр--%>

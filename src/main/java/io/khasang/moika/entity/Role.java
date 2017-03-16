@@ -1,10 +1,11 @@
 package io.khasang.moika.entity;
 
 import javax.persistence.*;
-        import java.io.Serializable;
+import java.io.Serializable;
+
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
+public class Role extends ABaseMoikaEntity implements Serializable  {
     @Id
     @Column(name = "id_role")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +16,11 @@ public class Role implements Serializable {
     private String descruiption;
 
     public Role() {
+    }
+
+    public Role(String name, String descruiption) {
+        this.name = name;
+        this.descruiption = descruiption;
     }
 
     public long getId() {

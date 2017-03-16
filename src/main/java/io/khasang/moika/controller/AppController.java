@@ -6,28 +6,20 @@ import io.khasang.moika.entity.Company;
 import io.khasang.moika.entity.User;
 import io.khasang.moika.model.CreateTable;
 import io.khasang.moika.service.CompanyService;
-import io.khasang.moika.service.OrlovDataAccessService;
-import io.khasang.moika.service.RostislavDataAccessService;
 import io.khasang.moika.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
->>>>>>> development
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 public class AppController {
@@ -37,9 +29,6 @@ public class AppController {
     @Autowired
     private CompanyService companyService;
     @Autowired
-    CompanyService companyService;
-    @Autowired
-    OrlovDataAccessService orlovDataAccessService;
     private CompanyDao companyDao;
     @Autowired
     private UserService userService;
@@ -49,24 +38,24 @@ public class AppController {
         return userService.findByLogin(currentLogin);
 
     }
-    CompanyDao companyDao;
 
     @RequestMapping("/")
-    @AddMenuPath(name="hello")
+    @AddMenuPath(name = "hello")
     public String hello(Model model) {
         User user = getCurrentUser();
         String headLine = "---------Security-----------";
         String footLine = "----------------------------";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         logger.debug(String.format("%n%s%nIs authenticated: %s%nWho: %s%nRole: %s%n%s",
                 headLine,
-                SecurityContextHolder.getContext().getAuthentication().isAuthenticated(),
-                SecurityContextHolder.getContext().getAuthentication().getName(),
-                SecurityContextHolder.getContext().getAuthentication().getAuthorities().iterator().next().toString(),
+                auth.isAuthenticated(),
+                auth.getName(),
+                auth.getAuthorities().stream().map(a -> a.toString()).collect(Collectors.joining(", ")),
                 footLine
         ));
-        if(user==null){
+        if (user == null) {
             model.addAttribute("isAuth", false);
-        }else{
+        } else {
             model.addAttribute("isAuth", true);
             model.addAttribute("userFirstName", user.getFirstName());
         }
@@ -87,18 +76,19 @@ public class AppController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "company/add/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/add/", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Company addCompany(@RequestBody Company company, @PathVariable("id") String id) {
-        company.setAmount(BigDecimal.valueOf(Long.parseLong(id)));
+    public Company addCompany(@RequestBody Company company) {
         companyService.addCompany(company);
         return company;
     }
 
-    @RequestMapping(value = "/company", method = RequestMethod.GET)
-    public String getCompanyList(Model model) {
-        model.addAttribute("companies", companyService.getCompanyGazpromList());
-        return "companies";
+    @RequestMapping(value = "/company/getAll/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List<Company> getCompanyList() {
+//        model.addAttribute("companies", companyService.getCompanyGazpromList());
+//        return "companies";?
+        return companyService.getCompanyGazpromList();
     }
 
     @RequestMapping(value = "/company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
@@ -110,15 +100,10 @@ public class AppController {
 
     @RequestMapping(value = "/company/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
-      companyService.deleteCompany(Integer.parseInt(inputId));
-      return "redirect:/company";
+    public String deleteCompany(@PathVariable(value = "id") String inputId) {
+        companyService.deleteCompany(Integer.parseInt(inputId));
+        return "redirect:/company";
     }
-
-    @RequestMapping("/dorlov")
-    public String selectDorlovCars(Model model) {
-        model.addAttribute("cars", orlovDataAccessService.select());
-        return "dorlov";
 
     @RequestMapping("/restHql")
     public String testHql() {
@@ -126,15 +111,9 @@ public class AppController {
         return "redirect:yandex.ru";
     }
 
-    @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/all/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Company company(@PathVariable(value = "id") String id){
-        return companyService.getCompanyById(Integer.parseInt(id));
-    }
-
-    @RequestMapping("/dorlov")
-    public String selectDorlovCars(Model model) {
-        model.addAttribute("cars", orlovDataAccessService.select());
-        return "dorlov";
+    public Company company(@PathVariable(value = "id") String id) {
+        return companyService.getCompanyById(Long.parseLong(id));
     }
 }

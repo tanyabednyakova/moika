@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,7 +40,7 @@ import java.util.Map;
 @RequestMapping(path = "/user")
 @Controller
 public class UserController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserDAOImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
     @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired
@@ -65,8 +66,14 @@ public class UserController {
             return Collections.singletonMap("errors",BindingResultToMapParser.getMap(result));
         }
         user.setEnabled(true);
-        userService.createUser(user);
+        userService.createClientUser(user);
         return Collections.singletonMap("redirect", " ");
+    }
+
+    @RequestMapping("/getallusers")
+    @ResponseBody
+    public List<User> user (){
+        return userService.getAllUsers();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

@@ -4,12 +4,17 @@ import io.khasang.moika.entity.Company;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
 public class CompanyIntegrationTest {
 
-    @Ignore
     @Test
     public void createCompany() {
         HttpHeaders headers = new HttpHeaders();
@@ -17,17 +22,15 @@ public class CompanyIntegrationTest {
         Company company = new Company();
         company.setName("Рога и копыта");
         company.setDescription("Свежее мясо");
-
-        long id = 10L;
+        company.setAmount(new BigDecimal(Long.valueOf(10)));
 
         HttpEntity<Company> httpEntity = new HttpEntity<>(company, headers);
         RestTemplate restTemplate = new RestTemplate();
         Company result = restTemplate.exchange
-                ("http://localhost:8080/company/add/{id}",
+                ("http://localhost:8080/company/add/",
                         HttpMethod.POST,
                         httpEntity,
-                        Company.class,
-                        id)
+                        Company.class)
                 .getBody();
 
         Assert.assertNotNull(result);
@@ -35,7 +38,7 @@ public class CompanyIntegrationTest {
         Assert.assertNotNull(result.getId());
 
         ResponseEntity<Company> responseEntity = restTemplate.exchange(
-                "http://localhost:8080/company/{id}",
+                "http://localhost:8080/company/all/{id}",
                 HttpMethod.GET,
                 null,
                 Company.class,
@@ -45,10 +48,21 @@ public class CompanyIntegrationTest {
         Assert.assertNotNull(resultCompany);
         Assert.assertEquals(resultCompany.getName(), result.getName());
 
-    }
+        ResponseEntity<List<Company>> resultAll = restTemplate.exchange(
+                "http://localhost:8080/company/getAll/",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Company>>() {
+                }
+        );
+        assertEquals(HttpStatus.OK, resultAll.getStatusCode());
+
+        Assert.assertNotNull(resultAll.getBody());
+
+}
 
     @Test
-    public void udateCompany() {
+    public void updateCompany() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         RestTemplate restTemplate = new RestTemplate();
