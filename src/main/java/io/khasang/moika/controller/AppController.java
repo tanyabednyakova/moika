@@ -18,8 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +46,7 @@ public class AppController {
         String headLine = "---------Security-----------";
         String footLine = "----------------------------";
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        logger.debug(String.format("%n%s%nIs authenticated: %s%nWho: %s%nRole(s): %s%n%s",
+        logger.debug(String.format("%n%s%nIs authenticated: %s%nWho: %s%nRole: %s%n%s",
                 headLine,
                 auth.isAuthenticated(),
                 auth.getName(),
@@ -61,7 +59,6 @@ public class AppController {
             model.addAttribute("isAuth", true);
             model.addAttribute("userFirstName", user.getFirstName());
         }
-
         return "index";
     }
 
@@ -79,18 +76,19 @@ public class AppController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "company/add/{id}", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/add/", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Company addCompany(@RequestBody Company company, @PathVariable("id") String id) {
-        company.setAmount(BigDecimal.valueOf(Long.parseLong(id)));
+    public Company addCompany(@RequestBody Company company) {
         companyService.addCompany(company);
         return company;
     }
 
-    @RequestMapping(value = "/company", method = RequestMethod.GET)
-    public String getCompanyList(Model model) {
-        model.addAttribute("companies", companyService.getCompanyGazpromList());
-        return "companies";
+    @RequestMapping(value = "/company/getAll/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public List<Company> getCompanyList() {
+//        model.addAttribute("companies", companyService.getCompanyGazpromList());
+//        return "companies";?
+        return companyService.getCompanyGazpromList();
     }
 
     @RequestMapping(value = "/company/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
@@ -102,7 +100,7 @@ public class AppController {
 
     @RequestMapping(value = "/company/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public String deleteCompany(@PathVariable(value = "id") String inputId, HttpServletResponse response) {
+    public String deleteCompany(@PathVariable(value = "id") String inputId) {
         companyService.deleteCompany(Integer.parseInt(inputId));
         return "redirect:/company";
     }
@@ -113,9 +111,9 @@ public class AppController {
         return "redirect:yandex.ru";
     }
 
-    @RequestMapping(value = "/company/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/company/all/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Company company(@PathVariable(value = "id") String id) {
-        return companyService.getCompanyById(Integer.parseInt(id));
+        return companyService.getCompanyById(Long.parseLong(id));
     }
 }

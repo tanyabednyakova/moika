@@ -2,9 +2,23 @@ package io.khasang.moika.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "v_wash_services")
+@Entity(name = "wash_services")
+@IdClass(WashServicePk.class)
 public class WashService extends ABaseMoikaServiceAdditionalInfo {
 
+    @Id
+    @Column(name = "id_service")
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Id
     @Column(name = "id_type_car")
     private int idCarType;
 
@@ -13,6 +27,7 @@ public class WashService extends ABaseMoikaServiceAdditionalInfo {
     private CarType carTypeEntity;
 
     public WashService() {
+       // setAdditionalServiceInfo(carTypeEntity.getTypeName());
     }
 
     public int getIdCarType() {

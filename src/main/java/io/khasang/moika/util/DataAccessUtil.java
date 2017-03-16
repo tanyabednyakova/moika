@@ -22,11 +22,14 @@ import java.util.Map;
 @Service("dataAccessUtil")
 public class DataAccessUtil {
 
-    private final SessionFactory sessionFactory;
-
     @Autowired
+    private SessionFactory sessionFactory;
+
     public DataAccessUtil(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public DataAccessUtil() {
     }
 
     /**

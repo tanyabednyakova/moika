@@ -1,6 +1,7 @@
 package io.khasang.moika.service.impl;
 
 
+import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
 import org.junit.Assert;
@@ -12,14 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserIntegrationTest {
 
     static final Logger LOGGER = LoggerFactory.getLogger(UserIntegrationTest.class);
 
-    @Autowired
-    UserService userService;
+//    @Autowired
+//    UserService userService;
 
-    @Ignore
+//    @Ignore
     @Test
     public void createUser() {
 
@@ -30,11 +35,11 @@ public class UserIntegrationTest {
         User user;
 
         //Delete if exists
-        user = userService.findByLogin(login);
-        if (user != null) {
-            userService.deleteUser(user);
-            LOGGER.debug("Existed User deleted");
-        }
+//        user = userService.findByLogin(login);
+//        if (user != null) {
+//            userService.deleteUser(user);
+//            LOGGER.debug("Existed User deleted");
+//        }
 
 
         //Create
@@ -45,9 +50,22 @@ public class UserIntegrationTest {
         user.setLogin(login);
         user.setFirstName("Петруха");
         user.setLastName("Кулебякин");
+        user.setMiddleName("qwe");
         user.setEmail(email);
         user.setPassword("123456Qw");
         user.setPhone(phone);
+        Calendar calendar = Calendar.getInstance();
+        user.setBirthday(calendar.getTime());
+        user.setEnabled(true);
+
+//        Set<Role> roles = new HashSet<>();
+//        Role role = new Role();
+//        role.setId(12);
+//        role.setName("Hacker");
+//        role.setDescruiption("01011101");
+//        roles.add(role);
+//        user.setRoles(roles);
+
 
         HttpEntity<User> httpEntity = new HttpEntity<>(user, headers);
         RestTemplate restTemplate = new RestTemplate();
