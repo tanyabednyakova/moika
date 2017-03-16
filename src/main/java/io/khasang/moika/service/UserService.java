@@ -11,6 +11,8 @@ import io.khasang.moika.entity.Role;
 import io.khasang.moika.entity.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface UserService {
 
@@ -45,6 +47,19 @@ public interface UserService {
      * @param user - Данные в объекте user
      */
     User createUser(User user);
+
+    /**
+     * Создать учетную запись пользователя
+     *
+     */
+    public List<User> getAllUsers();
+
+    /**
+     * Создать учетную запись пользователя
+     * с бозавой ролью ROLE_CLIENT
+     * @param user - Данные в объекте user
+     */
+    User createClientUser(User user);
 
     /**
      * Удалить учетную запись пользователя

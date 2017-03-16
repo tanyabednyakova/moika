@@ -1,4 +1,4 @@
-package io.khasang.moika.controller;
+package io.khasang.moika.integration;
 
 import io.khasang.moika.entity.Company;
 import org.junit.Assert;
