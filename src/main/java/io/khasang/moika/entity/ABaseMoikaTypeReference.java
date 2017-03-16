@@ -37,7 +37,7 @@ public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity {
         return id;
     }
 
-    public String getTypeCode() {
+    public String getCode() {
         return this.code;
     }
 
@@ -45,7 +45,7 @@ public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity {
         this.code = typeCode;
     }
 
-    public String getTypeName() {
+    public String getName() {
         return this.name;
     }
 
@@ -79,13 +79,13 @@ public abstract class ABaseMoikaTypeReference extends ABaseMoikaEntity {
         ABaseMoikaTypeReference that = (ABaseMoikaTypeReference) o;
 
         if (getId() != that.getId()) return false;
-        return getTypeCode().equals(that.getTypeCode());
+        return getCode().equals(that.getCode());
     }
 
     @Override
     public int hashCode() {
         int result = getId();
-        result = 31 * result + getTypeCode().hashCode();
+        result = 31 * result + getCode().hashCode();
         return result;
     }
 }

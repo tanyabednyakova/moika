@@ -39,7 +39,7 @@ public class ServiceTypesImplTest {
         Assert.assertFalse("Service types list is empty", serviceTypesList.isEmpty());
         boolean isCode = false;
         for (ServiceType item : serviceTypesList) {
-            if (item.getTypeCode().equals("WASH")) {
+            if (item.getCode().equals("WASH")) {
                 isCode = true;
             }
         }

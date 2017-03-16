@@ -95,7 +95,7 @@
                         </legend>
                         <c:forEach items="${serviceType}" var="service_Type">
                             <label>
-                                <input type="checkbox" value="${service_Type.typeCode}"> ${service_Type.typeName}
+                                <input type="checkbox" value="${service_Type.code}"> ${service_Type.name}
                             </label>
                             <br>
                         </c:forEach>

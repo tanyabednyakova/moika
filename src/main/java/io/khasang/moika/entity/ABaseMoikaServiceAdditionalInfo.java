@@ -37,7 +37,7 @@ public abstract class ABaseMoikaServiceAdditionalInfo extends BaseMoikaService  
                 ", idFacility=" + super.getIdFacility() +
                 ", washFacility=" + super.getWashFacility().getName() +
                 ", idType=" + super.getServiceType() +
-                ", serviceTypeEntity=" + super.getServiceTypeEntity().getTypeCode() +
+                ", serviceTypeEntity=" + super.getServiceTypeEntity().getCode() +
                 ", idStatus=" + super.getIdStatus() +
                 ", serviceStatusEntity=" + super.getServiceStatusEntity().getStatusName() +
                 ", serviceName='" + super.getName() + '\'' +

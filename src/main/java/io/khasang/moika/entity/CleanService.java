@@ -33,7 +33,7 @@ public class CleanService extends ABaseMoikaServiceAdditionalInfo {
     }
 
     public String getDirtTypeCode() {
-        return this.dirtTypeEntity.getTypeCode();
+        return this.dirtTypeEntity.getCode();
     }
 
 

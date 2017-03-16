@@ -39,7 +39,7 @@ public class ChemCleanService extends ABaseMoikaServiceAdditionalInfo   {
     }
 
     public String getDirtTypeCode() {
-        return this.dirtTypeEntity.getTypeCode();
+        return this.dirtTypeEntity.getCode();
     }
 
     public int getIdMaterial() {

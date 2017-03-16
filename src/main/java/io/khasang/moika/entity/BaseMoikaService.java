@@ -63,7 +63,7 @@ public class BaseMoikaService extends ABaseMoikaEntity {
 
     public void setServiceType(String code) {
         ServiceType sse = new ServiceType();
-        sse.getTypeCode();
+        sse.getCode();
         this.serviceTypeEntity = sse;
     }
 
@@ -183,7 +183,7 @@ public class BaseMoikaService extends ABaseMoikaEntity {
                 ", idFacility=" + idFacility +
                 ", washFacility=" + washFacility +
                 ", idType=" + idType +
-                ", serviceTypeEntity=" + serviceTypeEntity.getTypeCode() +
+                ", serviceTypeEntity=" + serviceTypeEntity.getCode() +
                 ", idStatus=" + idStatus +
                 ", serviceStatusEntity=" + serviceStatusEntity.code +
                 ", serviceName='" + name + '\'' +

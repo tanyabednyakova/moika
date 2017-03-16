@@ -4,10 +4,7 @@ import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.entity.Car;
 import io.khasang.moika.entity.CarType;
 import io.khasang.moika.service.CarService;
-import io.khasang.moika.service.CompanyService;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +43,7 @@ public class CarServiceImplTest {
         carService.addCar(car);
 
         Car newCar = carService.getCarById(car.getId());
-        Assert.assertEquals(newCar.getCarTypeEntity().getTypeName(), carType);
+        Assert.assertEquals(newCar.getCarTypeEntity().getName(), carType);
     }
 
     /**
