@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -61,7 +62,7 @@ public class DataAccessUtil {
      * Возвращает готовый к выполнению запрос сущностей указанного типа по сборному условию "поле=значение И поле=значение..."
      *
      * @param entityClass   класс запрашиваемых сущностей
-     * @param fieldValueMap имя поля для запроса
+     * @param fieldValueMap карта имя_поля-значение
      * @return готовый к выполнению запрос
      */
     public <E> TypedQuery<E> getQueryOfEntityWithComplexEqualCondition(Class<E> entityClass, Map<String, Object> fieldValueMap) {
