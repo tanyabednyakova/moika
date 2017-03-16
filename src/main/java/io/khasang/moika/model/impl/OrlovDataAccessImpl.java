@@ -20,7 +20,7 @@ public class OrlovDataAccessImpl implements OrlovDataAccess {
     private RowMapper<Car> rowMapper = (ResultSet rs, int rowNum) -> {
         Car car = new Car();
         car.setId(rs.getInt("id"));
-        car.setCarType(rs.getString("cartype"));
+//        car.setCarType(rs.getString("cartype"));
         car.setCarNumber(rs.getString("carnumber"));
         car.setCarModel(rs.getString("carmodel"));
         car.setDescription(rs.getString("description"));

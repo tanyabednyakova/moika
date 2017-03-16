@@ -12,7 +12,7 @@ public class Bucket {
     @OneToOne
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Product product;
     private int amount;
     @Column(name = "expire_datetime")
