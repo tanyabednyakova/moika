@@ -1,5 +1,7 @@
 package io.khasang.moika.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,9 +14,11 @@ public class SomeSubEntity extends ABaseMoikaEntity {
     @NotNull
     private String name;
     private String content;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "somes_subsomes", joinColumns = @JoinColumn(name = "sub_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "some_id",referencedColumnName = "id"))
+    @Column(name = "some_id",insertable = false,updatable = false)
+    private long someId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "some_id",insertable = false,updatable = false)
+    @JsonIgnore
     private SomeEntity someEntity;
 
     public long getId() {
@@ -39,6 +43,14 @@ public class SomeSubEntity extends ABaseMoikaEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public long getSomeId() {
+        return someId;
+    }
+
+    public void setSomeId(long someId) {
+        this.someId = someId;
     }
 
     public SomeEntity getSomeEntity() {

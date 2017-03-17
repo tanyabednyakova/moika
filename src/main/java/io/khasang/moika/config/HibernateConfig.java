@@ -24,7 +24,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource(value = {"classpath:hibernate.properties"})
-@ComponentScan({"io.khasang.moika.dao.*"})
+@ComponentScan({"io.khasang.moika.dao"})
 public class HibernateConfig {
     private final Environment environment;
 

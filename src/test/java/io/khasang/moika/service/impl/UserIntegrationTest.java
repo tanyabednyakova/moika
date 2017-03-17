@@ -85,7 +85,7 @@ public class UserIntegrationTest {
         Assert.assertNotNull(resultUser);
         Assert.assertEquals(resultUser.getPhone(), result.getPhone());
 
-        LOGGER.debug("New User created");
+        logger.debug("New User created");
 
     }
 
