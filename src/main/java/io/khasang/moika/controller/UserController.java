@@ -142,7 +142,7 @@ public class UserController {
             error = result ? null : "Такой email уже занят";
         }
         //Map<String,Object> resultMap = Collections.singletonMap("success",result);
-        Map<String, Object> resultMap = new HashMap();
+        Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("success", result);
         if (error != null) {
             resultMap.put("error", error);
@@ -154,31 +154,32 @@ public class UserController {
      * Функции администратора
      * */
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object addUser() {
         return userService.getAll();
     }
 
-    @RequestMapping(value = "/admin/create", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object addUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 
-    @RequestMapping(value = "/admin/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object getUser(@PathVariable("id") long id) {
         return userService.findById(id);
     }
 
-    @RequestMapping(value = "/admin/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object updateUser(@RequestBody User user) {
+    public Object updateUser(@RequestBody User user, @PathVariable("id") long id) {
+        user.setId(id);
         return userService.updateUser(user);
     }
 
-    @RequestMapping(value = "/admin/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object deleteUser(@PathVariable("id") long id) {
         User user = userService.findById(id);
@@ -187,17 +188,17 @@ public class UserController {
     }
 
     //Функции управления ролями
-    @RequestMapping(value = "/{id}/role", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/{id}/role/{role_id}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object grantRole(@RequestBody Role role, @PathVariable("id") long id) {
+    public Object grantRole(@RequestBody Role role, @PathVariable("id") long id, @PathVariable("role_id") long role_id) {
         User user = userService.findById(id);
         userService.grantRole(user, role);
         return user;
     }
 
-    @RequestMapping(value = "/{id}/role", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/{id}/role/{role_id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object revokeRole(@RequestBody Role role, @PathVariable("id") long id) {
+    public Object revokeRole(@RequestBody Role role, @PathVariable("id") long id, @PathVariable("role_id") long role_id) {
         User user = userService.findById(id);
         userService.revokeRole(user, role);
         return user;
