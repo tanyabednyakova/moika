@@ -3,12 +3,16 @@ package io.khasang.moika.dao.impl;
 import io.khasang.moika.dao.IMoikaDaoCrud;
 import io.khasang.moika.dao.MoikaDaoException;
 import io.khasang.moika.entity.ABaseMoikaEntity;
+import io.khasang.moika.entity.Company;
 import io.khasang.moika.util.DataAccessUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -17,10 +21,14 @@ import java.util.Map;
 
 @Transactional
 public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IMoikaDaoCrud<T> {
-
+    @Autowired
     protected DataAccessUtil dataAccessUtil;
+    @Autowired
     protected SessionFactory sessionFactory;
+
     protected Class<? extends T> daoType;
+
+
 
     /**
      * By defining this class as abstract, we prevent Spring from creating
@@ -35,6 +43,9 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
         daoType = (Class) pt.getActualTypeArguments()[0];
     }
 
+    public Class<? extends T> getDaoType() {
+        return daoType;
+    }
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -43,6 +54,11 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     public DataAccessUtil getDataAccessUtil() {
@@ -91,8 +107,4 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
         return dataAccessUtil.getQueryOfEntity((Class<T>) daoType).getResultList();
     }
 
-    @Override
-    public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
-    }
 }

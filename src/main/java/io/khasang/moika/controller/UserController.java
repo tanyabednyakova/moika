@@ -6,10 +6,11 @@ import io.khasang.moika.entity.User;
 import io.khasang.moika.service.UserService;
 import io.khasang.moika.util.BindingResultToMapParser;
 import io.khasang.moika.util.DataAccessUtil;
-import io.khasang.moika.validator.UserUtilValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,17 +18,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintValidatorFactory;
+import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
+import javax.validation.Validator;
+import javax.validation.groups.Default;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Контроллер интерфейсов пользователя
@@ -37,19 +42,19 @@ import java.util.Map;
  */
 
 @RequestMapping(path = "/user")
-@Controller
+@RestController
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
     @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
     @Autowired
     private UserService userService;
-    @Autowired
-    private Validator mvcValidator;
-    @Autowired
-    private UserUtilValidator userUtilValidator;
+
     @Autowired
     private DataAccessUtil dataAccessUtil;
+
+    @Autowired
+    private Validator validator;
 
     private User getCurrentUser() {
         String currentLogin = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -62,11 +67,17 @@ public class UserController {
     @ResponseBody
     public Object regUser(@RequestBody @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
-            return Collections.singletonMap("errors",BindingResultToMapParser.getMap(result));
+            return Collections.singletonMap("errors", BindingResultToMapParser.getMap(result));
         }
         user.setEnabled(true);
         userService.createClientUser(user);
         return Collections.singletonMap("redirect", " ");
+    }
+
+    @RequestMapping("/getallusers")
+    @ResponseBody
+    public List<User> user (){
+        return userService.getAllUsers();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -109,82 +120,69 @@ public class UserController {
         return "redirect: /";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object updateUser(@RequestBody Map<String, Object> user, BindingResult result) {
-        User currentUser = getCurrentUser();
-        if (user.containsKey("password") && currentUser.getPassword().equals(user.get("password"))) {
-            user.replace("password", userService.getEncodedPassword(user.get("password").toString()));
-        }
-        dataAccessUtil.setNewValuesToBean(currentUser, user);
-        mvcValidator.validate(currentUser, result);
-        if (result.hasErrors()) {
-            return BindingResultToMapParser.getMap(result);
-        }
-        userService.createUser(currentUser);
-        return BindingResultToMapParser.getSuccess("All good!!! =)");
-    }
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody Map<String, Object> userForUpdateData) {
 
-    @RequestMapping(value = "/util", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object utilUser(@RequestBody Map<String, String> param, BindingResult bindingResult) {
-        //TODO переделать на работу с javax.validation.Validator и создать две доп. аннотации
-        boolean result = false;
-        userUtilValidator.validate(param, bindingResult);
-        String error = null;
-        if (bindingResult.hasErrors()) {
-            error = bindingResult.getAllErrors().get(0).getDefaultMessage();
-        } else if (param.containsKey("login")) {
-            result = userService.isLoginFree(param.get("login"));
-            error = result ? null : "Такой логин уже занят";
-        } else if (param.containsKey("email")) {
-            result = userService.isEmailFree(param.get("email"));
-            error = result ? null : "Такой email уже занят";
+        User userForUpdate = userService.findById(id);
+
+        if (userForUpdate == null) {
+            return new ResponseEntity("No User found for ID " + id, HttpStatus.NOT_FOUND);
         }
-        //Map<String,Object> resultMap = Collections.singletonMap("success",result);
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("success", result);
-        if (error != null) {
-            resultMap.put("error", error);
+
+        dataAccessUtil.setNewValuesToBean(userForUpdate, userForUpdateData);
+
+        Set<ConstraintViolation<User>> errors = validator.validate(userForUpdate);
+        if (!errors.isEmpty()) {
+            return new ResponseEntity(errors, HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        return resultMap;
-    }
 
-    /**
-     * Функции администратора
-     * */
+        userService.updateUser(userForUpdate);
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object addUser() {
-        return userService.getAll();
-    }
-
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object addUser(@RequestBody User user) {
-        return userService.createUser(user);
+        return new ResponseEntity(userForUpdate, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Object getUser(@PathVariable("id") long id) {
-        return userService.findById(id);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public Object updateUser(@RequestBody User user, @PathVariable("id") long id) {
-        user.setId(id);
-        return userService.updateUser(user);
+        User user = userService.findById(id);
+        return user;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public Object deleteUser(@PathVariable("id") long id) {
+    public Object loginUser(@PathVariable("id") long id) {
         User user = userService.findById(id);
         userService.deleteUser(user);
         return user;
+    }
+
+    @PostMapping(value = "/util", produces = "application/json;charset=UTF-8")
+    public Object utilUser(@RequestBody Map<String, String> param) {
+        //TODO переделать на работу с javax.validation.Validator и создать две доп. аннотации
+        boolean result = false;
+
+        User userToCheck = null;
+        if(param.containsKey("id")) {
+            Long userId;
+            try {
+                userId = Long.parseLong(param.get("id"));
+            }catch(NumberFormatException e){
+                return new ResponseEntity("Unable to parse given user ID " + param.get("id"), HttpStatus.NOT_FOUND);
+            }
+
+            userToCheck = userService.findById(userId);
+
+            if(userToCheck == null){
+                return new ResponseEntity("No User found for ID " + userId, HttpStatus.NOT_FOUND);
+            }
+
+        }else{
+            userToCheck = new User();
+        }
+
+        Set<ConstraintViolation<User>> errors = validator.validate(userToCheck);
+
+        return new ResponseEntity(errors, HttpStatus.OK);
     }
 
     //Функции управления ролями
