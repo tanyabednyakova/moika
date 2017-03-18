@@ -22,9 +22,10 @@ public class WashFacility  extends ABaseMoikaEntity  {
     @Column(name = "descr")
     private String  description;
 
-    @OneToMany (mappedBy = "washFacility", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JoinColumn(name = "id_fclt")
-    private List<WashBox> washBoxes  = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
+    private List<WashBox> washBoxes = new ArrayList<>();
+
 
     public WashFacility() {
     }
