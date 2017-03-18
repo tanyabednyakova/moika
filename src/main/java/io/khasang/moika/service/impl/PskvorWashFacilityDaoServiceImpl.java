@@ -18,6 +18,7 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     @Autowired
     private WashFacilityDao washFacilityDao;
 
+
     public PskvorWashFacilityDaoServiceImpl() {
     }
 

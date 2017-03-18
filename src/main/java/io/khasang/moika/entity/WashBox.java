@@ -12,17 +12,10 @@ public class WashBox  extends ABaseMoikaEntity {
 
     @Column(name = "id_fclt", insertable=false, updatable=false)
     private int idFacility;
-    @ManyToOne//()
+    @ManyToOne
     @JoinColumn(name = "id_fclt", insertable=false, updatable=false )
     private WashFacility washFacility;
 
-
-    @Column(name = "id_type", insertable=false, updatable=false)
-    private int idType;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn( name = "id_type")//, foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
-    private BoxType boxTypeEntity;
 
     @Column(name = "name", unique = true)
     private String boxName;
@@ -30,9 +23,17 @@ public class WashBox  extends ABaseMoikaEntity {
     @Column(name = "descr")
     private String description;
 
-    @Column(name = "id_status", insertable=false, updatable=false)
-    private Short idStatus;
-    @ManyToOne(cascade = CascadeType.ALL)
+
+ //   @Column(name = "id_type", insertable=false, updatable=false)
+ //   private int idType;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn( name = "id_type")//, foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
+    private BoxType boxTypeEntity;
+
+
+ //   @Column(name = "id_status", insertable=false, updatable=false)
+ //   private Short idStatus;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = "id_status")//, insertable=false, updatable=false )
     private BoxStatus boxStatusEntity;
 
@@ -56,7 +57,7 @@ public class WashBox  extends ABaseMoikaEntity {
     public void setIdFacility(int idFacility) {
         this.idFacility = idFacility;
     }
-
+/*
     public int getIdType() {
         return idType;
     }
@@ -73,7 +74,7 @@ public class WashBox  extends ABaseMoikaEntity {
         this.idStatus = boxStatus;
     }
 
-
+*/
     public String getBoxName() {
         return boxName;
     }
