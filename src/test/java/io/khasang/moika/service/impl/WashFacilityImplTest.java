@@ -3,8 +3,6 @@ package io.khasang.moika.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.BoxStatus;
-import io.khasang.moika.entity.BoxType;
 import io.khasang.moika.entity.WashBox;
 import io.khasang.moika.entity.WashFacility;
 import io.khasang.moika.service.PskvorWashFacilityDaoService;
@@ -57,7 +55,7 @@ public class WashFacilityImplTest {
                 }
             }
         }
-        Assert.assertTrue("Facility  list not contain "+testString, isWashFacility);
+        Assert.assertTrue("Facility  list not contain " + testString, isWashFacility);
         Assert.assertTrue("Facility  list not contain box", isBox);
     }
 
@@ -76,10 +74,13 @@ public class WashFacilityImplTest {
         for (int i = 1; i < 5; i++) {
             WashBox box = new WashBox();
             box.setBoxName("№ " + i);
-            box.setBoxStatusEntity(new BoxStatus("WORKING"));
+            box.setIdStatus((short) 1);
+            box.setIdtype(1);
+            // box.setBoxStatusEntity(new BoxStatus("WORKING"));
             box.setDescription(box.getBoxName() + " " + fclt.getName());
-            box.setBoxTypeEntity(new BoxType("CAR"));
+            // box.setBoxTypeEntity(new BoxType("CAR"));
             boxList.add(box);
+
         }
 
         fclt.setWashBoxes(boxList);
@@ -90,19 +91,19 @@ public class WashFacilityImplTest {
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
-        Assert.assertNotNull("Facility  list is null", resFclt);
+        Assert.assertNotNull("Facility is null", resFclt);
         boolean isBox = false;
-            if (resFclt.getName().equalsIgnoreCase("Мойка на Мойке")) {
-                Assert.assertEquals("Facility  list not contain boxes", 4, resFclt.getWashBoxes().size());
-                List<WashBox> resBoxList = resFclt.getWashBoxes();
-                for (WashBox box : boxList) {
-                    if (box.getBoxName().equalsIgnoreCase("№ 1")) {
-                        isBox = true;
-                        break;
-                    }
+        if (resFclt.getName().equalsIgnoreCase(fcltName)) {
+            Assert.assertEquals("Facility   not contain boxes", 4, resFclt.getWashBoxes().size());
+            List<WashBox> resBoxList = resFclt.getWashBoxes();
+            for (WashBox box : boxList) {
+                if (box.getBoxName().equalsIgnoreCase("№ 1")) {
+                    isBox = true;
+                    break;
                 }
+            }
         }
-        Assert.assertTrue("Facility  list not contain "+fcltName, resFclt.getName().equalsIgnoreCase(fcltName));
-        Assert.assertTrue("Facility  list not contain box", isBox);
+        Assert.assertTrue("Facility  not contain " + fcltName, resFclt.getName().equalsIgnoreCase(fcltName));
+        Assert.assertTrue("Facility  not contain box", isBox);
     }
 }
