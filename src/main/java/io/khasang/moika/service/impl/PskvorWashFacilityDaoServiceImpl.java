@@ -22,12 +22,13 @@ public class PskvorWashFacilityDaoServiceImpl implements PskvorWashFacilityDaoSe
     }
 
     @Override
-    public void addWashFacility(WashFacility washFacility) {
+    public WashFacility addWashFacility(WashFacility washFacility) {
         try {
             washFacilityDao.create(washFacility);
         } catch (MoikaDaoException e) {
             e.printStackTrace();
         }
+        return washFacility;
     }
 
     @Override

@@ -15,17 +15,17 @@ public class WashBox  extends ABaseMoikaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "id_fclt")
+    @Column(name = "id_fclt", insertable=false, updatable=false)
     private int idFacility;
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "id_fclt", foreignKey = @ForeignKey(name = "fk_box_facility"), insertable=false, updatable=false )
+    @ManyToOne//()
+    @JoinColumn(name = "id_fclt", insertable=false, updatable=false )
     private WashFacility washFacility;
 
-    @Column(name = "id_type")
+    @Column(name = "id_type", insertable=false, updatable=false)
     private int idType;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn( name = "id_type", foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn( name = "id_type")//, foreignKey = @ForeignKey(name = "fk_box_type"), insertable=false, updatable=false )
     private BoxType boxTypeEntity;
 
     @Column(name = "name", unique = true)
@@ -34,10 +34,10 @@ public class WashBox  extends ABaseMoikaEntity {
     @Column(name = "descr")
     private String description;
 
-    @Column(name = "status")
+    @Column(name = "status", insertable=false, updatable=false)
     private Short boxStatus;
-    @ManyToOne
-    @JoinColumn(name = "status", foreignKey = @ForeignKey(name = "fk_box_status"), insertable=false, updatable=false )
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "status")//, insertable=false, updatable=false )
     private BoxStatus boxStatusEntity;
 
 
@@ -66,8 +66,8 @@ public class WashBox  extends ABaseMoikaEntity {
         return idType;
     }
 
-    public void setId_type(int id_type) {
-        this.idType = id_type;
+    public void setIdtype(int idType) {
+        this.idType = idType;
     }
 
     public String getBoxName() {
@@ -114,7 +114,15 @@ public class WashBox  extends ABaseMoikaEntity {
         this.boxStatusEntity = boxStatusEntity;
     }
 
-    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setWashFacility(WashFacility washFacility) {
+        this.washFacility = washFacility;
+    }
+
+    /*@Override
     public String toString() {
         return "WashBox{" +
                 "id=" + id +
@@ -124,5 +132,5 @@ public class WashBox  extends ABaseMoikaEntity {
                 ", boxStatusEntity=" + boxStatusEntity.toString() + '\'' +
                 ", description='" + description  +
                 '}';
-    }
+    }*/
 }

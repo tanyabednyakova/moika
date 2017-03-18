@@ -6,7 +6,7 @@ import io.khasang.moika.entity.WashFacility;
 import java.util.List;
 
 public interface PskvorWashFacilityDaoService {
-    void addWashFacility(WashFacility washFacility);
+    WashFacility addWashFacility(WashFacility washFacility);
     void updateWashFacility(WashFacility washFacility);
     void deleteWashFacility(WashFacility washFacility);
     WashFacility getWashFacilityByID(int id);

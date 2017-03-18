@@ -9,7 +9,7 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     @Id
     @Column(name = "id_fclt", columnDefinition = "serial")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "id_net")
     private int idNet;
@@ -23,7 +23,7 @@ public class WashFacility  extends ABaseMoikaEntity  {
     private String  description;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt")
-    private List<WashBox> washBowes  = new ArrayList<>();
+    private List<WashBox> washBoxes = new ArrayList<>();
 
     public WashFacility() {
     }
@@ -70,5 +70,17 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<WashBox> getWashBoxes() {
+        return washBoxes;
+    }
+
+    public void setWashBoxes(List<WashBox> washBoxes) {
+        this.washBoxes = washBoxes;
     }
 }
