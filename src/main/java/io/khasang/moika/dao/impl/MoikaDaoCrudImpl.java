@@ -74,6 +74,7 @@ public abstract class MoikaDaoCrudImpl<T extends ABaseMoikaEntity> implements IM
     @Override
     public T create(T entity) throws MoikaDaoException {
         getCurrentSession().save(entity);
+     //   getCurrentSession().flush();
         return entity;
     }
 

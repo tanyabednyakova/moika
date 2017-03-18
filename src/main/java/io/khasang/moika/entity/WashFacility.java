@@ -8,7 +8,7 @@ import java.util.List;
 public class WashFacility  extends ABaseMoikaEntity  {
 
     @Id
-    @Column(name = "id_fclt", columnDefinition = "serial")
+    @Column(name = "id_fclt") //, columnDefinition = "serial"
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "id_net")
@@ -21,8 +21,9 @@ public class WashFacility  extends ABaseMoikaEntity  {
     private int  idAddr;
     @Column(name = "descr")
     private String  description;
-    @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true) //(mappedBy="washFacility")
-    @JoinColumn(name = "id_fclt", referencedColumnName = "id_fclt", foreignKey = @ForeignKey(name = "fk_box_facility"))
+
+    @OneToMany (mappedBy = "washFacility", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JoinColumn(name = "id_fclt")
     private List<WashBox> washBoxes  = new ArrayList<>();
 
     public WashFacility() {
@@ -78,5 +79,43 @@ public class WashFacility  extends ABaseMoikaEntity  {
 
     public void setWashBoxes(List<WashBox> washBowes) {
         this.washBoxes = washBowes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WashFacility)) return false;
+
+        WashFacility that = (WashFacility) o;
+
+        if (getId() != that.getId()) return false;
+        if (getIdNet() != that.getIdNet()) return false;
+        return getName().equals(that.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getIdNet();
+        result = 31 * result + getName().hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (WashBox box : washBoxes) {
+            sb.append(box.toString());
+            sb.append("\n");
+        }
+        return "WashFacility{" +
+                "id=" + id +
+                ", idNet=" + idNet +
+                ", idManager=" + idManager +
+                ", name='" + name + '\'' +
+                ", idAddr=" + idAddr +
+                ", description='" + description + '\'' +
+                ", washBoxes=" + sb.toString() +
+                '}';
     }
 }

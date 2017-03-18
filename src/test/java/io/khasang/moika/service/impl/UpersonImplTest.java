@@ -3,11 +3,9 @@ package io.khasang.moika.service.impl;
 
 import io.khasang.moika.config.application.WebConfig;
 import io.khasang.moika.dao.MoikaDaoException;
-import io.khasang.moika.entity.BoxStatus;
-import io.khasang.moika.entity.BoxType;
-import io.khasang.moika.entity.WashBox;
-import io.khasang.moika.entity.WashFacility;
-import io.khasang.moika.service.PskvorWashFacilityDaoService;
+import io.khasang.moika.dao.UpersonDao;
+import io.khasang.moika.entity.Uperson;
+import io.khasang.moika.entity.Uphone;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,22 +15,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebConfig.class})
-public class WashFacilityImplTest {
+public class UpersonImplTest {
 
 
     @Autowired
-    PskvorWashFacilityDaoService fcltService;
+    UpersonDao personDao;
 
-
+/*
     @Test
     @Transactional
-    public void testWashFacilityServiceList() {
+    public void testUperoneList() {
         final String testString = "Мойка на Мойке";
         List<WashFacility> fcltList = null;
         try {
@@ -60,49 +59,44 @@ public class WashFacilityImplTest {
         Assert.assertTrue("Facility  list not contain "+testString, isWashFacility);
         Assert.assertTrue("Facility  list not contain box", isBox);
     }
-
+*/
     @Test
     @Transactional
-    public void testAddWashFacility() {
-        final String fcltName = "Мока на Фонтанке";
-        WashFacility fclt = new WashFacility(); // подготовили класс для тестирования
+    public void testAddUperson() {
+        final String personName = "Сидоров Иван Петрович";
+        Uperson person = new Uperson(); // подготовили класс для тестирования
 
-        fclt.setName(fcltName);
-        fclt.setIdNet(1);
-        fclt.setDescription("не фонтан");
-        fclt.setIdAddr(3);
+        person.setName(personName);
+        person.setBirthDate(Date.valueOf("1998-05-15"));
 
-        List<WashBox> boxList = new ArrayList<>();
+        List<Uphone> phoneList = new ArrayList<>();
         for (int i = 1; i < 5; i++) {
-            WashBox box = new WashBox();
-            box.setBoxName("№ " + i);
-            box.setBoxStatusEntity(new BoxStatus("WORKING"));
-            box.setDescription(box.getBoxName() + " " + fclt.getName());
-            box.setBoxTypeEntity(new BoxType("CAR"));
-            boxList.add(box);
+            Uphone phone = new Uphone();
+            phone.setNumber("962-555-55-55"+i);
+            phoneList.add(phone);
         }
 
-        fclt.setWashBoxes(boxList);
+        person.setPhones(phoneList);
 
-        WashFacility resFclt = new WashFacility();
+        Uperson resPerson = new Uperson();
         try {
-            resFclt = fcltService.addWashFacility(fclt);
+            resPerson = personDao.create(person);
         } catch (MoikaDaoException e) {
             Assert.fail(e.getMessage());
         }
-        Assert.assertNotNull("Facility  list is null", resFclt);
-        boolean isBox = false;
-            if (resFclt.getName().equalsIgnoreCase("Мойка на Мойке")) {
-                Assert.assertEquals("Facility  list not contain boxes", 4, resFclt.getWashBoxes().size());
-                List<WashBox> resBoxList = resFclt.getWashBoxes();
-                for (WashBox box : boxList) {
-                    if (box.getBoxName().equalsIgnoreCase("№ 1")) {
-                        isBox = true;
+        Assert.assertNotNull("Facility  list is null", resPerson);
+        boolean isTel = false;
+            if (resPerson.getName().equalsIgnoreCase("Сидоров Иван Петрович")) {
+                Assert.assertEquals("tel list not ", 4, resPerson.getPhones().size());
+                List<Uphone>  resPhoneList = resPerson.getPhones();
+                for (Uphone phone : resPhoneList) {
+                    if (phone.getNumber().equalsIgnoreCase("962-555-55-551")) {
+                        isTel= true;
                         break;
                     }
                 }
         }
-        Assert.assertTrue("Facility  list not contain "+fcltName, resFclt.getName().equalsIgnoreCase(fcltName));
-        Assert.assertTrue("Facility  list not contain box", isBox);
+        Assert.assertTrue("Person does not exist"+personName, resPerson.getName().equalsIgnoreCase(personName));
+        Assert.assertTrue("Phone  list not contain number", isTel);
     }
 }

@@ -1,5 +1,7 @@
 package io.khasang.moika.controller;
 
+import io.khasang.moika.entity.BoxStatus;
+import io.khasang.moika.entity.BoxType;
 import io.khasang.moika.entity.WashBox;
 import io.khasang.moika.entity.WashFacility;
 import org.junit.Assert;
@@ -44,10 +46,9 @@ public class WashFacilityIntegrationalTest {
         for (int i = 1; i < 5; i++) {
             WashBox box = new WashBox();
             box.setBoxName("№ " + i);
-            box.setBoxStatus((short) 1);
+            box.setBoxStatusEntity(new BoxStatus("WORKING"));
             box.setDescription(box.getBoxName() + " " + fclt.getName());
-            box.setIdtype(1);
-            box.setBoxStatus((short) 1);
+            box.setBoxTypeEntity(new BoxType("CAR"));
             boxList.add(box);
         }
 
